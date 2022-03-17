@@ -13,4 +13,4 @@
 
 [Diagrama - UML - Link de Edicao no Diagrams](https://app.diagrams.net/?src=about#G1AxUJbZJFG4Tdd7riOOYGaOUZxSYiLEBB)
 
-![Diagrama-UML](Ficheiros_de_Apoio/Projecto_Livraria_UML.drawio.png)
+![Diagrama-UML](Ficheiros_de_Apoio/Projecto_Livraria_UML.png)
