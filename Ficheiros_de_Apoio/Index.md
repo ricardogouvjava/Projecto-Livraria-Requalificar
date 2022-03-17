@@ -1,7 +1,9 @@
 # Planeamento Inicial
 ## Docs
-[Projecto](Docs/Projeto.pdf)
-[UML](Docs/UML.pdf)
+[Enunciado do Projecto - Livraria Requalificar](Docs/Projeto.pdf)
+
+### Docs de Apoio
+[Texto - UML](Docs/UML.pdf)
 
 
 ## Case Use
