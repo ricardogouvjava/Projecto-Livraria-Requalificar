@@ -2,3 +2,4 @@
 
 ## Case Use
 [Diagrama de Case-Use](https://app.diagrams.net/?src=about#G1jZsvF--a0koeIQHv51fgQeugpGPUzqpi)
+![Alt](Ficheiros_de_Apoio/Projecto Livraria.drawio.png)
