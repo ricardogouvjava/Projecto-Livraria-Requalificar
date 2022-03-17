@@ -1,4 +1,4 @@
-# Planeamento Inicial
+# Planeamento Inicial - Sprint 1
 ## Docs
 [Enunciado do Projecto - Livraria Requalificar](Docs/Projeto.pdf)
 
