@@ -1,6 +1,6 @@
 # Planeamento Inicial - Sprint 1
 ## Docs
-[Enunciado do Projecto - Livraria Requalificar](Docs/Projeto.pdf)
+[Enunciado do Projecto - Livraria Requalificar](/Docs/Projeto.pdf)
 
 ### Docs de Apoio
 [Texto - UML](/Docs/UML.pdf)
