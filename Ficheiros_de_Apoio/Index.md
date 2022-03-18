@@ -66,7 +66,7 @@
   - gastos, mais vendidos, mais rentaveis
 
 
-** Requisitos Nao Funcionais **
+**Requisitos Nao Funcionais**
 - Devera ser desenvolvdo em duas semanas;
 
 - Devera ser ulizada linguagem java com uso as bibliotecas/software de dominio/licensa de utilizacao publicas:
