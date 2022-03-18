@@ -3,7 +3,7 @@
 [Enunciado do Projecto - Livraria Requalificar](Docs/Projeto.pdf)
 
 ### Docs de Apoio
-[Texto - UML](Docs/UML.pdf)
+[Texto - UML](/Docs/UML.pdf)
 
 ## Requisitos - Incompleto
 
