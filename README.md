@@ -1,5 +1,14 @@
 # Projecto - Livraria-Requalificar
 Projecto - Livraria Requalificar - Curso Requalificar +Digital
 
-## Index de Planeamento Inicial
-[Index de Planeamento](Ficheiros_de_Apoio/Index.md)
+## Planeamento Inicial
+
+# Sptrint 1 - Modelacao e Planeamento
+
+[Documento - Sprint 1](Sprints/Sprint_1.md) *ClickME*
+
+**Requisitos**
+
+**Diagrama Case Use**
+
+**Diagrama UML**
