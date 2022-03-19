@@ -1,7 +1,18 @@
 ## Mockup
 
-Elementos conceptuais para aplicacao.
+Elementos conceptuais para aplicação:
+- Login
+- Registar Utilizador
+- Pesquisar livros
+- Elemento livro
+- Carrinho
+- Perfil
 
-Nao sao demonstrados os elementos de listagem de estatisticas e de cupoes pois enquadram-se nos
+Não sao demonstrados todos elementos necessários como:
+- estatísticas
+- cupões
+-etc
 
-![Elementos prototipos para aplicacao](/Sprints/Mockup.png)
+pois são semelhantes aos demonstrados.
+
+![Elementos protótipos para aplicação](/Sprints/Mockup.png)
