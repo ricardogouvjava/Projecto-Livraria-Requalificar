@@ -11,13 +11,15 @@
 
 - Registo dos utilizadores (dois tipos) utilizando dados pessoais.
   - Cliente
-    - nome, email, data de nascimento e password encryptada escolhidos pelo cliente;
-    - id unico gerado automaticamente;
+    - nome, email, data de nascimento;
+    - userLogin escolhido pelo cliente mas unico na base de dados 
+    - password encryptada escolhidos pelo cliente;
+    - userid unico gerado automaticamente;
   - Funcionario
     - nome, data de nascimento inserido pelo funcionario;
     - id unico (nickname) auto gerado atraves do nome;
 
-- Login dos utilizadores com confirmacao dos dados em base de dados:
+- Login dos utilizadores atraves de userid e password:
   - Cliente
   - Funcionario  
 
@@ -36,13 +38,15 @@
     - nome, email, morada e data de nascimento; 
   - Funcionarios
     - nome, data de nascimento e nickname
+  - Compras Realizadas
+  - Historico de cupoes emitidos em compras de determinados valores
 
 - Permitir ao utilizador de tipo funcionario a manipulacao da base de dados de:
   - Livros, Autores, Editoras com opcao de insercao de novos elementos e alteracao dos presentes.
 
-- Permitir aos utilizadores cliente e funcionario pesquisa livros e visualizacao da lista de livros com campos minimos e com hipoteses de ordenacao;
+- Permitir aos utilizadores cliente e funcionario pesquisa livros e visualizacao da lista de livros com campos minimos e com hipoteses de ordenacao:
+  - Titulo, autor, editora, preco, etc. Descendente e ascendente.
    
-
 - Permitir visualizar individualmente apos selecao de um elemento livro todas a suas caracteristicas
 
 - Existir um carinho de compras de livros em que permite:
@@ -64,7 +68,6 @@
 - Fornecer um campo "Estatisticas" no utilizador funcionario, em que este podera:
 - visualizar estatisticas das vendas dos livros:
   - gastos, mais vendidos, mais rentaveis
-
 
 **Requisitos Nao Funcionais**
 - Devera ser desenvolvdo em duas semanas;
