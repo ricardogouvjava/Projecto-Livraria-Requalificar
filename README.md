@@ -5,7 +5,7 @@ Projecto - Livraria Requalificar - Curso Requalificar +Digital
 
 # Sprint 1 - Modelacao e Planeamento
 
-[Documento - Sprint 1](Sprints/Sprint_1.md) *ClickME*
+[Documento - Sprint 1](Sprints/Sprint_1.md)
 
 **Requisitos**
 
