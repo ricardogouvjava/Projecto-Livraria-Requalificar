@@ -2,4 +2,4 @@
 
 Elementos conceptuais para aplicacao.
 
-![Elementos prototipos para aplicacao](Sprints/Mockup.png)
+![Elementos prototipos para aplicacao](/Sprints/Mockup.png)
