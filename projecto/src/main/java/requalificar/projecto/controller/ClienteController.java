@@ -24,6 +24,7 @@ public class ClienteController
 		this.clienteService = clienteService;
 	}
 	
+	/** Devolve cliente usando LoginId**/
 	@GetMapping("/getClienteByLoginId/{aLoginId}")
 	public ResponseEntity<SimpleResponse> getClienteByLoginId(@PathVariable String aLoginId)
 	{
@@ -41,6 +42,7 @@ public class ClienteController
 	
 	}
 	
+	/** Devolve todos os clientes na base de dados **/
 	@GetMapping("/getClientes")
 	public ResponseEntity<SimpleResponse> getClientes()
 	{
@@ -58,6 +60,7 @@ public class ClienteController
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);	
 	}
 	
+	/** Adiciona cliente a base de dados **/
 	@PostMapping("/addCliente")
 	public ResponseEntity<SimpleResponse> addCliente(@RequestBody Cliente aCliente)
 	{
@@ -78,5 +81,27 @@ public class ClienteController
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);	
 	}
 	
+	/** **/
+	@DeleteMapping("/removeClienteByLoginId/{loginId}")
+	public ResponseEntity<SimpleResponse> removeClienteByLoginId(@PathVariable String loginId)
+	{
+		SimpleResponseClientes srC = new SimpleResponseClientes();
+		
+		// Verifica se loginid nao existe
+		if(!clienteService.loginIdClienteExiste(loginId))
+		{
+			srC.setAsError("LoginId nao existente");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
+		}
+		
+		Cliente clienteToDelete = clienteService.getClienteByLoginId(loginId);
 	
+		if(clienteToDelete != null)
+		{
+			clienteService.removeCliente(clienteToDelete);
+			srC.setAsSuccess("Sucesso ao remover cliente");
+			return ResponseEntity.status(HttpStatus.OK).body(srC);
+		}	
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);	
+	}
 }

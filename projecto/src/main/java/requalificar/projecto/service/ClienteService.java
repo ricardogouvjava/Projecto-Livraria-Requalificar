@@ -20,13 +20,39 @@ public class ClienteService
 		this.clienteRepo = clienteRepo;
 	}
 	
-	// Metodos
+	/** Devolve cliente usando LoginId**/
+	public Cliente getClienteByLoginId(String clienteLoginId)
+	{
+		for(Cliente cliente : getClientes())
+		{
+			if(cliente.getLoginId().equals(clienteLoginId))
+			{
+				return cliente;
+			}
+		}
+		return null;
+	}
+	
 	/** Devolve todos os clientes na base de dados **/
 	public List<Cliente> getClientes()
 	{
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		clienteRepo.findAll().forEach(clientes::add);
 		return clientes;
+	}
+	
+	/** Adiciona cliente a base de dados **/
+	public boolean addCliente(Cliente aCliente)
+	{
+		clienteRepo.save(aCliente);
+		return true;	
+	}
+	
+	/** Remove cliente **/
+	public boolean removeCliente(Cliente aCliente)
+	{
+		clienteRepo.delete(aCliente);
+		return true;	
 	}
 	
 	/** Verifica se LoginId ja existe na base de dados **/
@@ -42,25 +68,5 @@ public class ClienteService
 		return false;
 	}
 	
-	
-	/** Adiciona cliente a base de dados **/
-	public boolean addCliente(Cliente aCliente)
-	{
-		clienteRepo.save(aCliente);
-		return true;	
-	}
-	
-	/** Devolve cliente usando LoginId**/
-	public Cliente getClienteByLoginId(String clienteLoginId)
-	{
-		for(Cliente cliente : getClientes())
-		{
-			if(cliente.getLoginId().equals(clienteLoginId))
-			{
-				return cliente;
-			}
-		}
-		return null;
-	}
 
 }
