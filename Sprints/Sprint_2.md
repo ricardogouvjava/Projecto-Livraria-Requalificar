@@ -8,15 +8,11 @@
 - @PostMapping("/addCliente") ```http://localhost:8080/addCliente```
 ```
 {
-   "loginId": "ricardinho1998",
-    
-    "nome": "Ricardo",
-    
-    "password":"qwertyuiop",
-    
-    "dataDeNascimento": "25-02-1983",
-    
-   "email": "ricardinho1998@gmail.com"
+	"loginId": "ricardinho1998",
+	"nome": "Ricardo",
+	"password":"qwertyuiop",
+	"dataDeNascimento": "25-02-1983",
+	"email": "ricardinho1998@gmail.com"
 }
 ```
 - @DeleteMapping("/removeClienteByLoginId/{loginId}") ```//localhost:8080/removeClienteByLoginId/ricardinho1998```
@@ -25,13 +21,10 @@
 
 ```
 {
-    "loginId" : "ricardinho1998",
-    
-    "nome": "Ricardo Gouveia",
-    
-    "dataDeNascimento": "25-02-2000",
-    
-    "email": "ricardinhoGouveia1998@gmail.com"
+	"loginId" : "ricardinho1998",
+	"nome": "Ricardo Gouveia",
+	"dataDeNascimento": "25-02-2000",
+	"email": "ricardinhoGouveia1998@gmail.com"
 
 }
 ```
@@ -45,7 +38,7 @@
 
 ```
 {
-    "isbn": "blob",
+	"isbn": "blob",
 	"titulo": "Fazadas do Mundo",
 	"preco": 20,
 	"stock": 15,
