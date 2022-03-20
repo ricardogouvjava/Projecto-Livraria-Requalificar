@@ -28,8 +28,8 @@ Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor cri
 - ClassRepo
 - SimpleResponseClass
 
-** Cliente **
+**Cliente **
 
-** Funcionario **
+**Funcionario **
 
-** Livro **
+**Livro **
