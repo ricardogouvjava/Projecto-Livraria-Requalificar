@@ -28,7 +28,7 @@ Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor cri
 - ClassRepo
 - SimpleResponseClass
 
-## Classes
+### nas classes
 - Cliente
 - Funcionario
 - Livro
