@@ -1,5 +1,6 @@
 package requalificar.projecto.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class ClienteService
 		this.clienteRepo = clienteRepo;
 	}
 	
-	/** Devolve cliente usando LoginId**/
+	/** Devolve cliente usando LoginId **/
 	public Cliente getClienteByLoginId(String clienteLoginId)
 	{
 		for(Cliente cliente : getClientes())
@@ -55,10 +56,29 @@ public class ClienteService
 		return true;	
 	}
 	
-	/** Verifica se LoginId ja existe na base de dados **/
-	public boolean loginIdClienteExiste(String idCliente)
+	/** updates client data 
+	 * @throws ParseException **/
+	public boolean updateCliente(Cliente aCliente) throws ParseException
 	{
-		for(Cliente cliente : getClientes())
+		Cliente clienteAlterar = getClienteByLoginId(aCliente.getLoginId());
+		clienteAlterar.setNome(aCliente.getNome());
+		clienteAlterar.setDataDeNascimento(aCliente.getDataDeNascimento());
+		clienteAlterar.setEmail(aCliente.getEmail());
+		clienteRepo.save(clienteAlterar);
+		return true;
+	}
+	
+	/** Verifica se LoginId ja existe na base de dados **/
+ 	public boolean loginIdClienteExiste(String idCliente)
+	{
+ 		List<Cliente> clientes = getClientes();
+ 		
+ 		if(clientes.isEmpty())
+ 		{
+ 			return false; 			
+ 		}
+ 		
+		for(Cliente cliente : clientes)
 		{
 			if(cliente.getLoginId().equals(idCliente))
 			{
