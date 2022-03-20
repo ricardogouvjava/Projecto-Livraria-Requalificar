@@ -20,7 +20,7 @@ Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor cri
 
 # Sprint 2 - Modelacao e Planeamento
 
-[Documento - Sprint 2]()
+[Documento - Sprint 2](Sprints/Sprint_2.md)
 
 ## Implementacao de diversas funcionalidades:
 - ClassController
@@ -28,8 +28,7 @@ Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor cri
 - ClassRepo
 - SimpleResponseClass
 
-**Cliente **
-
-**Funcionario **
-
-**Livro **
+### nas classes
+- Cliente
+- Funcionario
+- Livro
