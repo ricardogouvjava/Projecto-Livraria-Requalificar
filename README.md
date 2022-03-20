@@ -17,3 +17,19 @@ Projecto - Livraria Requalificar - Curso Requalificar +Digital
 Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor criar um mockup nao final!!!
 
 [Documento - Sprint 1.5](Sprints/Sprint_1.5.md)
+
+# Sprint 2 - Modelacao e Planeamento
+
+[Documento - Sprint 2]()
+
+## Implementacao de diversas funcionalidades:
+- ClassController
+- ClassService
+- ClassRepo
+- SimpleResponseClass
+
+**Cliente **
+
+**Funcionario **
+
+**Livro **

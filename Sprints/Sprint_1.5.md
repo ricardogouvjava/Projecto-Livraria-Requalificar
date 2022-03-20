@@ -11,7 +11,7 @@ Elementos conceptuais para aplicação:
 Não sao demonstrados todos elementos necessários como:
 - estatísticas
 - cupões
--etc
+- etc.
 
 pois são semelhantes aos demonstrados.
 
