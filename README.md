@@ -18,7 +18,7 @@ Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor cri
 
 [Documento - Sprint 1.5](Sprints/Sprint_1.5.md)
 
-# Sprint 2 - Modelacao e Planeamento
+# Sprint 2 - BackEnd
 
 [Documento - Sprint 2](Sprints/Sprint_2.md)
 
