@@ -13,11 +13,12 @@
   - Cliente
     - nome, email, data de nascimento;
     - userLogin escolhido pelo cliente mas unico na base de dados 
-    - password encryptada escolhidos pelo cliente;
-    - userid unico gerado automaticamente;
+    - password encryptada escolhida pelo cliente;
+    - userid unico gerado automaticamente para controlo de base de dados;
   - Funcionario
     - nome, data de nascimento inserido pelo funcionario;
-    - id unico (nickname) auto gerado atraves do nome;
+    - password encryptada escolhida pelo funcionario;
+    - userid (nickname) auto gerado atraves do nome *ou escolhido pelo funcionario*;
 
 - Login dos utilizadores atraves de userid e password:
   - Cliente
@@ -29,47 +30,56 @@
 
 - Existir base de dados dos diversos elementos intrinsecos ao funcionamento da livraria e dos seus campos especificos:
   - Livros
-    - titulo, autores, ISBN, preco, quantidade em stock, editora, data de lancamento, numero de paginas, sinopse, edicao, imagem;
+    - id, titulo, autores, ISBN, genero, preco, quantidade em stock, editora, data de lancamento, numero de paginas, sinopse, edicao, imagem;
   - Autores
-    - nome, data de nascimento e email;
+    - id, nome, data de nascimento e email;
   - Editoras
     - nome e morada;
   - Clientes
     - nome, email, morada e data de nascimento; 
   - Funcionarios
-    - nome, data de nascimento e nickname
+    - id, usrid, nome, data de nascimento;
   - Compras Realizadas
+    - data, valor, cliente, livros
   - Historico de cupoes emitidos em compras de determinados valores
+    - compra, valorcupao
 
-- Permitir ao utilizador de tipo funcionario a manipulacao da base de dados de:
+- Permitir ao utilizador funcionario a manipulacao da base de dados de:
   - Livros, Autores, Editoras com opcao de insercao de novos elementos e alteracao dos presentes.
 
-- Permitir aos utilizadores cliente e funcionario pesquisa livros e visualizacao da lista de livros com campos minimos e com hipoteses de ordenacao:
-  - Titulo, autor, editora, preco, etc. Descendente e ascendente.
+- Permitir aos utilizadores cliente e funcionario pesquisa livros e visualizacao da lista de livros com campos minimos (Titulo, imagem, preco) e com hipoteses de ordenacao por:
+  - Titulo (alfabetica), autor(alfabetica) ou so desse autor, editora(alfabetica) ou so dessa editora, preco, etc.
+De forma descendente e ascendente.
    
-- Permitir visualizar individualmente apos selecao de um elemento livro todas a suas caracteristicas
+- Permitir visualizar individualmente apos selecao de um elemento livro todas a suas caracteristicas e existir a funcionalidade de no caso do utilizador:
+  - Cliente permitir adicionar ao carrinho;
+  - Funcionario permitir alterar os dados:;
 
-- Existir um carinho de compras de livros em que permite:
-  - Adiconar livros
-  - Remover livros
-  - Alterar o numero de livros
-  - Consultar o valor do carrinho
+- Existir um carinho de compras de livros em que permite ao utilizador cliente:
+  - Adiconar livros;
+  - Remover livros;
+  - Alterar o numero de livros presentes no carinho;
+  - Consultar o valor do carrinho;
+  - realizar checkout (Compra);
 
-- Permitir ao utilizador cliente utilizar/manipular o carrinho de compras e realizar a accao compra em que nesta e possivel:
-  - Associar cupoes de desconto antes finalizacao;
-  - Gerar cupoes de disconto apos a sua conclusao;
-  - Verificar o sucesso da operacao compra;
+- Permitir que quando o utilizador cliente realize uma compra:
+  - Possa associar cupoes de desconto que detenha antes finalizacao da compra;
+  - Seja gerardo cupoes de disconto apos a sua conclusao consoante o valor da compra;
+  - Verifique o sucesso da operacao compra;
 
 - Existir um campo "Perfil" no utilizador cliente, em que este podera:
-  - alterar os seus dados pessoais;
-  - aceder aos seu historico de compras;
-  - aceder ao seus cupoes (usados e por usar)
+  - Alterar os seus dados pessoais;
+  - Aceder aos seu historico de compras;
+  - Aceder ao seus cupoes (usados e por usar)
 
 - Fornecer um campo "Estatisticas" no utilizador funcionario, em que este podera:
-- visualizar estatisticas das vendas dos livros:
-  - gastos, mais vendidos, mais rentaveis
+  - visualizar estatisticas das vendas dos livros:
+    - gastos, mais vendidos, mais rentaveis
+  - visualizar estatisticas de clientes:
+    - intervalo de idade mais rentavel, genero mais rentavel, altura do ano que compram mais, etc
 
 **Requisitos Nao Funcionais**
+
 - Devera ser desenvolvdo em duas semanas;
 
 - Devera ser ulizada linguagem java com uso as bibliotecas/software de dominio/licensa de utilizacao publicas:
@@ -79,12 +89,12 @@
   - React
   - Postman
   - pgAdmin
+  - GitHub
 
-- Devera ser concebido em arquitectura de multicamada para uma mais facil estruturacao e manutencao
-  
-- Listagem de livros aquando da procura devera apenas usar os elementos minimos (imagem, titulo e preco) com hipotese de utilizacao de filtros de forma descendente ou ascendente (preco / editora / autor / data de lancamento)
+- Devera ser concebido em arquitectura de multicamada para uma mais facil estruturacao e manutencao.
 
--  
+- Devera ser elaborada documentacao do processo de desenvolvimento no Github estruturada em etapas(Springs) e objectivos(milestones).   
+
 
 ## Case Use
 
