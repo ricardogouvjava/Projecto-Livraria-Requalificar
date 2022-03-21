@@ -37,28 +37,30 @@ public class Livro
 	private int paginas;
 	private int edicao;
 	private String sinopse;
-	
 	@Column(columnDefinition="text")
 	private String imagem;
 	
 	
 	//Getters
-	public Long getId() {
+	public Long getId()
+	{
 		return id;
 	}
-	public String getIsbn() {
+	public String getIsbn() 
+	{
 		return isbn;
 	}
-	public String getTitulo() {
+	public String getTitulo()
+	{
 		return titulo;
 	}
-	public List<Autor> getAutores() {
+	public List<Autor> getAutores()
+	{
 		return autores;
 	}
 	public Editora getEditora() {
 		return editora;
 	}
-	
 	public double getPreco() {
 		return preco;
 	}
@@ -77,7 +79,7 @@ public class Livro
 	public String getImagem() throws IOException {
 		return ImageFileToString.decode(imagem);
 	}
-	public String getSinospe() {
+	public String getSinopse() {
 		return sinopse;
 	}
 
@@ -85,7 +87,6 @@ public class Livro
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
@@ -121,14 +122,8 @@ public class Livro
 		
 		this.imagem = ImageFileToString.encode(aPath);
 	}
-
 	public void setSinopse(String sinopse) {
 		this.sinopse = sinopse;
 	}
-
-	public String getSinopse() {
-		return sinopse;
-	}
-
 	
 }

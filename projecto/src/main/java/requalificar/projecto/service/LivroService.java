@@ -71,7 +71,7 @@ public class LivroService
 		//livroAlterar.setEditora(aLivro.getEditora());
 		livroAlterar.setEdicao(aLivro.getEdicao());
 		//livroAlterar.setImagem(aLivro.getImagem());
-		livroAlterar.setSinopse(aLivro.getSinospe());
+		livroAlterar.setSinopse(aLivro.getSinopse());
 		livroRepo.save(livroAlterar);
 		return true;
 	}
@@ -87,6 +87,16 @@ public class LivroService
 			}
 		}
 		return false;
+	}
+ 	
+	/** Verifica se id existe na base de dados **/
+ 	public boolean existeId(Long id)
+	{
+ 		if(!id.equals(null) && livroRepo.existsById(id))
+ 		{
+ 			return true;
+ 		}
+ 			return false;
 	}
 	
 

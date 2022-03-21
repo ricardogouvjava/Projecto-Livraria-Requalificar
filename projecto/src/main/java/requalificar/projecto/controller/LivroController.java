@@ -131,10 +131,22 @@ public class LivroController
 	{
 		SimpleResponseLivro srL = new SimpleResponseLivro();
 		
-		// Verifica se isbn ja existe
-		if(!livroService.existeIsbn(aLivro.getIsbn()))
+		if(aLivro.equals(null))
 		{
-			srL.setAsError("isbn nao existente");
+			srL.setAsError("Falha na introducao de dados");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);
+		}
+		
+		if(aLivro.getId().equals(null) || aLivro.getIsbn() == null)
+		{
+			srL.setAsError("Falha na introducao de id / isbn");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);
+		}
+		
+		// Verifica se livroexiste
+		if(!livroService.existeIsbn(aLivro.getIsbn()) || !livroService.existeId(aLivro.getId()))
+		{
+			srL.setAsError("Isbn / id nao existente na base de dados");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);
 		}
 		
@@ -234,9 +246,9 @@ public class LivroController
 			return srL;	
 		}
 		
-		if(aLivro.getSinospe() == null || aLivro.getSinospe().isEmpty())
+		if(aLivro.getSinopse() == null || aLivro.getSinopse().isEmpty())
 		{
-			srL.setAsError("Falha no parametro sinopse: " + aLivro.getSinospe());
+			srL.setAsError("Falha no parametro sinopse: " + aLivro.getSinopse());
 			return srL;	
 		}
 		
