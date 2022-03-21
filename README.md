@@ -13,7 +13,7 @@ Projecto - Livraria Requalificar - Curso Requalificar +Digital
 
 **Diagrama UML**
 
-### Sprint 1.5 - App Mockup
+## Sprint 1.5 - App Mockup
 Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor criar um mockup nao final!!!
 
 [Documento - Sprint 1.5](Sprints/Sprint_1.5.md)
@@ -22,13 +22,13 @@ Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor cri
 
 [Documento - Sprint 2](Sprints/Sprint_2.md)
 
-## Implementacao de diversas funcionalidades:
+**Implementacao de diversas funcionalidades**
 - ClassController
 - ClassService
 - ClassRepo
 - SimpleResponseClass
 
-### nas classes
+*nas classes*
 - Cliente
 - Funcionario
 - Livro
