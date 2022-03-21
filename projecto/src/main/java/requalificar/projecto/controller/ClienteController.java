@@ -33,10 +33,17 @@ public class ClienteController
 	{
 	SimpleResponseCliente srC = new SimpleResponseCliente();
 	
+	if(aLoginId == null || aLoginId.isBlank())
+	{
+		srC.setAsError("Falha no valor LoginId");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
+	}
+	
 	Cliente cliente = clienteService.getClienteByLoginId(aLoginId);
+	
 	if(cliente == null)
 	{
-		srC.setAsError("LoginId nao existente");
+		srC.setAsError("Cliente nao existente");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
 	}
 	srC.setAsSuccess("Cliente encontrado");

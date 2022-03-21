@@ -58,4 +58,5 @@
 @GetMapping("/getAutores")
 
 ## Editora
+@GetMapping("getEditora/{id}")
 

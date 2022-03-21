@@ -20,7 +20,17 @@ public class Editora
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "editora", targetEntity=Livro.class)
 	List<Livro> livros = new ArrayList<Livro>();
 
+	private String morada;
 	
+	
+	public String getMorada() {
+		return morada;
+	}
+
+	public void setMorada(String morada) {
+		this.morada = morada;
+	}
+
 	public Long getId() {
 		return id;
 	}

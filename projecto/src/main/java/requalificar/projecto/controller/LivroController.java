@@ -106,7 +106,7 @@ public class LivroController
 		srL = new SimpleResponseLivro();
 		
 		// Verifica se isbn nao existe
-		if(!livroService.existeIsbn(isbn))
+		if(isbn == null || isbn.isBlank() || !livroService.existeIsbn(isbn))
 		{
 			srL.setAsError("isbn nao existente");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);
