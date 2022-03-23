@@ -3,6 +3,7 @@ package requalificar.projecto.service;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,21 @@ public class ClienteService
 			}
 		}
 		return null;
+	}
+	
+	public Optional<Cliente> getClienteById(Long idToGet) 
+	{
+		return clienteRepo.findById(idToGet);
+	}
+	
+	
+	public boolean idExiste(Long idToCheck) 
+	{
+		if(clienteRepo.existsById(idToCheck))
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	/** Devolve todos os clientes na base de dados **/
@@ -87,6 +103,7 @@ public class ClienteService
 		}
 		return false;
 	}
+
 	
 
 }

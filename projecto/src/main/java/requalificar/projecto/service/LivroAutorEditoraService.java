@@ -3,6 +3,8 @@ package requalificar.projecto.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import requalificar.projecto.models.Autor;
+import requalificar.projecto.models.Livro;
 import requalificar.projecto.repository.AutorRepo;
 import requalificar.projecto.repository.EditoraRepo;
 import requalificar.projecto.repository.LivroRepo;
@@ -22,5 +24,23 @@ public class LivroAutorEditoraService
 		this.editoraRepo = editoraRepo;
 	}
 	
+	
+	public boolean addAutorToLivro(Autor autor, Livro livro)
+	{
+		try
+		{
+			livro.addAutor(autor);
+			livroRepo.save(livro);
+
+			autor.addLivro(livro);			
+			autorRepo.save(autor);
+			return true;		
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+		
+	}
 	
 }

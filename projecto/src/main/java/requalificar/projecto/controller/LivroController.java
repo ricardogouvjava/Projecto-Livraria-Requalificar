@@ -21,8 +21,6 @@ import requalificar.projecto.service.LivroService;
 public class LivroController
 {
 	private final LivroService livroService;
-	private SimpleResponseLivro srL;
-	private SimpleResponseLivros srLs;
 	
 	@Autowired
 	public LivroController(LivroService livroService)
@@ -34,7 +32,7 @@ public class LivroController
 	@GetMapping("/getLivroByIsbn/{isbn}")
 	public ResponseEntity<SimpleResponse> getLivroByIsbn(@PathVariable String isbn)
 	{
-	srL = new SimpleResponseLivro();
+		SimpleResponseLivro srL = new SimpleResponseLivro();
 	
 	Livro livro = livroService.getLivroByIsbn(isbn);
 	
@@ -53,7 +51,7 @@ public class LivroController
 	@GetMapping("/getLivros")
 	public ResponseEntity<SimpleResponse> getLivros()
 	{
-		srLs = new SimpleResponseLivros();
+		SimpleResponseLivros srLs = new SimpleResponseLivros();
 		
 		List<Livro> livros = livroService.getLivros();
 		
@@ -103,7 +101,7 @@ public class LivroController
 	@DeleteMapping("/removeLivroByIsbn/{isbn}")
 	public ResponseEntity<SimpleResponse> removeLivroByIsbn(@PathVariable String isbn)
 	{
-		srL = new SimpleResponseLivro();
+		SimpleResponseLivro srL = new SimpleResponseLivro();
 		
 		// Verifica se isbn nao existe
 		if(isbn == null || isbn.isBlank() || !livroService.existeIsbn(isbn))
@@ -175,7 +173,7 @@ public class LivroController
 	 * @throws IOException **/
 	public SimpleResponseLivro verificaDados(Livro aLivro) throws ParseException, IOException
 	{
-		srL = new SimpleResponseLivro();
+		SimpleResponseLivro srL = new SimpleResponseLivro();
 		
 		if(aLivro == null)
 		{

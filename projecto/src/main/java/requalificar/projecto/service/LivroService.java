@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,14 @@ public class LivroService
 	{
 		this.livroRepo = livroRepo;
 	}
+	
+	
+	/** Devolve livro usando id**/
+	public Optional<Livro> getLivroById(Long id)
+	{
+		return livroRepo.findById(id);
+	}
+	
 	
 	/** Devolve livro usando ISBN**/
 	public Livro getLivroByIsbn(String idIsbn)

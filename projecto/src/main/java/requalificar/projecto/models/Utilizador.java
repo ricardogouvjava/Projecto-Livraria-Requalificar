@@ -62,14 +62,16 @@ public class Utilizador
 	}
 
 	//Setters
-	public void setLoginId(String loginId)
-	{
-		this.loginId = loginId;
-	}	
+
+	
 	public void setNome(String nome) 
 	{
 		this.nome = nome;
 	}
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+
 	public void setPassword(String password)
 	{
 		this.password = encriptaPassword(password);
@@ -79,6 +81,5 @@ public class Utilizador
 		String pattern = "dd-MM-yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		this.dataDeNascimento = simpleDateFormat.parse(dataDeNascimento);
-	}
-	
+	}	
 }

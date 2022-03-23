@@ -7,8 +7,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name="Autor")
-@Table(name="autor")
+@Entity
+@Table(name="Autor")
 public class Autor 
 {
 	@Id
@@ -21,14 +21,21 @@ public class Autor
 	private Editora editora;
 
 	
-	
+	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "autor_livro", 
+	@JoinTable(name = "Autor_Livro", 
 				joinColumns = @JoinColumn(name = "autor_id"),
 				inverseJoinColumns = @JoinColumn(name = "livro_id"))
-	
-	@JoinColumn(name = "autor_id", referencedColumnName = "id") //, nullable=false
 	private List<Livro> livros = new ArrayList<Livro>();
+	
+	
+	//Metodos
+	public void addLivro(Livro livro)
+	{
+		this.livros.add(livro);
+	}
+	
+	
 	
 	// Getters & Setters
 	private String nome;

@@ -4,11 +4,18 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import requalificar.projecto.dto.SimpleResponse;
 import requalificar.projecto.dto.SimpleResponseCliente;
@@ -52,6 +59,40 @@ public class ClienteController
 	
 	}
 	
+	/** Devolve cliente usando id**/
+	@GetMapping("/getClienteById/{id}")
+	public ResponseEntity<SimpleResponse> getClienteById(@PathVariable String id)
+	{
+	SimpleResponseCliente srC = new SimpleResponseCliente();
+	
+	if(id == null || id.isBlank())
+	{
+		srC.setAsError("Falha no valor id");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
+	}
+	
+	Long idToGet = Long.parseLong(id);
+	
+	if(idToGet == null || idToGet <= 0)
+	{
+		srC.setAsError("Falha no valor id");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
+	}
+	
+	Optional<Cliente> optionalCliente = clienteService.getClienteById(idToGet);
+	
+	if(optionalCliente == null)
+	{
+		srC.setAsError("Cliente nao existente");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
+	}
+	srC.setAsSuccess("Cliente encontrado");
+	srC.setCliente(optionalCliente.get());
+	return ResponseEntity.status(HttpStatus.OK).body(srC);
+	
+	}
+	
+	
 	/** Devolve todos os clientes na base de dados **/
 	@GetMapping("/getClientes")
 	public ResponseEntity<SimpleResponse> getClientes()
@@ -72,9 +113,11 @@ public class ClienteController
 	
 	/** Adiciona cliente a base de dados **/
 	@PostMapping("/addCliente")
-	public ResponseEntity<SimpleResponse> addCliente(@RequestBody Cliente aCliente) throws ParseException
+    public ResponseEntity<SimpleResponse> addCliente(@RequestBody Cliente aCliente) throws ParseException
 	{
 		SimpleResponseCliente srC = new SimpleResponseCliente();
+		
+		System.out.print(aCliente);
 		
 		// Verifica se loginId ja existe
 		if(clienteService.loginIdClienteExiste(aCliente.getLoginId()))

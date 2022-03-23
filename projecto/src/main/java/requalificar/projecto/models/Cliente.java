@@ -1,20 +1,39 @@
 package requalificar.projecto.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
-@Entity(name="Cliente")
-@Table(name="cliente")
+@Entity
+@Table(name="Cliente")
 public class Cliente extends Utilizador
 {
 	@Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id; 
+	
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "cliente", targetEntity=Venda.class)
+	List<Venda> compras = new ArrayList<Venda>();
 
 	private String email;
+	
+	
+	public void addVenda(Venda venda)
+	{
+		compras.add(venda);
+	}
+	
+	
+	public List<Venda> getCompras() {
+		return compras;
+	}
 
-	
-	
+	public void setCompras(List<Venda> compras) {
+		this.compras = compras;
+	}
+
 	public String getEmail()
 	{
 		return email;
@@ -28,5 +47,7 @@ public class Cliente extends Utilizador
 	public Long getId() {
 		return id;
 	}
+
+	
 	
 }

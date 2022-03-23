@@ -52,10 +52,6 @@ public class AutorService
 	/** Verifica se existe autor com id **/
 	public boolean existeAutorById(Long id)
 	{
-		if(id.equals(null))
-		{
-			return false;
-		}
 		return autorRepo.existsById(id);
 	}
 	

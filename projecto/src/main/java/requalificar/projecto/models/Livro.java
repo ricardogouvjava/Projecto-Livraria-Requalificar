@@ -3,6 +3,7 @@ package requalificar.projecto.models;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,17 +13,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import requalificar.projecto.utils.ImageFileToString;
 
-@Entity(name="Livro")
-@Table(name="livro")
+@Entity
+@Table(name="Livro")
 public class Livro 
 {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonIgnore
+	
 	@ManyToMany(mappedBy = "livros")
-	private List<Autor> autores;
+	private List<Autor> autores = new ArrayList<Autor>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livro_id", referencedColumnName = "id") //, nullable=false
@@ -30,6 +31,7 @@ public class Livro
 	private Editora editora;
 
 	private String titulo;
+	@Column(unique = true)
 	private String isbn;
 	private double preco;
 	private int stock;
@@ -37,8 +39,15 @@ public class Livro
 	private int paginas;
 	private int edicao;
 	private String sinopse;
+	
 	@Column(columnDefinition="text")
 	private String imagem;
+	
+	
+	//Methods
+	public void addAutor(Autor autor){
+		this.autores.add(autor);
+	}
 	
 	
 	//Getters
