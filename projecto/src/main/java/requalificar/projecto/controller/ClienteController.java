@@ -120,7 +120,6 @@ public class ClienteController
 	{
 		SimpleResponseCliente srC = new SimpleResponseCliente();
 		
-		System.out.print("OOOOOOOOOOOOOOOOOOOOOOO");
 		
 		// Verifica se loginId ja existe
 		if(clienteService.loginIdClienteExiste(aCliente.getLoginId()))

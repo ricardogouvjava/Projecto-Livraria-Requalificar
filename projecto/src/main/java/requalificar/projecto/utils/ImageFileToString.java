@@ -25,8 +25,8 @@ public class ImageFileToString
 	    public static String decode(String encodedString) throws IOException
 	    {
 	    	// Define onde guardar
-	    	//Path path = Paths.get(System.getProperty("user.home")+"\\Documents\\GitHub\\Projecto---Livraria-Requalificar\\projecto\\src\\main\\resources\\imagens\\teste.jpg");
-	    	Path path = Paths.get("C:\\Users\\ricar\\Documents\\GitHub\\Projecto---Livraria-Requalificar\\projecto\\src\\main\\resources\\imagens\\teste.jpg");
+	    	Path path = Paths.get(System.getProperty("user.home")+"\\Documents\\GitHub\\Projecto---Livraria-Requalificar\\projecto\\src\\main\\resources\\imagens\\teste.jpg");
+	    	//Path path = Paths.get("C:\\Users\\ricar\\Documents\\GitHub\\Projecto---Livraria-Requalificar\\projecto\\src\\main\\resources\\imagens\\teste.jpg");
 	    	
 	    	// descodifica
 	        byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
