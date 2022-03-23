@@ -27,7 +27,7 @@ public class ClienteService
 	{
 		for(Cliente cliente : getClientes())
 		{
-			if(cliente.getLoginId().equals(clienteLoginId))
+			if(cliente.getLogin().equals(clienteLoginId))
 			{
 				return cliente;
 			}
@@ -76,7 +76,7 @@ public class ClienteService
 	 * @throws ParseException **/
 	public boolean updateCliente(Cliente aCliente) throws ParseException
 	{
-		Cliente clienteAlterar = getClienteByLoginId(aCliente.getLoginId());
+		Cliente clienteAlterar = getClienteByLoginId(aCliente.getLogin());
 		clienteAlterar.setNome(aCliente.getNome());
 		clienteAlterar.setDataDeNascimento(aCliente.getDataDeNascimento());
 		clienteAlterar.setEmail(aCliente.getEmail());
@@ -85,7 +85,7 @@ public class ClienteService
 	}
 	
 	/** Verifica se LoginId ja existe na base de dados **/
- 	public boolean loginIdClienteExiste(String idCliente)
+ 	public boolean loginClienteExiste(String idCliente)
 	{
  		List<Cliente> clientes = getClientes();
  		
@@ -96,7 +96,7 @@ public class ClienteService
  		
 		for(Cliente cliente : clientes)
 		{
-			if(cliente.getLoginId().equals(idCliente))
+			if(cliente.getLogin().equals(idCliente))
 			{
 				return true;
 			}

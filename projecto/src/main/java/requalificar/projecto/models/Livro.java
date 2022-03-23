@@ -44,6 +44,10 @@ public class Livro
 	private String imagem;
 	
 	
+	@ManyToMany(mappedBy = "livros")
+	private List<Venda> venda = new ArrayList<Venda>();
+	
+	
 	//Methods
 	public void addAutor(Autor autor){
 		this.autores.add(autor);

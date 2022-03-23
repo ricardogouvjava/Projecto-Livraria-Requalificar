@@ -13,27 +13,23 @@ public class Cliente extends Utilizador
     @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id; 
 	
+	@Column(name="email")
+	private String email;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "cliente", targetEntity=Venda.class)
 	List<Venda> compras = new ArrayList<Venda>();
 
-	@Column(name="email")
-	private String email;
-	
-	
-	public void addVenda(Venda venda)
-	{
-		compras.add(venda);
-	}
-	
-	
-	public List<Venda> getCompras() {
-		return compras;
-	}
 
-	public void setCompras(List<Venda> compras) {
-		this.compras = compras;
-	}
+	
+	
+	
+	  public void addVenda(Venda venda) { compras.add(venda); }
+	  
+	  
+	  public List<Venda> getCompras() { return compras; }
+	  
+	  public void setCompras(List<Venda> compras) { this.compras = compras; }
+	 
 
 	public String getEmail()
 	{

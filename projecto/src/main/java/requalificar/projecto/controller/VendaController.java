@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import requalificar.projecto.dto.SimpleResponse;
 import requalificar.projecto.dto.SimpleResponseVenda;
+import requalificar.projecto.dto.SimpleResponseVendas;
 import requalificar.projecto.models.Venda;
 import requalificar.projecto.service.ClienteService;
 import requalificar.projecto.service.VendaService;
@@ -38,11 +39,11 @@ public class VendaController
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srV);
 		}
 		
-		if(venda.getCliente() == null || clienteService.idExiste(venda.getCliente().getId()))
-		{
-			srV.setAsError("Falha na entrada de Cliente");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srV);
-		}
+		//if(venda.getCliente() == null || clienteService.idExiste(venda.getCliente().getId()))
+		//{
+		//	srV.setAsError("Falha na entrada de Cliente");
+		//	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srV);
+		//}
 						
 		if(venda.getValor() <0)
 		{
@@ -68,5 +69,14 @@ public class VendaController
 		
 	}
 	
-	
+	@GetMapping("/getVendas")
+	public ResponseEntity<SimpleResponse> getVendas()
+	{
+		SimpleResponseVendas srVs = new SimpleResponseVendas();
+		
+		srVs.setAsSuccess("OG");
+		srVs.setVendas(vendaService.getVendas());
+		return ResponseEntity.status(HttpStatus.OK).body(srVs);
+	}
+		
 }

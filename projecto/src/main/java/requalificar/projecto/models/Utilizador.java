@@ -15,10 +15,13 @@ abstract class Utilizador
 {
 	@Column(name="login")
 	private String login;
+	
 	@Column(name="nome")
 	private String nome; 				// nome do utilizador
+	
 	@Column(name="password")
 	private String password;			// password de utilizador encryptada
+	
 	@Column(name="data_de_Nascimento")
 	private Date dataDeNascimento;
 	public void setDataDeNascimento(Date dataDeNascimento) {
@@ -53,14 +56,19 @@ abstract class Utilizador
 	}
 
 	//Getters
-	public String getLoginId() 
-	{
-		return login;
-	}
+	
 	public String getNome()
 	{
 		return nome;
 	}
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public String getDataDeNascimento() throws ParseException 
 	{
 		String pattern = "dd-MM-yyyy";
@@ -75,10 +83,7 @@ abstract class Utilizador
 	{
 		this.nome = nome;
 	}
-	public void setLoginId(String login) {
-		this.login = login;
-	}
-
+	
 	public void setPassword(String password)
 	{
 		this.password = encriptaPassword(password);

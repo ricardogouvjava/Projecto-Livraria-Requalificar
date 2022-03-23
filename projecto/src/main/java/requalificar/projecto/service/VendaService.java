@@ -1,10 +1,13 @@
 package requalificar.projecto.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import requalificar.projecto.models.Autor;
 import requalificar.projecto.models.Livro;
 import requalificar.projecto.models.Venda;
 import requalificar.projecto.repository.ClienteRepo;
@@ -31,10 +34,10 @@ public class VendaService
 	{
 		
 		try {
-			for(Map.Entry<Livro, Integer> entry : venda.getLivros().entrySet())
+			
+			for(Livro livro : venda.getLivros())
 			{
-				entry.getKey().setStock(entry.getKey().getStock() - entry.getValue());
-				livroRepo.save(entry.getKey());
+			 	livro.setStock(livro.getStock() - venda.getQuantLivros().get(venda.getLivros().indexOf(livro)));
 			}
 			
 			vendaRepo.save(venda);
@@ -47,6 +50,15 @@ public class VendaService
 			return false;
 	
 		}
+	}
+
+	
+
+	public List<Venda> getVendas() {
+		List<Venda> vendas = new ArrayList<Venda>();
+		vendaRepo.findAll().forEach(vendas::add);
+		return vendas;
+		
 	}
 	
 	

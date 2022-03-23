@@ -120,9 +120,9 @@ public class ClienteController
 	{
 		SimpleResponseCliente srC = new SimpleResponseCliente();
 		
-		
+
 		// Verifica se loginId ja existe
-		if(clienteService.loginIdClienteExiste(aCliente.getLoginId()))
+		if(clienteService.loginClienteExiste(aCliente.getLogin()))
 		{
 			srC.setAsError("LoginId ja existente");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
@@ -135,7 +135,7 @@ public class ClienteController
 			if(clienteService.addCliente(aCliente))
 			{
 				srC.setAsSuccess("Sucesso ao introduzir Cliente");
-				srC.setCliente(clienteService.getClienteByLoginId(aCliente.getLoginId()));
+				srC.setCliente(clienteService.getClienteByLoginId(aCliente.getLogin()));
 				return ResponseEntity.status(HttpStatus.OK).body(srC);
 			}
 			
@@ -153,7 +153,7 @@ public class ClienteController
 		SimpleResponseCliente srC = new SimpleResponseCliente();
 		
 		// Verifica se loginid nao existe
-		if(!clienteService.loginIdClienteExiste(loginId))
+		if(!clienteService.loginClienteExiste(loginId))
 		{
 			srC.setAsError("LoginId nao existente");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
@@ -178,7 +178,7 @@ public class ClienteController
 		SimpleResponseCliente srC = new SimpleResponseCliente();
 		
 		// Verifica se loginId ja existe
-		if(!clienteService.loginIdClienteExiste(aCliente.getLoginId()))
+		if(!clienteService.loginClienteExiste(aCliente.getLogin()))
 		{
 			srC.setAsError("LoginId nao existente");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
@@ -191,7 +191,7 @@ public class ClienteController
 			if(clienteService.updateCliente(aCliente))
 			{
 				srC.setAsSuccess("Sucesso em actualizar utilizador");
-				srC.setCliente(clienteService.getClienteByLoginId(aCliente.getLoginId()));
+				srC.setCliente(clienteService.getClienteByLoginId(aCliente.getLogin()));
 				return ResponseEntity.status(HttpStatus.OK).body(srC);
 			}
 			srC.setAsError("Falha no update do cliente");
@@ -206,9 +206,9 @@ public class ClienteController
 	{
 		SimpleResponseCliente srC = new SimpleResponseCliente();
 		
-		if(aCliente.getLoginId() == null || aCliente.getLoginId().isEmpty())
+		if(aCliente.getLogin() == null || aCliente.getLogin().isEmpty())
 		{
-			srC.setAsError("Falha no parametro Login Id:" + aCliente.getLoginId());
+			srC.setAsError("Falha no parametro Login Id:" + aCliente.getLogin());
 			return srC;	
 		}
 		
