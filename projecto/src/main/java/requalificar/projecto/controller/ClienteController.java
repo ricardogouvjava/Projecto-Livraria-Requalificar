@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -112,12 +113,14 @@ public class ClienteController
 	}
 	
 	/** Adiciona cliente a base de dados **/
-	@PostMapping("/addCliente")
-    public ResponseEntity<SimpleResponse> addCliente(@RequestBody Cliente aCliente) throws ParseException
+	@PostMapping(path = "/addCliente", 
+	        consumes = MediaType.APPLICATION_JSON_VALUE, 
+	        produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SimpleResponse> addsCliente(@RequestBody Cliente aCliente) throws ParseException
 	{
 		SimpleResponseCliente srC = new SimpleResponseCliente();
 		
-		System.out.print(aCliente);
+		System.out.print("OOOOOOOOOOOOOOOOOOOOOOO");
 		
 		// Verifica se loginId ja existe
 		if(clienteService.loginIdClienteExiste(aCliente.getLoginId()))

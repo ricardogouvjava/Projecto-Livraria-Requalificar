@@ -4,19 +4,26 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.jasypt.util.password.PasswordEncryptor;
 
-
 @MappedSuperclass 
-public class Utilizador
+abstract class Utilizador
 {
-	private String loginId;
+	@Column(name="login")
+	private String login;
+	@Column(name="nome")
 	private String nome; 				// nome do utilizador
+	@Column(name="password")
 	private String password;			// password de utilizador encryptada
+	@Column(name="data_de_Nascimento")
 	private Date dataDeNascimento;
+	public void setDataDeNascimento(Date dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
+	}
 	private static PasswordEncryptor encriptador = new BasicPasswordEncryptor();
 	
 	/* Metodos
@@ -48,7 +55,7 @@ public class Utilizador
 	//Getters
 	public String getLoginId() 
 	{
-		return loginId;
+		return login;
 	}
 	public String getNome()
 	{
@@ -68,8 +75,8 @@ public class Utilizador
 	{
 		this.nome = nome;
 	}
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
+	public void setLoginId(String login) {
+		this.login = login;
 	}
 
 	public void setPassword(String password)

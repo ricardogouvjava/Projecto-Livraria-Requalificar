@@ -17,6 +17,7 @@ public class Cliente extends Utilizador
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "cliente", targetEntity=Venda.class)
 	List<Venda> compras = new ArrayList<Venda>();
 
+	@Column(name="email")
 	private String email;
 	
 	
