@@ -95,7 +95,7 @@ public class EditoraController
 
 		Long idToGet = Long.parseLong(id);
 		
-		if(!editoraService.existeEditoraById(idToGet))
+		if(!editoraService.existeId(idToGet))
 		{
 			srE.setAsError("Editora inexistente com este id");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);

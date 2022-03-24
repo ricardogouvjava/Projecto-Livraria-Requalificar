@@ -40,13 +40,16 @@ public class Venda
 	  	
     
     //Metodos
-    public void addLivro(Livro livro) {
+    public void addLivro(Livro livro)
+    {
+    	valor += livro.getPreco();
 		livros.add(livro);
 		
 	}
     
     public void removeLivro(Livro livro) {
-		livros.add(livro);
+    	valor -= livro.getPreco();
+		livros.remove(livro);
 		
 	} 
     

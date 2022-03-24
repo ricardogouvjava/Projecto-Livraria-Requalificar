@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import requalificar.projecto.models.Autor;
+import requalificar.projecto.models.Editora;
 import requalificar.projecto.models.Livro;
 import requalificar.projecto.repository.AutorRepo;
 import requalificar.projecto.repository.EditoraRepo;
@@ -29,10 +30,47 @@ public class LivroAutorEditoraService
 	{
 		try
 		{
+			
+			
 			livro.addAutor(autor);
 			livroRepo.save(livro);
 
 			autor.addLivro(livro);			
+			autorRepo.save(autor);
+			
+			if(!autor.getEditora().equals(null) && livro.getEditora().equals(null))
+			{
+				livro.setEditora(autor.getEditora());
+				livroRepo.save(livro);
+			}
+				
+				
+			return true;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+		
+	}
+
+
+	public boolean addAutorToEditora(Autor autor, Editora editora) {
+		try
+		{
+			if(autor.getLivros().size() > 0) {
+				for(Livro livro : autor.getLivros())
+				{
+					editora.addLivro(livro);
+					livro.setEditora(editora);
+					livroRepo.save(livro);
+				}				
+			}
+			
+			editora.addAutor(autor);
+			editoraRepo.save(editora);
+
+			autor.setEditora(editora);			
 			autorRepo.save(autor);
 			return true;		
 		}

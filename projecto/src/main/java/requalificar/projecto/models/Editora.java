@@ -23,6 +23,25 @@ public class Editora
 	private String morada;
 	
 	
+	
+	public void addAutor(Autor autor) {
+		autores.add(autor);
+		
+	}
+	
+	public void removeAutor(Autor autor) {
+		autores.remove(autor);
+		
+	}
+	
+	public void addLivro(Livro livro) {
+		livros.add(livro);
+	}
+	public void removeLivro(Livro livro) {
+		livros.remove(livro);
+	}
+	
+	
 	public String getMorada() {
 		return morada;
 	}
@@ -64,6 +83,7 @@ public class Editora
 	public void setLivros(List<Livro> livros) {
 		this.livros = livros;
 	}
-	
+
+
 	
 }

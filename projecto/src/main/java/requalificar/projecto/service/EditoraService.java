@@ -52,7 +52,7 @@ public class EditoraService
 	}
 	
 	/** Verifica se existe editora com id **/
-	public boolean existeEditoraById(Long id)
+	public boolean existeId(Long id)
 	{
 		if(id.equals(null))
 		{
@@ -68,4 +68,5 @@ public class EditoraService
 	{
 		return editoraRepo.findById(id);
 	}
+
 }

@@ -31,9 +31,8 @@ public class VendaController {
 		this.livroService = livroService;
 	}
 
-	/** Devolve cliente usando LoginId **/
 	@PostMapping("/criaVenda")
-	public ResponseEntity<SimpleResponse> criaVenda(Venda venda) {
+	public ResponseEntity<SimpleResponse> criaVenda(@RequestBody Venda venda) {
 		SimpleResponseVenda srV = new SimpleResponseVenda();
 
 		if (venda.equals(null) || venda.getId() != null) {
