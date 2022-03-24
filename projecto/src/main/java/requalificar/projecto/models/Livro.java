@@ -47,6 +47,8 @@ public class Livro
 	@Column(columnDefinition="text")
 	private String imagem;
 	
+	private int vendidos;
+	
 	//Methods
 	public void addAutor(Autor autor){
 		this.autores.add(autor);
@@ -55,6 +57,7 @@ public class Livro
 	{
 		vendas.add(venda);
 		this.stock -= quantidade;
+		this.vendidos +=1;
 		
 	}
 	
@@ -103,7 +106,9 @@ public class Livro
 	public String getSinopse() {
 		return sinopse;
 	}
-
+	public int getVendidos() {
+		return vendidos;
+	}
 	// Setters	
 	public void setId(Long id) 
 	{
@@ -159,7 +164,10 @@ public class Livro
 	{
 		this.vendas = vendas;
 	}
-
+	public void setVendidos(int vendidos) {
+		this.vendidos = vendidos;
+	}
+	
 
 	
 }

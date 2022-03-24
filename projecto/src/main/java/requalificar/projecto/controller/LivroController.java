@@ -47,6 +47,26 @@ public class LivroController
 	
 	}
 	
+	/** Devolve livro que mais copias vendeu**/
+	@GetMapping("/getLivroMaisVendeu")
+	public ResponseEntity<SimpleResponse> getLivroMaisVendeu()
+	{
+		SimpleResponseLivro srL = new SimpleResponseLivro();
+	
+		Livro livro = livroService.getLivroMaisVendeu();
+	
+		if(livro == null)
+		{
+			srL.setAsError("nao existente");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);
+		}
+		srL.setAsSuccess("Livro encontrado");
+		srL.setLivro(livro);
+		return ResponseEntity.status(HttpStatus.OK).body(srL);
+	
+	}
+	
+	
 	/** Devolve todos os livros na base de dados **/
 	@GetMapping("/getLivros")
 	public ResponseEntity<SimpleResponse> getLivros()

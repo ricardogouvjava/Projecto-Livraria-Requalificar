@@ -3,12 +3,13 @@ package requalificar.projecto.service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import requalificar.projecto.models.Livro;
 import requalificar.projecto.repository.LivroRepo;
 
@@ -106,6 +107,16 @@ public class LivroService
  			return true;
  		}
  			return false;
+	}
+
+
+	public Livro getLivroMaisVendeu() {
+		Comparator<Livro> compararVendido = Comparator
+				.comparing(Livro::getVendidos)
+				.reversed();
+
+		return getLivros().stream().collect(Collectors.maxBy(compararVendido)).get();
+
 	}
 	
 
