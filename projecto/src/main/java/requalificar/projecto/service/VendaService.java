@@ -67,12 +67,12 @@ public class VendaService {
 		}
 	}
 
-	public boolean addLivroToVenda(Livro livro, Venda venda) {
+	public boolean addLivroToVenda(Livro livro, Venda venda, int quantidade) {
 		try {
-			venda.addLivro(livro);
+			venda.addLivro(livro, quantidade);
 			vendaRepo.save(venda);
 
-			livro.addVenda(venda);
+			livro.addVenda(venda, quantidade);
 			livroRepo.save(livro);
 			
 			return true;

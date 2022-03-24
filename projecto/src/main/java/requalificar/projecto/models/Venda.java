@@ -34,22 +34,24 @@ public class Venda
     
     private Date dataVenda;
 
-//  @Column
-//  @ElementCollection(targetClass=Integer.class)
-//  private List<Integer> quantLivros;
+    @Column
+  	@ElementCollection(targetClass=Integer.class)
+  	private List<Integer> quantLivros;
 	  	
     
     //Metodos
-    public void addLivro(Livro livro)
+    public void addLivro(Livro livro, Integer quantidade)
     {
-    	valor += livro.getPreco();
+    	valor += livro.getPreco() * quantidade;
 		livros.add(livro);
+		quantLivros.add(quantidade);
 		
 	}
     
     public void removeLivro(Livro livro) {
     	valor -= livro.getPreco();
 		livros.remove(livro);
+		quantLivros.remove(livros.indexOf(livro));
 		
 	} 
     
@@ -57,8 +59,18 @@ public class Venda
     
     //Getters & Setters
     
+    
+    
     public Cliente getCliente() {
 		return cliente;
+	}
+
+	public List<Integer> getQuantLivros() {
+		return quantLivros;
+	}
+
+	public void setQuantLivros(List<Integer> quantLivros) {
+		this.quantLivros = quantLivros;
 	}
 
 	public void setCliente(Cliente cliente) {

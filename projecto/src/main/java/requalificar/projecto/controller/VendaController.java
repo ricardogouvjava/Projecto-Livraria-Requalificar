@@ -48,7 +48,7 @@ public class VendaController {
 
 		if (vendaService.addVenda(venda)) 
 		{
-			srV.setAsSuccess("Venda realizada com sucesso");
+			srV.setAsSuccess("Sucesso em criar venda");
 			srV.setVenda(venda);
 			return ResponseEntity.status(HttpStatus.OK).body(srV);
 		}
@@ -134,20 +134,22 @@ public class VendaController {
 
 	}
 
-	@PostMapping("/addLivro/{idLivro}/ToVenda/{idVenda}")
-	public ResponseEntity<SimpleResponse> addLivroToVenda(@PathVariable String idLivro, @PathVariable String idVenda) {
+	@PostMapping("/addLivro/{idLivro}/quantidade/{quantidade}/ToVenda/{idVenda}")
+	public ResponseEntity<SimpleResponse> addLivroToVenda(@PathVariable String idLivro, @PathVariable String quantidade ,@PathVariable String idVenda) {
 
 		SimpleResponseVenda srV = new SimpleResponseVenda();
 
-		if (idLivro == null || idLivro.isBlank() || idVenda == null || idVenda.isBlank()) {
+		if (idLivro == null || idLivro.isBlank() || idVenda == null || idVenda.isBlank() || quantidade == null || quantidade.isBlank()){
 			srV.setAsError("Falha na entrada de dados");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srV);
 		}
 
 		Long idLivroToAdd = Long.parseLong(idLivro);
 		Long idVendaToAdd = Long.parseLong(idVenda);
+		Integer quantidadeToAdd = Integer.parseInt(quantidade);
+		
 
-		if (idLivroToAdd.equals(null) || idLivroToAdd <= 0 || idVendaToAdd.equals(null) || idVendaToAdd <= 0) {
+		if (idLivroToAdd.equals(null) || idLivroToAdd <= 0 || idVendaToAdd.equals(null) || idVendaToAdd <= 0 || quantidadeToAdd.equals(null) || quantidadeToAdd <= 0) {
 			srV.setAsError("Falha no parse");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srV);
 		}
@@ -162,7 +164,7 @@ public class VendaController {
 
 		}
 
-		if (vendaService.addLivroToVenda(optionalLivro.get(), optionalVenda.get())) {
+		if (vendaService.addLivroToVenda(optionalLivro.get(), optionalVenda.get(), quantidadeToAdd)) {
 			srV.setAsSuccess("Sucesso ao adicionar livro a venda");
 			srV.setVenda(optionalVenda.get());
 			return ResponseEntity.status(HttpStatus.OK).body(srV);

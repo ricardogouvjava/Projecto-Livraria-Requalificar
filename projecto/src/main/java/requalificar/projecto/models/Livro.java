@@ -51,10 +51,10 @@ public class Livro
 	public void addAutor(Autor autor){
 		this.autores.add(autor);
 	}
-	public void addVenda(Venda venda)
+	public void addVenda(Venda venda, Integer quantidade)
 	{
 		vendas.add(venda);
-		this.stock -= 1;
+		this.stock -= quantidade;
 		
 	}
 	
