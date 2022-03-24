@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./SelecaoAutor.css";
 
-const API_URL = "https://livrariarequalificar.herokuapp.com";
+const API_URL = "http://localhost:8080";
 //const API_URL = "https://pessoa-backend.herokuapp.com";
 
 export function SelecaoAutor() {
@@ -24,7 +24,7 @@ export function SelecaoAutor() {
         if (response.status !== 200) {
           throw new Error("Falha encontar Autores");
         }
-
+        console.log(response);
         return response.json();
       })
       .then((parsedResponse) => {

@@ -30,13 +30,12 @@ public class LivroAutorEditoraService
 	{
 		try
 		{
-			
+			autor.addLivro(livro);			
+			autorRepo.save(autor);
 			
 			livro.addAutor(autor);
 			livroRepo.save(livro);
 
-			autor.addLivro(livro);			
-			autorRepo.save(autor);
 			
 			if(!autor.getEditora().equals(null) && livro.getEditora().equals(null))
 			{
@@ -88,13 +87,17 @@ public class LivroAutorEditoraService
 		try {
 			for(Autor autor: editora.getAutores())
 			{
-				livroRepo.deleteAll(autor.getLivros());		
+				for(Livro livro : autor.getLivros())
+				{
+					livroRepo.delete(livro);
+				}
+				autorRepo.delete(autor);				
 			}
-			
-			autorRepo.deleteAll(editora.getAutores());
-			
+				
 			editoraRepo.delete(editora);
-		} catch (Exception e) {
+		}
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 		

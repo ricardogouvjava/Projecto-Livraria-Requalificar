@@ -78,15 +78,17 @@ public class LivroAutorEditoraController
 		
 		
 		
-		if(livroAutorEditoraService.addAutorToLivro(autor, livro)) 
+		if(!livroAutorEditoraService.addAutorToLivro(autor, livro)) 
 		{
-			srLAE.setAsSuccess("Sucesso em associar Livro a autor");
-			srLAE.setAutor(autor);
-			srLAE.setLivro(livro);
+			srLAE.setAsError("Falha ao associar");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srLAE);	
 		}
-		srLAE.setAsError("Falha ao associar");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srLAE);
+
+		srLAE.setAsSuccess("Sucesso em associar Livro a autor");
+		srLAE.setAutor(autor);
+		srLAE.setLivro(livro);
+		return ResponseEntity.status(HttpStatus.OK).body(srLAE);
+
 		
 	}
 	
