@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./SelecaoAutor.css";
 
-//const API_URL = "https:livrariarequalificar.herokuapp.com";
-const API_URL = "https://pessoa-backend.herokuapp.com";
+const API_URL = "https://livrariarequalificar.herokuapp.com";
+//const API_URL = "https://pessoa-backend.herokuapp.com";
 
 export function SelecaoAutor() {
   const [autorLista, setAutoresLista] = useState([]);

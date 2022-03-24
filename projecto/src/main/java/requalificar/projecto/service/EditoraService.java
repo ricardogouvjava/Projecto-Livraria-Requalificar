@@ -28,7 +28,6 @@ public class EditoraService
 		return true;
 	}
 	
-	
 	/** Devolve todos os editoras na base de dados **/
 	public List<Editora> getEditoras()
 	{
@@ -36,7 +35,6 @@ public class EditoraService
 		editoraRepo.findAll().forEach(editoras::add);
 		return editoras;
 	}
-	
 	
 	/** Verifica se existe autor com mesmo nome e morada na base de dados **/
 	public boolean existeEditora(Editora aEditora)
@@ -60,13 +58,12 @@ public class EditoraService
 		}
 		return editoraRepo.existsById(id);
 	}
-	
-	
-	
+		
 	/** Devolve editora atraves de id **/
 	public Optional<Editora> getEditoraById(long id)
 	{
 		return editoraRepo.findById(id);
 	}
+
 
 }

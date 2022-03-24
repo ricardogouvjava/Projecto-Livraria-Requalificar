@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,7 +81,7 @@ public class EditoraController
 		srEs.setAsError("Nehum cliente na base de dados");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srEs);	
 	}
-	
+		
 	/** Devolve Editora atravez de id **/
 	@GetMapping("getEditora/{id}")
 	public ResponseEntity<SimpleResponse> getEditora(@PathVariable String id)
@@ -134,5 +135,9 @@ public class EditoraController
 		srE.setAsSuccess("Correcto");
 		return srE;
 	}
+	
+	
+	
+	
 	
 }

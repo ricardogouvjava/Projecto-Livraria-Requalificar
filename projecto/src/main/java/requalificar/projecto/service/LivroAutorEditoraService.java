@@ -81,4 +81,23 @@ public class LivroAutorEditoraService
 		
 	}
 	
+	
+	
+	public boolean removeEditora(Editora editora)
+	{
+		try {
+			for(Autor autor: editora.getAutores())
+			{
+				livroRepo.deleteAll(autor.getLivros());		
+			}
+			
+			autorRepo.deleteAll(editora.getAutores());
+			
+			editoraRepo.delete(editora);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 }

@@ -1,13 +1,17 @@
 package requalificar.projecto.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import requalificar.projecto.dto.SimpleResponse;
+import requalificar.projecto.dto.SimpleResponseEditora;
 import requalificar.projecto.dto.SimpleResponseLivroAutorEditora;
 import requalificar.projecto.models.Autor;
 import requalificar.projecto.models.Editora;
@@ -140,7 +144,42 @@ public class LivroAutorEditoraController
 		
 	}
 	
-	
+	/** Remove editora **/
+	@DeleteMapping("/removeEditora/{id}")
+	public ResponseEntity<SimpleResponse> removeEditora(@PathVariable String id)
+	{
+		SimpleResponseEditora srE = new SimpleResponseEditora();
+		
+		if(id.equals(null) || id.isBlank())
+		{
+			srE.setAsError("Falha no valor id");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);
+		}
+
+		Long idToDelete = Long.parseLong(id);
+		
+		if(!editoraService.existeId(idToDelete))
+		{
+			srE.setAsError("Editora inexistente com este id");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);
+		}
+		
+		Optional<Editora> editora = editoraService.getEditoraById(idToDelete);
+		
+		if(editora.equals(null) || editora.isEmpty())
+		{
+			srE.setAsError("Falha em encontar Editora");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);	
+		}
+				
+		if(livroAutorEditoraService.removeEditora(editora.get()))
+		{
+			srE.setAsSuccess("Editora removida na base de dados:");
+			return ResponseEntity.status(HttpStatus.OK).body(srE);
+		}
+		srE.setAsError("Nao foi possivel remover da base de dados");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);	
+	}
 	
 	
 	
