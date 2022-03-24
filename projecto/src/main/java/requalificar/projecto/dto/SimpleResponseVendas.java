@@ -1,5 +1,6 @@
 package requalificar.projecto.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import requalificar.projecto.models.Venda;
@@ -10,6 +11,7 @@ public class SimpleResponseVendas extends SimpleResponse
 	
 	
 	public SimpleResponseVendas() {
+		vendas = new ArrayList<Venda>();
 	}
 
 

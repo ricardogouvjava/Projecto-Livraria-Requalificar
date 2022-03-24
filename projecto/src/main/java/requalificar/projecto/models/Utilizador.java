@@ -11,7 +11,7 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.jasypt.util.password.PasswordEncryptor;
 
 @MappedSuperclass 
-abstract class Utilizador
+public class Utilizador
 {
 	@Column(name="login")
 	private String login;
@@ -24,9 +24,7 @@ abstract class Utilizador
 	
 	@Column(name="data_de_Nascimento")
 	private Date dataDeNascimento;
-	public void setDataDeNascimento(Date dataDeNascimento) {
-		this.dataDeNascimento = dataDeNascimento;
-	}
+	
 	private static PasswordEncryptor encriptador = new BasicPasswordEncryptor();
 	
 	/* Metodos
@@ -56,7 +54,6 @@ abstract class Utilizador
 	}
 
 	//Getters
-	
 	public String getNome()
 	{
 		return nome;
@@ -64,29 +61,23 @@ abstract class Utilizador
 	public String getLogin() {
 		return login;
 	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
 	public String getDataDeNascimento() throws ParseException 
 	{
 		String pattern = "dd-MM-yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		return simpleDateFormat.format(this.dataDeNascimento);
 	}
-
 	//Setters
-
-	
 	public void setNome(String nome) 
 	{
 		this.nome = nome;
 	}
-	
 	public void setPassword(String password)
 	{
 		this.password = encriptaPassword(password);
+	}
+	public void setDataDeNascimento(Date dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
 	}
 	public void setDataDeNascimento(String dataDeNascimento) throws ParseException 
 	{
@@ -94,4 +85,7 @@ abstract class Utilizador
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		this.dataDeNascimento = simpleDateFormat.parse(dataDeNascimento);
 	}	
+	public void setLogin(String login) {
+		this.login = login;
+	}
 }

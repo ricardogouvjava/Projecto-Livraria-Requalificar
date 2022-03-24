@@ -1,36 +1,21 @@
 package requalificar.projecto.dto;
 
-import java.util.List;
-
-import requalificar.projecto.models.Cliente;
-import requalificar.projecto.models.Livro;
+import requalificar.projecto.models.Venda;
 
 public class SimpleResponseVenda extends SimpleResponse
 {
-	Cliente cliente;
-	double valor;
-	List<Livro> livros;
-	
+	Venda venda;
 	
 	public SimpleResponseVenda() {
 	}
+
 	
-	public Cliente getCliente() {
-		return cliente;
+	public Venda getVenda() {
+		return venda;
 	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+
+	public void setVenda(Venda venda) {
+		this.venda = venda;
 	}
-	public double getValor() {
-		return valor;
-	}
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
-	public List<Livro> getLivros() {
-		return livros;
-	}
-	public void setLivros(List<Livro> livros) {
-		this.livros = livros;
-	}
+	
 }

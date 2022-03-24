@@ -34,16 +34,16 @@ public class LivroController
 	{
 		SimpleResponseLivro srL = new SimpleResponseLivro();
 	
-	Livro livro = livroService.getLivroByIsbn(isbn);
+		Livro livro = livroService.getLivroByIsbn(isbn);
 	
-	if(livro == null)
-	{
-		srL.setAsError("isbn nao existente");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);
-	}
-	srL.setAsSuccess("Livro encontrado");
-	srL.setLivro(livro);
-	return ResponseEntity.status(HttpStatus.OK).body(srL);
+		if(livro == null)
+		{
+			srL.setAsError("isbn nao existente");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);
+		}
+		srL.setAsSuccess("Livro encontrado");
+		srL.setLivro(livro);
+		return ResponseEntity.status(HttpStatus.OK).body(srL);
 	
 	}
 	

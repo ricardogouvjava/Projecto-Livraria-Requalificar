@@ -10,9 +10,10 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import requalificar.projecto.utils.ImageFileToString;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="Livro")
 public class Livro 
@@ -21,15 +22,18 @@ public class Livro
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
-	@ManyToMany(mappedBy = "livros")
+	@ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
 	private List<Autor> autores = new ArrayList<Autor>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livro_id", referencedColumnName = "id") //, nullable=false
     @JsonIgnore
 	private Editora editora;
-
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
+	private List<Venda> vendas = new ArrayList<Venda>();
+		
 	private String titulo;
 	@Column(unique = true)
 	private String isbn;
@@ -43,14 +47,15 @@ public class Livro
 	@Column(columnDefinition="text")
 	private String imagem;
 	
-	
-	@ManyToMany(mappedBy = "livros")
-	private List<Venda> venda = new ArrayList<Venda>();
-	
-	
 	//Methods
 	public void addAutor(Autor autor){
 		this.autores.add(autor);
+	}
+	public void addVenda(Venda venda)
+	{
+		vendas.add(venda);
+		this.stock -= 1;
+		
 	}
 	
 	
@@ -71,16 +76,19 @@ public class Livro
 	{
 		return autores;
 	}
-	public Editora getEditora() {
+	public Editora getEditora()
+	{
 		return editora;
 	}
-	public double getPreco() {
+	public double getPreco() 
+	{
 		return preco;
 	}
 	public int getStock() {
 		return stock;
 	}
-	public Date getDataLancamento() {
+	public Date getDataLancamento()
+	{
 		return dataLancamento;
 	}
 	public int getPaginas() {
@@ -97,10 +105,12 @@ public class Livro
 	}
 
 	// Setters	
-	public void setId(Long id) {
+	public void setId(Long id) 
+	{
 		this.id = id;
 	}
-	public void setTitulo(String titulo) {
+	public void setTitulo(String titulo) 
+	{
 		this.titulo = titulo;
 	}
 	public void setAutores(List<Autor> autores) {
@@ -109,13 +119,15 @@ public class Livro
 	public void setEditora(Editora editora) {
 		this.editora = editora;
 	}
-	public void setIsbn(String aIsn) {
+	public void setIsbn(String aIsn)
+	{
 		this.isbn = aIsn;
 	}
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-	public void setStock(int stock) {
+	public void setStock(int stock) 
+{
 		this.stock = stock;
 	}
 	public void setDataLancamento(String dataLancamento) throws ParseException 
@@ -135,8 +147,19 @@ public class Livro
 		
 		this.imagem = ImageFileToString.encode(aPath);
 	}
-	public void setSinopse(String sinopse) {
+	public void setSinopse(String sinopse) 
+	{
 		this.sinopse = sinopse;
 	}
+	public List<Venda> getVendas() 
+	{
+		return vendas;
+	}
+	public void setVendas(List<Venda> vendas) 
+	{
+		this.vendas = vendas;
+	}
+
+
 	
 }
