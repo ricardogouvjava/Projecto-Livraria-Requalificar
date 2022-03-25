@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./Autor.css";
 
-const API_URL = "http://localhost:8080";
-//const API_URL = "https://pessoa-backend.herokuapp.com";
+//const API_URL = "http://localhost:8080";
+const API_URL = "https://git.heroku.com/livrariarequalificar.git";
 
 export function AutorService() {
   const [autorLista, setAutoresLista] = useState([]);
