@@ -59,6 +59,7 @@ public class ClienteController
 	return ResponseEntity.status(HttpStatus.OK).body(srC);
 	
 	}
+		
 	
 	/** Devolve cliente usando id**/
 	@GetMapping("/getClienteById/{id}")
