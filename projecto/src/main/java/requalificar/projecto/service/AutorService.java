@@ -28,6 +28,32 @@ public class AutorService
 		return true;	
 	}
 	
+	public boolean updateAutor(Autor aAutor) 
+	{
+		try {
+			Autor autor = autorRepo.findById(aAutor.getId()).get();
+			if(aAutor.getNome() != null) 
+			{
+				autor.setNome(aAutor.getNome());
+			}
+			if(aAutor.getEmail()!= null) 
+			{
+				autor.setEmail(aAutor.getEmail());
+			}
+			if(aAutor.getEditora() != null) 
+			{
+				autor.setEditora(aAutor.getEditora());
+
+			}
+			autorRepo.save(autor);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
 	/** Devolve todos os autores na base de dados **/
 	public List<Autor> getAutores()
 	{
@@ -37,11 +63,11 @@ public class AutorService
 	}
 	
 	/** Verifica se existe autor com mesmo nome e email na base de dados **/
-	public boolean autorExiste(Autor aAutor)
+	public boolean autorDadosExiste(Autor aAutor)
 	{
 		for(Autor autor : getAutores())
 		{
-			if(autor.getNome().equals(aAutor.getNome()) && autor.getEmail().equals(aAutor.getEmail()))
+			if(autor.getNome().equals(aAutor.getNome()) || autor.getEmail().equals(aAutor.getEmail()))
 			{
 				return true;
 			}
@@ -57,10 +83,24 @@ public class AutorService
 	
 	
 	
-	/** Devolve editora atraves de id **/
+	/** Devolve autor atraves de id **/
 	public Optional<Autor> getautorById(long id)
 	{
 		return autorRepo.findById(id);
 	}
+
+	/** Remove autor atraves de id **/
+	public boolean removeAutor(Autor autor)
+	{
+		try {
+			autorRepo.delete(autor);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+
 	
 }

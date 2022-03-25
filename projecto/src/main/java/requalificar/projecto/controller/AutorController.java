@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +40,7 @@ public class AutorController
 		SimpleResponseAutor srA  = new SimpleResponseAutor();
 		
 		// Verifica se loginId ja existe
-		if(aAutor.getId() != null || autorService.autorExiste(aAutor))
+		if(aAutor.getId() != null || autorService.autorDadosExiste(aAutor))
 		{
 			srA.setAsError("Autor ja existente");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
@@ -61,8 +63,49 @@ public class AutorController
 		srA.setAsError(checkData.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);	
 	}
+	
+
+	/** Actualiza autor a base de dados **/
+	@CrossOrigin
+	@PutMapping("/updateAutor")
+	public ResponseEntity<SimpleResponse> updateAutor(@RequestBody Autor aAutor) throws ParseException
+	{
+		SimpleResponseAutor srA  = new SimpleResponseAutor();
+		
+		// Verifica se loginId ja existe
+		if(aAutor.getId() == null || autorService.autorDadosExiste(aAutor)) //atencao com o autorDadosExiste
+		{
+			srA.setAsError("Problema nos dados a actualizar");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
+		}
+		
+		if(!autorService.existeAutorById(aAutor.getId()))
+		{
+			srA.setAsError("Autor inexistente com este id");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
+		}
+		
+		SimpleResponseAutor checkData = verificaDados(aAutor);
+		
+		if(checkData.isStatus())
+		{
+			if(autorService.updateAutor(aAutor))
+			{
+				srA.setAsSuccess("Sucesso ao actualizar Autor");
+				srA.setAutor(aAutor);
+				return ResponseEntity.status(HttpStatus.OK).body(srA);
+			}
+			
+			srA.setAsError("Falha na actualizacao de autor");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
+		}
+		srA.setAsError(checkData.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);	
+	}
+	
 
 	/** Devolve todos os autores na base de dados **/
+	@CrossOrigin
 	@GetMapping("/getAutores")
 	public ResponseEntity<SimpleResponse> getAutores()
 	{
@@ -76,11 +119,13 @@ public class AutorController
 			srAs.setAutores(autores);
 			return ResponseEntity.status(HttpStatus.OK).body(srAs);
 		}
-		srAs.setAsError("Nehum cliente na base de dados");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srAs);	
+		srAs.setAsError("Nehum autor na base de dados");
+		srAs.setAutores(autores);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(srAs);	
 	}
-	
+		
 	/** Devolve Autor atravez de id **/
+	@CrossOrigin
 	@GetMapping("getAutor/{id}")
 	public ResponseEntity<SimpleResponse> getAutor(@PathVariable String id)
 	{
@@ -108,8 +153,47 @@ public class AutorController
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
 		}
 				
-		srA.setAsSuccess("Sucesso ao encontar livro");
+		srA.setAsSuccess("Sucesso ao encontar autor");
 		srA.setAutor(autor.get());
+		return ResponseEntity.status(HttpStatus.OK).body(srA);
+	}
+	
+	/** Remove Autor atravez de id **/
+	@CrossOrigin
+	@DeleteMapping("/removeAutor/{id}")
+	public ResponseEntity<SimpleResponse> removeAutor(@PathVariable String id)
+	{
+		SimpleResponseAutor srA = new SimpleResponseAutor();
+			
+		if(id == null || id.isBlank())
+		{
+			srA.setAsError("Falha no valor id");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
+		}
+
+		Long idToRemove = Long.parseLong(id);
+		
+		if(!autorService.existeAutorById(idToRemove))
+		{
+			srA.setAsError("Autor inexistente com este id");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
+		}
+		
+		Optional<Autor> autorToRemove = autorService.getautorById(idToRemove);
+		
+		if(autorToRemove == null || autorToRemove.isEmpty())
+		{
+			srA.setAsError("Falha em encontar autor");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
+		}
+		
+		if(!autorService.removeAutor(autorToRemove.get()))
+		{
+			srA.setAsError("Falha em remover autor");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
+		}
+		
+		srA.setAsSuccess("Sucesso remover autor");
 		return ResponseEntity.status(HttpStatus.OK).body(srA);
 	}
 	
@@ -123,8 +207,6 @@ public class AutorController
 			srA.setAsError("Falha no parametro nome: " + aAutor.getNome());
 			return srA;	
 		}
-		
-		
 			
 		if(aAutor.getEmail() == null || aAutor.getEmail().isEmpty())
 		{
