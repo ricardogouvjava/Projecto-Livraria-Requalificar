@@ -1,0 +1,12 @@
+.Navbar {
+  background-color: brown;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.Navbar button {
+  background-color: chocolate;
+  width: 150px;
+  height: 50px;
+}

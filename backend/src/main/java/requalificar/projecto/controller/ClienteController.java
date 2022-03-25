@@ -93,7 +93,6 @@ public class ClienteController
 	
 	}
 	
-	
 	/** Devolve todos os clientes na base de dados **/
 	@GetMapping("/getClientes")
 	public ResponseEntity<SimpleResponse> getClientes()

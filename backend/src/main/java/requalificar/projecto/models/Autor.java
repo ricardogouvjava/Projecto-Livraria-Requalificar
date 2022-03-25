@@ -36,7 +36,6 @@ public class Autor
 	}
 	
 	
-	
 	// Getters & Setters
 	private String nome;
 	
