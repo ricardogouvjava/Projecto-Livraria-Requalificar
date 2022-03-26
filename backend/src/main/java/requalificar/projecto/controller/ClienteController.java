@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,8 @@ import requalificar.projecto.dto.SimpleResponseCliente;
 import requalificar.projecto.dto.SimpleResponseClientes;
 import requalificar.projecto.models.Cliente;
 import requalificar.projecto.service.ClienteService;
-
+import requalificar.projecto.utils.WrapperVerificaLogin;
+@CrossOrigin
 @RestController
 public class ClienteController
 {
@@ -35,7 +37,41 @@ public class ClienteController
 		this.clienteService = clienteService;
 	}
 	
+	
+	/** Verifia Login e devolve cliente **/
+	@CrossOrigin
+	@PostMapping("/verificaLogin")
+	public ResponseEntity<SimpleResponse> verificaLogin(@RequestBody WrapperVerificaLogin clienteVerificar)
+	{
+		SimpleResponseCliente srC = new SimpleResponseCliente();
+		if(clienteVerificar.equals(null)) 
+		{
+			srC.setAsError("Falha na variavel de entrada");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(srC);
+		}
+		
+		if(clienteVerificar.getLogin().equals(null) || clienteVerificar.getLogin().isEmpty() || clienteVerificar.getPassword().equals(null) || clienteVerificar.getPassword().isEmpty())
+		{
+			srC.setAsError("Nao possui dados necessarios para confirmcao");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(srC);
+		}
+		
+		Cliente cliente =  clienteService.verificaLoginValido(clienteVerificar);
+				
+		if(cliente == null)
+		{
+			srC.setAsSuccess("Login incorrecto");
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(srC);
+		}
+		else {
+			srC.setAsSuccess("Login Correcto");
+			srC.setCliente(cliente);
+			return ResponseEntity.status(HttpStatus.OK).body(srC);
+		}
+	}
+	
 	/** Devolve cliente usando LoginId**/
+	@CrossOrigin
 	@GetMapping("/getClienteByLoginId/{aLoginId}")
 	public ResponseEntity<SimpleResponse> getClienteByLoginId(@PathVariable String aLoginId)
 	{
@@ -60,8 +96,8 @@ public class ClienteController
 	
 	}
 		
-	
 	/** Devolve cliente usando id**/
+	@CrossOrigin
 	@GetMapping("/getClienteById/{id}")
 	public ResponseEntity<SimpleResponse> getClienteById(@PathVariable String id)
 	{
@@ -95,6 +131,7 @@ public class ClienteController
 	}
 	
 	/** Devolve todos os clientes na base de dados **/
+	@CrossOrigin
 	@GetMapping("/getClientes")
 	public ResponseEntity<SimpleResponse> getClientes()
 	{
@@ -113,10 +150,11 @@ public class ClienteController
 	}
 	
 	/** Adiciona cliente a base de dados **/
+	@CrossOrigin
 	@PostMapping(path = "/addCliente", 
 	        consumes = MediaType.APPLICATION_JSON_VALUE, 
 	        produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SimpleResponse> addsCliente(@RequestBody Cliente aCliente) throws ParseException
+	public ResponseEntity<SimpleResponse> addCliente(@RequestBody Cliente aCliente) throws ParseException
 	{
 		SimpleResponseCliente srC = new SimpleResponseCliente();
 		
@@ -147,6 +185,7 @@ public class ClienteController
 	}
 	
 	/** remove cliente atraves do id **/
+	@CrossOrigin
 	@DeleteMapping("/removeClienteByLoginId/{loginId}")
 	public ResponseEntity<SimpleResponse> removeClienteByLoginId(@PathVariable String loginId)
 	{
@@ -172,6 +211,7 @@ public class ClienteController
 	}
 	
 	/** Updates informacao cliente: nome email dataDeNascimento**/
+	@CrossOrigin
 	@PutMapping("/updateCliente")
 	public ResponseEntity<SimpleResponseCliente> updateCliente(@RequestBody Cliente aCliente) throws ParseException
 	{

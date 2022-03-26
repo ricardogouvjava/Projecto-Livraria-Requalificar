@@ -24,6 +24,12 @@ public class Cliente extends Utilizador
 	private String email;
 	
 	
+	@Override
+	public String toString() {
+		return "Cliente [getLogin()=" + getLogin() + "]";
+	}
+
+
 	public void addVenda(Venda venda) 
 	{
 		compras.add(venda);
@@ -53,8 +59,5 @@ public class Cliente extends Utilizador
 	public Long getId() {
 		return id;
 	}
-	
-	
-
 	
 }

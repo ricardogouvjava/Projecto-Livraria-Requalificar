@@ -16,7 +16,7 @@ import requalificar.projecto.dto.SimpleResponseLivro;
 import requalificar.projecto.dto.SimpleResponseLivros;
 import requalificar.projecto.models.Livro;
 import requalificar.projecto.service.LivroService;
-
+@CrossOrigin
 @RestController
 public class LivroController
 {
@@ -29,6 +29,7 @@ public class LivroController
 	}
 	
 	/** Devolve livro usando idisbn**/
+	@CrossOrigin
 	@GetMapping("/getLivroByIsbn/{isbn}")
 	public ResponseEntity<SimpleResponse> getLivroByIsbn(@PathVariable String isbn)
 	{
@@ -48,6 +49,7 @@ public class LivroController
 	}
 	
 	/** Devolve livro que mais copias vendeu**/
+	@CrossOrigin
 	@GetMapping("/getLivroMaisVendeu")
 	public ResponseEntity<SimpleResponse> getLivroMaisVendeu()
 	{
@@ -68,6 +70,7 @@ public class LivroController
 	
 	
 	/** Devolve todos os livros na base de dados **/
+	@CrossOrigin
 	@GetMapping("/getLivros")
 	public ResponseEntity<SimpleResponse> getLivros()
 	{
@@ -87,6 +90,7 @@ public class LivroController
 	
 	/** Adiciona livro a base de dados 
 	 * @throws IOException **/
+	@CrossOrigin
 	@PostMapping("/addLivro")
 	public ResponseEntity<SimpleResponse> addLivro(@RequestBody Livro aLivro) throws ParseException, IOException
 	{
@@ -118,6 +122,7 @@ public class LivroController
 	}
 	
 	/** remove livro atraves do isbn **/
+	@CrossOrigin
 	@DeleteMapping("/removeLivroByIsbn/{isbn}")
 	public ResponseEntity<SimpleResponse> removeLivroByIsbn(@PathVariable String isbn)
 	{
@@ -144,6 +149,7 @@ public class LivroController
 	
 	/** Updates informacao livro: 
 	 * @throws IOException **/
+	@CrossOrigin
 	@PutMapping("/updateLivro")
 	public ResponseEntity<SimpleResponseLivro> updateLivro(@RequestBody Livro aLivro) throws ParseException, IOException
 	{

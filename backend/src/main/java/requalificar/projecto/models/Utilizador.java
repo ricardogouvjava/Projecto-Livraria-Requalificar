@@ -67,6 +67,11 @@ public class Utilizador
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		return simpleDateFormat.format(this.dataDeNascimento);
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+
 	//Setters
 	public void setNome(String nome) 
 	{

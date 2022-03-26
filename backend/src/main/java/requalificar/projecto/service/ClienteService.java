@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import requalificar.projecto.models.Cliente;
 import requalificar.projecto.repository.ClienteRepo;
+import requalificar.projecto.utils.WrapperVerificaLogin;
 
 @Service
 public class ClienteService 
@@ -40,7 +41,7 @@ public class ClienteService
 		return clienteRepo.findById(idToGet);
 	}
 	
-	
+	/** Verifica se id exista **/
 	public boolean idExiste(Long idToCheck) 
 	{
 		if(clienteRepo.existsById(idToCheck))
@@ -85,10 +86,10 @@ public class ClienteService
 	}
 	
 	/** Verifica se LoginId ja existe na base de dados **/
- 	public boolean loginClienteExiste(String idCliente)
+ 	public boolean loginClienteExiste(String loginCliente)
 	{
  		List<Cliente> clientes = getClientes();
- 		
+
  		if(clientes.isEmpty())
  		{
  			return false; 			
@@ -96,12 +97,27 @@ public class ClienteService
  		
 		for(Cliente cliente : clientes)
 		{
-			if(cliente.getLogin().equals(idCliente))
+			if(cliente.getLogin().equals(loginCliente))
 			{
 				return true;
 			}
 		}
 		return false;
+	}
+
+ 	/** Verifica se Login existe e se corresponde a password **/
+	public Cliente verificaLoginValido(WrapperVerificaLogin clienteVerificar) 
+	{
+		if(loginClienteExiste(clienteVerificar.getLogin()))
+		{
+			Cliente clienteComparar = getClienteByLoginId(clienteVerificar.getLogin());
+			
+			if(clienteComparar.isPasswordCorrecta(clienteVerificar.getPassword()))
+			{
+				return clienteComparar;
+			}
+		}
+		return null;
 	}
 
 

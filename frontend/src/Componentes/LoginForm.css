@@ -1,0 +1,31 @@
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid;
+  height: 30em;
+  padding: 10em;
+}
+
+.Info {
+  color: tomato;
+}
+
+.LoginForm-Row {
+  display: flex;
+  width: 30em;
+  padding: 3em;
+  margin: 1em;
+}
+
+.LoginForm-Column {
+  flex: 50%;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  padding-top: 5em;
+  padding-bottom: 5em;
+}
+
+.LoginForm-Column input {
+  margin: 0.5em;
+}

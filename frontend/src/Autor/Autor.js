@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import "./Autor.css";
 
-//const API_URL = "http://localhost:8080";
-const API_URL = "https://livrariarequalificar.herokuapp.com/";
+const API_URL = "http://localhost:8080";
+//const API_URL = "https://livrariarequalificar.herokuapp.com/";
 
-export function AutorService() {
+export function AutorService(props) {
   const [autorLista, setAutoresLista] = useState([]);
   const [novoAutor, setNovoAutor] = useState({ nome: "", email: "" });
   const [autorSelecionado, setAutorSelecionado] = useState({});
@@ -53,7 +53,7 @@ export function AutorService() {
       })
         .then((response) => {
           if (response.status !== 200) {
-            throw new Error("Falha encontar autor");
+            throw new Error("Falha adicionar autor");
           }
           console.log(response);
 
