@@ -11,6 +11,7 @@ import { ClienteService } from "./Componentes/Cliente/Cliente";
 import { AutorService } from "./Componentes/Autor/Autor";
 import { FuncionarioService } from "./Componentes/Funcionario/Funcionario";
 import { Footer } from "./Footer/Footer";
+import { LivroService } from "./Componentes/Livro/Livro";
 
 function App() {
   const [user, setUser] = useState();
@@ -56,6 +57,14 @@ function App() {
             element={
               <VerificaUser user={user}>
                 <FuncionarioService user={user}></FuncionarioService>
+              </VerificaUser>
+            }
+          />
+          <Route
+            path="/Livro"
+            element={
+              <VerificaUser user={user}>
+                <LivroService user={user}></LivroService>
               </VerificaUser>
             }
           />

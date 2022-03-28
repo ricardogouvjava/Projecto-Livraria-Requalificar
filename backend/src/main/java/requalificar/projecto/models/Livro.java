@@ -172,8 +172,8 @@ public class Livro
 		return dataDeLancamento;
 	}
 		
-	public void setDataLancamento(Date dataLancamento) {
-		this.dataDeLancamento = dataLancamento;
+	public void setDataLancamento(Date dataDeLancamento) {
+		this.dataDeLancamento = dataDeLancamento;
 	}
 	
 	public String getDataDeLancamento() {
@@ -182,11 +182,11 @@ public class Livro
 		return simpleDateFormat.format(this.dataDeLancamento);
 	}
 
-	public void setDataDeLancamento(String dataLancamento) throws ParseException 
+	public void setDataDeLancamento(String dataDeLancamento) throws ParseException 
 	{
 		String pattern = "dd-MM-yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		this.dataDeLancamento = simpleDateFormat.parse(dataLancamento);
+		this.dataDeLancamento = simpleDateFormat.parse(dataDeLancamento);
 	}
 
 }

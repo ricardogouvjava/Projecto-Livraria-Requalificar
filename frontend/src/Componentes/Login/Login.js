@@ -34,7 +34,6 @@ export function Login(props) {
       .then((id) => {
         props.doLogin(id);
         navigate("/home");
-        //}
         return id;
       })
       .catch((error) => {

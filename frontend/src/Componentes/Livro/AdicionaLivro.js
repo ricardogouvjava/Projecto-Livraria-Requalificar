@@ -8,32 +8,18 @@ export function AdicionaLivro(props) {
   const { params } = useParams();
   const [id, setId] = useState("1");
   const [info, setInfo] = useState("");
-  const [livroInfo, setLivroInfo] = useState({
-    autores: [
-      {
-        id: 0,
-      },
-    ],
-    titulo: "string",
-    isbn: "string",
-    preco: 0,
-    stock: 0,
-    paginas: 0,
-    edicao: 0,
-    sinopse: "string",
-    imagem: "string",
-    vendidos: 0,
-    dataDeLancamento: "string",
-  });
+  const childToParent = (data) => {
+    addLivro(data);
+  };
 
-  function addLivro() {
-    fetch(API_URL + "/addLivro/", {
+  function addLivro(data) {
+    fetch(API_URL + "/addLivro", {
       mode: "cors",
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(livroInfo),
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (response.status !== 200) {
@@ -53,7 +39,7 @@ export function AdicionaLivro(props) {
 
   return (
     <>
-      <LivroForm setLivroInfo={setLivroInfo}></LivroForm>
+      <LivroForm childToParent={childToParent}></LivroForm>
     </>
   );
 }

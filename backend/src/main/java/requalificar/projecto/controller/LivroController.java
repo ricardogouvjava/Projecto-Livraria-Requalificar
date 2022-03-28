@@ -267,16 +267,16 @@ public class LivroController
 			return srL;	
 		}
 		
-		// Ferramenta para comparacao de data
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date(System.currentTimeMillis()));
-		//c.add(Calendar.YEAR, -16);
-		
-		if(aLivro.dataLancamento()== null || aLivro.dataLancamento().after(c.getTime()))
-		{
-			srL.setAsError("Falha no parametro data: " + aLivro.dataLancamento());
-			return srL;	
-		}
+		/*
+		 * // Ferramenta para comparacao de data Calendar c = Calendar.getInstance();
+		 * c.setTime(new Date(System.currentTimeMillis())); //c.add(Calendar.YEAR, -16);
+		 */		
+		/*
+		 * if(aLivro.dataLancamento()== null ||
+		 * aLivro.dataLancamento().after(c.getTime())) {
+		 * srL.setAsError("Falha no parametro data: " + aLivro.dataLancamento()); return
+		 * srL; }
+		 */
 		
 		if(aLivro.getPaginas() <=0)
 		{

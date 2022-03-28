@@ -117,7 +117,7 @@ export function ClienteService(props) {
           <div className={mostraForm ? "MostraSelecao" : "EscondeSelecao"}>
             <h4>Alterar Dados</h4>
             <p>
-              <b>Login: (Autenticacao)</b>
+              Login: (Autenticacao)
               <input
                 type="text"
                 value={updateCliente.login}
@@ -130,7 +130,7 @@ export function ClienteService(props) {
               ></input>
             </p>
             <p>
-              <b>Password: (Autenticacao) </b>
+              Password: (Autenticacao)
               <input
                 type="password"
                 value={updateCliente.password}
@@ -143,7 +143,7 @@ export function ClienteService(props) {
               ></input>
             </p>
             <p>
-              <b>Nome: </b>
+              Nome:
               <input
                 type="text"
                 value={updateCliente.nome}
@@ -157,7 +157,7 @@ export function ClienteService(props) {
             </p>
             <p>
               <p>
-                <b>Data de Nascimento: (dd/MM/yyyy)</b>
+                Data de Nascimento: (dd/MM/yyyy)
                 <input
                   type="text"
                   value={updateCliente.dataDeNascimento}
@@ -169,8 +169,7 @@ export function ClienteService(props) {
                   }}
                 ></input>
               </p>
-
-              <b>Email: </b>
+              Email:
               <input
                 type="text"
                 value={updateCliente.email}
