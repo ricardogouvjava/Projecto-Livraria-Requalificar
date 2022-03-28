@@ -8,6 +8,7 @@ export function AdicionaLivro(props) {
   const { params } = useParams();
   const [id, setId] = useState("1");
   const [info, setInfo] = useState("");
+
   const childToParent = (data) => {
     addLivro(data);
   };
@@ -39,7 +40,7 @@ export function AdicionaLivro(props) {
 
   return (
     <>
-      <LivroForm childToParent={childToParent}></LivroForm>
+      <LivroForm childToParent={addLivro}></LivroForm>
     </>
   );
 }

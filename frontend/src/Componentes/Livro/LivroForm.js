@@ -2,21 +2,25 @@ import { useState, React } from "react";
 import "./LivroForm.css";
 export function LivroForm({ childToParent }) {
   const [livro, setLivroInfo] = useState({
+    id: 0,
     autores: [
       {
         id: 0,
+        nome: "string",
+        email: "string",
       },
     ],
-    titulo: "",
-    isbn: "",
+    titulo: "string",
+    isbn: "string",
     preco: 0,
     stock: 0,
+    dataDeLancamento: "string",
     paginas: 0,
     edicao: 0,
-    sinopse: "",
-    imagem: "",
+    sinopse: "string",
+    imagem: "string",
     vendidos: 0,
-    dataDeLancamento: "",
+    dataLancamento: "2022-03-28T16:46:16.432Z",
   });
   return (
     <div className="LivroForm">
@@ -153,6 +157,15 @@ export function LivroForm({ childToParent }) {
           }}
         ></input>
       </p>
+
+      {/*
+      <select>
+        {options.map((option) => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+*/}
+
       <button
         onClick={() => {
           childToParent(livro);
