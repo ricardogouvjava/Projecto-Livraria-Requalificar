@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { Navbar } from "./Componentes/NavBar/Navbar";
-import { CriarConta } from "./Componentes/Conta/CriarConta";
+import { CriarConta } from "./Componentes/CriarConta/CriarConta";
 import { HomePage } from "./Componentes/Home/Home";
 import { PesquisaService } from "./Componentes/Pesquisa/Pesquisa";
 import { Login } from "./Componentes/Login/Login";
@@ -24,14 +24,6 @@ function App() {
             element={
               <VerificaUser user={user}>
                 <HomePage user={user}></HomePage>
-              </VerificaUser>
-            }
-          ></Route>
-          <Route
-            path="/CriarConta"
-            element={
-              <VerificaUser user={user}>
-                <CriarConta user={user}></CriarConta>
               </VerificaUser>
             }
           ></Route>
@@ -68,6 +60,7 @@ function App() {
             }
           />
           <Route path="/*" element={<Login doLogin={setUser}></Login>} />
+          <Route path="/CriarConta" element={<CriarConta></CriarConta>}></Route>
         </Routes>
         <Footer></Footer>
       </BrowserRouter>

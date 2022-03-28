@@ -14,6 +14,11 @@ body,
   overflow-y: auto;
 }
 
+h3 {
+  color: wheat;
+  padding: 1em;
+}
+
 /** Corpo **/
 .Listagem {
   margin: auto;
@@ -60,7 +65,11 @@ body,
   flex-direction: row;
   flex-wrap: wrap;
 }
-
+.DadosCliente {
+  padding: 3em;
+  width: 70%;
+  margin: auto;
+}
 .Pesquisa {
   width: 90%;
   margin: auto;
@@ -201,7 +210,12 @@ input[type="password"] {
   width: 100%;
   color: black;
   font-weight: bold;
-  background-color: burlywood;
+  background-color: wheat;
+}
+.CriaConta {
+  padding: 0.4em;
+  margin: 3em;
+  cursor: pointer;
 }
 
 /** Especificos **/

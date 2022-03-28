@@ -48,12 +48,12 @@ public class Utilizador
         return false;
 	}
 	
-	public Date dataNascimento()
-	{
-		return this.dataDeNascimento;
-	}
-
 	//Getters
+	
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	
 	public String getNome()
 	{
 		return nome;
@@ -61,13 +61,7 @@ public class Utilizador
 	public String getLogin() {
 		return login;
 	}
-	public String getDataDeNascimento() throws ParseException 
-	{
-		String pattern = "dd-MM-yyyy";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		return simpleDateFormat.format(this.dataDeNascimento);
-	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -81,16 +75,31 @@ public class Utilizador
 	{
 		this.password = encriptaPassword(password);
 	}
+	
+	
+	
+	public Date dataNascimento()
+	{
+		return this.dataDeNascimento;
+	}
+	
 	public void setDataDeNascimento(Date dataDeNascimento) {
 		this.dataDeNascimento = dataDeNascimento;
 	}
+	
+	public String getDataDeNascimento() throws ParseException 
+	{
+		String pattern = "dd-MM-yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		return simpleDateFormat.format(this.dataDeNascimento);
+	}
+	
+
 	public void setDataDeNascimento(String dataDeNascimento) throws ParseException 
 	{
 		String pattern = "dd-MM-yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		this.dataDeNascimento = simpleDateFormat.parse(dataDeNascimento);
 	}	
-	public void setLogin(String login) {
-		this.login = login;
-	}
+
 }

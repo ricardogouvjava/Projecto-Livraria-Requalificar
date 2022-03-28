@@ -10,7 +10,6 @@ export function ClienteService(props) {
   const [mostraInfo, setMostraInfo] = useState(false);
   const [mostraForm, setMostraForm] = useState(false);
   const [info, setInfo] = useState("");
-
   const [updateClienteInfo, setUpdateClienteInfo] = useState({
     login: "",
     nome: "",

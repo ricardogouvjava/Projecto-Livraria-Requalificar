@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Funcionario.css";
-import { PesquisaLivro } from "../Pesquisa/PesquisaLivro";
+import { PesquisaLivro } from "../Livro/PesquisaLivro";
+import { AdicionaLivro } from "../Livro/AdicionaLivro";
 
 const API_URL = "http://localhost:8080";
 //const API_URL = "https://livrariarequalificar.herokuapp.com/";
@@ -15,7 +16,9 @@ export function FuncionarioService(props) {
     SetOpcao(<PesquisaLivro></PesquisaLivro>);
   }
 
-  function adicionaLivro() {}
+  function adicionaLivro() {
+    SetOpcao(<AdicionaLivro></AdicionaLivro>);
+  }
 
   return (
     <>

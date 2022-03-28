@@ -19,6 +19,7 @@ export function Login(props) {
       body: JSON.stringify(verifica),
     })
       .then((response) => {
+        console.log(response);
         if (response.status === 403 || response.status === 204) {
           setInfo("Login Invalido");
         } else if (response.status !== 200) {
@@ -31,11 +32,6 @@ export function Login(props) {
         return parseInt(parsedResponse.cliente.id);
       })
       .then((id) => {
-        //if (id >= 0) {
-        //console.log("User :" + id);
-        //setUserId(id);
-        //console.log(userId);
-        //setInfo("Login Valido");
         props.doLogin(id);
         navigate("/home");
         //}
@@ -74,6 +70,9 @@ export function Login(props) {
           </button>
         </div>
         <p className="Informacao">{info}</p>
+        <button className="CriaConta" onClick={() => navigate("/CriarConta")}>
+          Criar Conta
+        </button>
       </div>
     </>
   );

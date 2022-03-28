@@ -39,7 +39,9 @@ public class Livro
 	private String isbn;
 	private double preco;
 	private int stock;
-	private Date dataLancamento;
+	
+	@Column(name="data_de_Lancamento")
+	private Date dataDeLancamento;
 	private int paginas;
 	private int edicao;
 	private String sinopse;
@@ -90,20 +92,10 @@ public class Livro
 	public int getStock() {
 		return stock;
 	}
-	public Date dataLancamento()
-	{
-		return dataLancamento;
-	}
 	
 	
-	public String getDataDeLancamento() {
-		String pattern = "dd-MM-yyyy";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		return simpleDateFormat.format(this.dataLancamento);
-	}
-	public void setDataLancamento(Date dataLancamento) {
-		this.dataLancamento = dataLancamento;
-	}
+	
+	
 	public int getPaginas() {
 		return paginas;
 	}
@@ -145,12 +137,7 @@ public class Livro
 {
 		this.stock = stock;
 	}
-	public void setDataLancamento(String dataLancamento) throws ParseException 
-	{
-		String pattern = "dd-MM-yyyy";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		this.dataLancamento = simpleDateFormat.parse(dataLancamento);
-	}
+	
 	public void setPaginas(int paginas) {
 		this.paginas = paginas;
 	}
@@ -178,6 +165,28 @@ public class Livro
 		this.vendidos = vendidos;
 	}
 	
-
 	
+	
+	public Date dataLancamento()
+	{
+		return dataDeLancamento;
+	}
+		
+	public void setDataLancamento(Date dataLancamento) {
+		this.dataDeLancamento = dataLancamento;
+	}
+	
+	public String getDataDeLancamento() {
+		String pattern = "dd-MM-yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		return simpleDateFormat.format(this.dataDeLancamento);
+	}
+
+	public void setDataDeLancamento(String dataLancamento) throws ParseException 
+	{
+		String pattern = "dd-MM-yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		this.dataDeLancamento = simpleDateFormat.parse(dataLancamento);
+	}
+
 }
