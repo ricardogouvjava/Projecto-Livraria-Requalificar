@@ -106,13 +106,13 @@ public class ClienteService
 	}
 
  	/** Verifica se Login existe e se corresponde a password **/
-	public Cliente verificaLoginValido(WrapperVerificaLogin clienteVerificar) 
+	public Cliente verificaLoginValido(String login, String password) 
 	{
-		if(loginClienteExiste(clienteVerificar.getLogin()))
+		if(loginClienteExiste(login))
 		{
-			Cliente clienteComparar = getClienteByLoginId(clienteVerificar.getLogin());
+			Cliente clienteComparar = getClienteByLoginId(login);
 			
-			if(clienteComparar.isPasswordCorrecta(clienteVerificar.getPassword()))
+			if(clienteComparar.isPasswordCorrecta(password))
 			{
 				return clienteComparar;
 			}

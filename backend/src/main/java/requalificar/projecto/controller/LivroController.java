@@ -28,6 +28,32 @@ public class LivroController
 		this.livroService = livroService;
 	}
 	
+	/** Procura livros**/
+	@CrossOrigin
+	@GetMapping("/procuraLivros/{pesquisa}")
+	public ResponseEntity<SimpleResponse> procuraLivros(@PathVariable String pesquisa)
+	{
+	SimpleResponseLivros srLs = new SimpleResponseLivros();
+	
+	if(pesquisa.equals(null) || pesquisa.isEmpty() || pesquisa.isBlank()) 
+	{
+		srLs.setAsError("Falha no argumento pesquisa");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srLs);
+	}
+	
+	List<Livro> livros = livroService.procuraLivros(pesquisa);
+
+	if(livros.size() < 1 || livros == null) 
+	{
+		srLs.setAsError("Livros nao existentes nestes parametros");
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(srLs);
+	}
+	srLs.setAsSuccess("Livros encontrado");
+	srLs.setLivros(livros);
+	return ResponseEntity.status(HttpStatus.OK).body(srLs);
+	
+	}
+	
 	/** Devolve livro usando idisbn**/
 	@CrossOrigin
 	@GetMapping("/getLivroByIsbn/{isbn}")
@@ -85,7 +111,7 @@ public class LivroController
 			return ResponseEntity.status(HttpStatus.OK).body(srLs);
 		}
 		srLs.setAsError("Nehum livro na base de dados");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srLs);	
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(srLs);	
 	}
 	
 	/** Adiciona livro a base de dados 
@@ -246,9 +272,9 @@ public class LivroController
 		c.setTime(new Date(System.currentTimeMillis()));
 		//c.add(Calendar.YEAR, -16);
 		
-		if(aLivro.getDataLancamento() == null || aLivro.getDataLancamento().after(c.getTime()))
+		if(aLivro.dataLancamento()== null || aLivro.dataLancamento().after(c.getTime()))
 		{
-			srL.setAsError("Falha no parametro data: " + aLivro.getDataLancamento());
+			srL.setAsError("Falha no parametro data: " + aLivro.dataLancamento());
 			return srL;	
 		}
 		

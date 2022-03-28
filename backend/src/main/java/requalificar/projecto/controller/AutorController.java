@@ -34,6 +34,7 @@ public class AutorController
 	}
 	
 	/** Adiciona autor a base de dados **/
+	@CrossOrigin
 	@PostMapping("/addAutor")
 	public ResponseEntity<SimpleResponse> addAutor(@RequestBody Autor aAutor) throws ParseException
 	{
@@ -156,6 +157,30 @@ public class AutorController
 		srA.setAsSuccess("Sucesso ao encontar autor");
 		srA.setAutor(autor.get());
 		return ResponseEntity.status(HttpStatus.OK).body(srA);
+	}
+	/** Devolve Autor atravez de id **/
+	@CrossOrigin
+	@GetMapping("getAutor/{string}")
+	public ResponseEntity<SimpleResponse> procuraAutor(@PathVariable String string)
+	{
+		SimpleResponseAutores srAs = new SimpleResponseAutores();
+			
+		if(string == null || string.isBlank())
+		{
+			srAs.setAsError("Falha no valor string");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srAs);
+		}
+
+		List<Autor> autores = autorService.procuraAutor(string);
+		
+		if(autores== null || autores.size() <= 0 ){
+			srAs.setAsError("Nao existe autores com estes parametros");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(srAs);
+		}
+				
+		srAs.setAsSuccess("Sucesso ao encontar autores");
+		srAs.setAutores(autores);
+		return ResponseEntity.status(HttpStatus.OK).body(srAs);
 	}
 	
 	/** Remove Autor atravez de id **/

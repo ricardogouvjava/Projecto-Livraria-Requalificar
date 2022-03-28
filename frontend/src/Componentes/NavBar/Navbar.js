@@ -5,6 +5,7 @@ export function Navbar(props) {
   const navigate = useNavigate();
   return (
     <>
+      <div className="Header">Livraria Requalificar</div>
       <div className="Navbar">
         <button
           onClick={() => {
@@ -22,10 +23,10 @@ export function Navbar(props) {
         </button>
         <button
           onClick={() => {
-            navigate("/Info/2");
+            navigate("/Cliente/:id");
           }}
         >
-          Info
+          Cliente
         </button>
         <button
           onClick={() => {
@@ -33,6 +34,13 @@ export function Navbar(props) {
           }}
         >
           Autor
+        </button>
+        <button
+          onClick={() => {
+            navigate("/Funcionario");
+          }}
+        >
+          Funcionario
         </button>
       </div>
     </>

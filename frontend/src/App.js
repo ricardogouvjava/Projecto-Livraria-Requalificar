@@ -2,21 +2,22 @@ import "./App.css";
 
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useState } from "react";
-import { Navbar } from "./Componentes/Navbar";
-import { Menu } from "./Componentes/Menu";
-import { CriarConta } from "./Componentes/CriarConta";
-import { HomePage } from "./Componentes/HomePage";
-import { Pesquisa } from "./Componentes/Pesquisa";
-import { Login } from "./Componentes/Login";
-import { Info } from "./Componentes/Info";
-import { AutorService } from "./Autor/Autor";
+import { Navbar } from "./Componentes/NavBar/Navbar";
+import { CriarConta } from "./Componentes/Conta/CriarConta";
+import { HomePage } from "./Componentes/Home/Home";
+import { PesquisaService } from "./Componentes/Pesquisa/Pesquisa";
+import { Login } from "./Componentes/Login/Login";
+import { ClienteService } from "./Componentes/Cliente/Cliente";
+import { AutorService } from "./Componentes/Autor/Autor";
+import { FuncionarioService } from "./Componentes/Funcionario/Funcionario";
+import { Footer } from "./Footer/Footer";
 
 function App() {
   const [user, setUser] = useState();
   return (
     <div className="App">
       <BrowserRouter>
-        {user && <Navbar></Navbar>}
+        {user && <Navbar user={user}></Navbar>}
         <Routes>
           <Route
             path="/Home"
@@ -38,23 +39,15 @@ function App() {
             path="/Pesquisa"
             element={
               <VerificaUser user={user}>
-                <Pesquisa user={user}></Pesquisa>
+                <PesquisaService user={user}></PesquisaService>
               </VerificaUser>
             }
           ></Route>
           <Route
-            path="/Menu"
+            path="/Cliente/:id"
             element={
               <VerificaUser user={user}>
-                <Menu user={user}></Menu>
-              </VerificaUser>
-            }
-          ></Route>
-          <Route
-            path="/info/:id"
-            element={
-              <VerificaUser user={user}>
-                <Info user={user}></Info>
+                <ClienteService user={user}></ClienteService>
               </VerificaUser>
             }
           />
@@ -66,8 +59,17 @@ function App() {
               </VerificaUser>
             }
           />
+          <Route
+            path="/Funcionario"
+            element={
+              <VerificaUser user={user}>
+                <FuncionarioService user={user}></FuncionarioService>
+              </VerificaUser>
+            }
+          />
           <Route path="/*" element={<Login doLogin={setUser}></Login>} />
         </Routes>
+        <Footer></Footer>
       </BrowserRouter>
     </div>
   );

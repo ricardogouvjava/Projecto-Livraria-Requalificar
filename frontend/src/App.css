@@ -1,44 +1,225 @@
-.grid-container-inside {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  padding: 10px;
-}
-
-.grid-item {
-  background-color: rgba(212, 14, 14, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
-}
-
-/* Style the header */
-.header {
-  grid-area: header;
-  background-color: #f1f1f1;
-  padding: 30px;
-  text-align: center;
-  font-size: 35px;
-}
-
-/* The grid container */
-.grid-container {
-  display: grid;
-  grid-template-areas:
-    "header header header header header header"
-    "left middle middle middle middle right"
-    "footer footer footer footer footer footer";
-  /* grid-column-gap: 10px; - if you want gap between the columns */
-}
-
-/* Style the footer */
-.footer {
-  grid-area: footer;
-  background-color: #f1f1f1;
-  padding: 10px;
-  text-align: center;
-}
-
 .App {
+  background-color: #0777ac;
   text-align: center;
+  max-width: 1000px;
+  margin: auto;
+}
+
+html,
+body,
+#app,
+#app > div {
+  height: 98%;
+  background-color: #0777ac;
+  overflow-y: auto;
+}
+
+/** Corpo **/
+.Listagem {
+  margin: auto;
+  width: 90%;
+}
+
+.ElementoListagem {
+  text-align: left;
+  margin-bottom: 0.5em;
+  background-color: white;
+  padding: 0.3em;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+}
+.ElementoListagem p {
+  color: #282c34;
+  flex: 10;
+  font-size: calc(10px + 0.5vmin);
+  cursor: pointer;
+  vertical-align: middle;
+  margin: 10px;
+}
+
+.ElementRemove {
+  color: red;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  cursor: pointer;
+  border: 1px solid red;
+}
+
+.MainBodyClean {
+  width: 90%;
+  margin: auto;
+}
+
+.MainBody {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.Pesquisa {
+  width: 90%;
+  margin: auto;
+  padding: 1em;
+}
+
+.Pesquisa div {
+  width: 90%;
+  margin: auto;
+  padding: 1em;
+}
+
+.Pesquisa input[type="text"] {
+  width: 400px;
+  padding: 1em;
+  margin: auto;
+}
+
+.Pesquisa button {
+  width: 100px;
+  cursor: pointer;
+  padding: 1em;
+}
+
+.Altera {
+  display: block;
+  width: 90%;
+  margin: auto;
+}
+
+.Linha {
+  display: flex;
+  width: 90%;
+  padding: 1em;
+  margin: 1em;
+}
+
+.column {
+  flex: 50%;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 2;
+}
+
+.column input {
+  margin: 0.5em;
+}
+
+.bodyleft {
+  width: 85%;
+}
+
+.bodyright {
+  width: 14%;
+}
+
+.Linha:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+
+/** Informacao **/
+
+.Informacao {
+  width: max-content;
+  margin: auto;
+  border: 0.2em;
+  font-weight: bold;
+  padding: 1em;
+}
+
+/** Mostra e Escondde **/
+
+.EscondeSelecao {
+  visibility: hidden;
+  display: none;
+}
+
+.MostraSelecao {
+  border: 2px solid wheat;
+  visibility: visible;
+  display: block;
+  font-weight: bold;
+  width: 90%;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+}
+.MostraSelecao h4 {
+  text-align: center;
+  color: wheat;
+}
+.MostraSelecao p {
+  border-bottom: 1px solid wheat;
+  padding: 0.5em;
+}
+.EscondeButtons {
+  visibility: hidden;
+  display: none;
+}
+
+.MostraButtons {
+  visibility: visible;
+  text-align: center;
+  display: block;
+}
+
+.Mostra h3 {
+  text-align: center;
+}
+
+.Mostra p {
+  visibility: visible;
+  text-align: left;
+}
+
+/** Input **/
+
+input[type="text"] {
+  width: 100%;
+}
+input[type="password"] {
+  width: 100%;
+}
+
+/** Butao **/
+.mainbutton {
+  width: 100%;
+  color: black;
+  font-weight: bold;
+  background-color: burlywood;
+}
+
+/** Especificos **/
+.Login {
+  align-items: center;
+  padding-top: 10em;
+  margin: auto;
+  width: 90%;
+}
+.Login input[type="text"] {
+  width: 20em;
+}
+.Login input[type="password"] {
+  width: 20em;
+}
+
+.Button {
+  padding: 0.5em;
+  margin-top: 2em;
+  width: 10em;
 }

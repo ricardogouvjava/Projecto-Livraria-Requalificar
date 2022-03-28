@@ -8,6 +8,9 @@ export function AutorService(props) {
   const [autorLista, setAutoresLista] = useState([]);
   const [novoAutor, setNovoAutor] = useState({ nome: "", email: "" });
   const [autorSelecionado, setAutorSelecionado] = useState({});
+  const [info, setInfo] = useState("");
+  const [restultados, setResultados] = useState([]);
+  const [pesquisa, setPesquisa] = useState("");
 
   useEffect(() => {
     fetchAutores();
@@ -35,7 +38,7 @@ export function AutorService(props) {
         console.log(parsedResponse.autores);
       })
       .catch((error) => {
-        alert(error);
+        setInfo(error);
       });
   }
 
@@ -55,8 +58,6 @@ export function AutorService(props) {
           if (response.status !== 200) {
             throw new Error("Falha adicionar autor");
           }
-          console.log(response);
-
           return response.json();
         })
         .then((parsedResponse) => {
@@ -71,7 +72,8 @@ export function AutorService(props) {
           fetchAutores();
         })
         .catch((error) => {
-          alert(error);
+          console.log(error);
+          setInfo("Falha em adicionar Autor");
         });
     }
   }
@@ -104,7 +106,7 @@ export function AutorService(props) {
         setAutoresLista(autorListaaux);
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
   }
 
@@ -136,68 +138,112 @@ export function AutorService(props) {
         fetchAutores();
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
   }
 
+  function getAutoresByPesquisa() {
+    fetch(API_URL + "/procuraAutor/" + pesquisa, {
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 204) {
+          setInfo("Nenhum Autor Encontrado");
+          setResultados([]);
+        } else if (response.status !== 200 && response.status !== 204) {
+          throw new Error("error");
+        } else {
+          return response.json();
+        }
+      })
+      .then((parsedResponse) => {
+        setResultados(parsedResponse.livros);
+      })
+      .catch((error) => {
+        if (error === undefined) {
+          setInfo("Nenhum Autor Encontrado");
+          setResultados([]);
+        }
+      });
+  }
   return (
     <>
-      <header className="CabecalhoListagem">
-        <h1>Autores</h1>
-      </header>
-      <section className="Listagem">
-        <div className="ElementoAutor">
-          <p>{"ID-/-NOME-/-EMAIL"}</p>
-        </div>
-        {autorLista.map(function (element, index) {
-          return (
-            <div key={index} className="ElementoAutor">
-              <p onClick={() => setAutorSelecionado(element)}>
-                {element.id + " , " + element.nome + " , " + element.email}
-              </p>
-              <button
-                className="ElementRemove"
-                onClick={() => removeAutor(element.id)}
-              >
-                X
-              </button>
-            </div>
-          );
-        })}
-      </section>
+      <div className="MainBody">
+        <div className="bodyleft">
+          <div>"opcao"</div>
 
-      <div>
-        <div className="row">
-          <div className="column">Autor Selecionado :</div>
-          <div className="column">
-            {autorSelecionado.nome + " , " + autorSelecionado.email}
-          </div>
-        </div>
-        <div className="row">
-          <div className="column">
-            <p>Nome:</p>
+          <div className="Pesquisa">
+            <h3>Pesquisa Autores</h3>
             <input
               type="text"
-              value={novoAutor.name}
-              onChange={(e) => {
-                setNovoAutor({ ...novoAutor, nome: e.target.value });
+              name="Pesquisa"
+              value={pesquisa}
+              onChange={(char) => {
+                setPesquisa(char.target.value);
               }}
-            />
+            ></input>
+            <button className="butaoPesquisa" onClick={getAutoresByPesquisa}>
+              Pesquisa
+            </button>
           </div>
-          <div className="column">
-            <p>Email:</p>
-            <input
-              type="text"
-              value={novoAutor.email}
-              onChange={(e) => {
-                setNovoAutor({ ...novoAutor, email: e.target.value });
-              }}
-            />
+          <section className="Listagem">
+            {autorLista.map(function (element, index) {
+              return (
+                <div key={index} className="ElementoListagem">
+                  <p onClick={() => setAutorSelecionado(element)}>
+                    {element.id + " , " + element.nome + " , " + element.email}
+                  </p>
+                  <button
+                    className="ElementRemove"
+                    onClick={() => removeAutor(element.id)}
+                  >
+                    X
+                  </button>
+                </div>
+              );
+            })}
+          </section>
+
+          <div className="Altera">
+            <div className="Linha">
+              <div className="column">Autor Selecionado :</div>
+              <div className="column">
+                {autorSelecionado.nome + " , " + autorSelecionado.email}
+              </div>
+            </div>
+            <div className="Linha">
+              <div className="column">
+                <p>Nome:</p>
+                <input
+                  type="text"
+                  value={novoAutor.name}
+                  onChange={(e) => {
+                    setNovoAutor({ ...novoAutor, nome: e.target.value });
+                  }}
+                />
+              </div>
+              <div className="column">
+                <p>Email:</p>
+                <input
+                  type="text"
+                  value={novoAutor.email}
+                  onChange={(e) => {
+                    setNovoAutor({ ...novoAutor, email: e.target.value });
+                  }}
+                />
+              </div>
+            </div>
           </div>
+          <div className="Informacao">Info: {info}</div>
         </div>
-        <p>Opcoes:</p>
-        <button onClick={addAutor}>Adiciona Autor</button>
-        <button onClick={updateAutor}>Update Autor</button>
+        <div className="bodyright">
+          <p>Opcoes:</p>
+          <button onClick={addAutor}>Adiciona Autor</button>
+          <button onClick={updateAutor}>Update Autor</button>
+        </div>
       </div>
     </>
   );

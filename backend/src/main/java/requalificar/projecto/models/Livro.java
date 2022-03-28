@@ -90,9 +90,19 @@ public class Livro
 	public int getStock() {
 		return stock;
 	}
-	public Date getDataLancamento()
+	public Date dataLancamento()
 	{
 		return dataLancamento;
+	}
+	
+	
+	public String getDataDeLancamento() {
+		String pattern = "dd-MM-yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		return simpleDateFormat.format(this.dataLancamento);
+	}
+	public void setDataLancamento(Date dataLancamento) {
+		this.dataLancamento = dataLancamento;
 	}
 	public int getPaginas() {
 		return paginas;

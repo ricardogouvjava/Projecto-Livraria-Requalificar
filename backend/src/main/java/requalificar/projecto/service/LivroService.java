@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import requalificar.projecto.models.Autor;
 import requalificar.projecto.models.Livro;
 import requalificar.projecto.repository.LivroRepo;
 
@@ -117,6 +119,30 @@ public class LivroService
 
 		return getLivros().stream().collect(Collectors.maxBy(compararVendido)).get();
 
+	}
+
+
+	public List<Livro> procuraLivros(String pesquisa)
+	{
+		List<Livro> livros = new ArrayList<Livro>();
+		
+		for(Livro livro : getLivros())
+		{
+			if(livro.getTitulo().contains(pesquisa))
+			{
+				livros.add(livro);
+			}
+			/*
+			 * if(!livro.getEditora().equals(null)) {
+			 * if(livro.getEditora().getNome().contains(pesquisa) &&
+			 * !livros.contains(livro)) { livros.add(livro); } }
+			 * if(livro.getAutores().size() > 0) { for(Autor autor : livro.getAutores()) {
+			 * if(autor.getNome().contains(pesquisa) && !livros.contains(livro)) {
+			 * livros.add(livro); } } }
+			 */
+		}
+
+		return livros;
 	}
 	
 

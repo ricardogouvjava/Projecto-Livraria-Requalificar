@@ -1,0 +1,21 @@
+.Navbar {
+  background-color: #0777ac;
+  display: block;
+  width: 100%;
+  padding: 1em;
+}
+
+.Navbar button {
+  background-color: wheat;
+  width: 100px;
+  height: 30px;
+}
+
+.Header {
+  background-color: #0777ac;
+  padding: 0.5em;
+  display: block;
+  width: 100%;
+  font-size: 3em;
+  color: wheat;
+}

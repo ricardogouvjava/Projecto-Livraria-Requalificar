@@ -56,7 +56,7 @@ public class ClienteController
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(srC);
 		}
 		
-		Cliente cliente =  clienteService.verificaLoginValido(clienteVerificar);
+		Cliente cliente =  clienteService.verificaLoginValido(clienteVerificar.getLogin(), clienteVerificar.getPassword());
 				
 		if(cliente == null)
 		{
@@ -223,6 +223,7 @@ public class ClienteController
 			srC.setAsError("LoginId nao existente");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srC);
 		}
+		
 		
 		SimpleResponseCliente srCT = verificaDados(aCliente);
 		

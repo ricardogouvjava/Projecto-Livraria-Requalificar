@@ -101,6 +101,18 @@ public class AutorService
 		}
 	}
 
+	public List<Autor> procuraAutor(String string) {
+		List<Autor> autores = new ArrayList<Autor>();
+		for(Autor autor : getAutores())
+		{
+			if(autor.getNome().contains(string))
+			{
+				autores.add(autor);
+			}
+		}
+		return autores;
+	}
+
 
 	
 }
