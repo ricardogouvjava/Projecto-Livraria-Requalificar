@@ -5,22 +5,20 @@ export function LivroForm({ childToParent }) {
     id: 0,
     autores: [
       {
-        id: 0,
         nome: "string",
         email: "string",
       },
     ],
     titulo: "string",
     isbn: "string",
-    preco: 0,
-    stock: 0,
-    dataDeLancamento: "string",
-    paginas: 0,
-    edicao: 0,
+    preco: 10,
+    stock: 10,
+    dataDeLancamento: "20-10-2000",
+    paginas: 100,
+    edicao: 1,
     sinopse: "string",
     imagem: "string",
     vendidos: 0,
-    dataLancamento: "2022-03-28T16:46:16.432Z",
   });
   return (
     <div className="LivroForm">
@@ -171,7 +169,7 @@ export function LivroForm({ childToParent }) {
           childToParent(livro);
         }}
       >
-        AdicionaLivro
+        Adiciona Livro
       </button>
     </div>
   );

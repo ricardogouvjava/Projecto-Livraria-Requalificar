@@ -25,6 +25,9 @@ public class Utilizador
 	@Column(name="data_de_Nascimento")
 	private Date dataDeNascimento;
 	
+	@Column(name="email")
+	private String email;
+	
 	private static PasswordEncryptor encriptador = new BasicPasswordEncryptor();
 	
 	/* Metodos
@@ -66,6 +69,10 @@ public class Utilizador
 		return password;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
 	//Setters
 	public void setNome(String nome) 
 	{
@@ -87,6 +94,12 @@ public class Utilizador
 		this.dataDeNascimento = dataDeNascimento;
 	}
 	
+	
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getDataDeNascimento() throws ParseException 
 	{
 		String pattern = "dd-MM-yyyy";

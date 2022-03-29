@@ -20,8 +20,7 @@ public class Cliente extends Utilizador
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "cliente", targetEntity=Venda.class)
 	private List<Venda> compras = new ArrayList<Venda>();
 
-	@Column(name="email")
-	private String email;
+
 	
 	
 	@Override
@@ -44,17 +43,6 @@ public class Cliente extends Utilizador
 	public void setCompras(List<Venda> compras) {
 		this.compras = compras;
 	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 
 	public Long getId() {
 		return id;

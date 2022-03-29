@@ -40,8 +40,8 @@ public class ClienteController
 	
 	/** Verifia Login e devolve cliente **/
 	@CrossOrigin
-	@PostMapping("/verificaLogin")
-	public ResponseEntity<SimpleResponse> verificaLogin(@RequestBody WrapperVerificaLogin clienteVerificar)
+	@PostMapping("/verificaLoginCliente")
+	public ResponseEntity<SimpleResponse> verificaLoginCliente(@RequestBody WrapperVerificaLogin clienteVerificar)
 	{
 		SimpleResponseCliente srC = new SimpleResponseCliente();
 		if(clienteVerificar.equals(null)) 

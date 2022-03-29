@@ -4,7 +4,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { Navbar } from "./Componentes/NavBar/Navbar";
 import { CriarConta } from "./Componentes/CriarConta/CriarConta";
-import { HomePage } from "./Componentes/Home/Home";
 import { PesquisaService } from "./Componentes/Pesquisa/Pesquisa";
 import { Login } from "./Componentes/Login/Login";
 import { ClienteService } from "./Componentes/Cliente/Cliente";
@@ -12,19 +11,30 @@ import { AutorService } from "./Componentes/Autor/Autor";
 import { FuncionarioService } from "./Componentes/Funcionario/Funcionario";
 import { Footer } from "./Footer/Footer";
 import { LivroService } from "./Componentes/Livro/Livro";
+import { HomePageFuncionario } from "./Componentes/Home/HomePageFuncionario";
+import { HomePageCliente } from "./Componentes/Home/HomePageCliente";
 
 function App() {
   const [user, setUser] = useState();
+  const [tipo, setTipo] = useState();
   return (
     <div className="App">
       <BrowserRouter>
-        {user && <Navbar user={user}></Navbar>}
+        {user && tipo && <Navbar user={user} tipo={tipo}></Navbar>}
         <Routes>
           <Route
-            path="/Home"
+            path="/HomeFuncionario"
             element={
               <VerificaUser user={user}>
-                <HomePage user={user}></HomePage>
+                <HomePageFuncionario user={user}></HomePageFuncionario>
+              </VerificaUser>
+            }
+          ></Route>
+          <Route
+            path="/HomeCliente"
+            element={
+              <VerificaUser user={user}>
+                <HomePageCliente user={user}></HomePageCliente>
               </VerificaUser>
             }
           ></Route>
@@ -68,8 +78,18 @@ function App() {
               </VerificaUser>
             }
           />
-          <Route path="/*" element={<Login doLogin={setUser}></Login>} />
-          <Route path="/CriarConta" element={<CriarConta></CriarConta>}></Route>
+          <Route
+            path="/*"
+            element={<Login doLogin={setUser} setTipo={setTipo}></Login>}
+          />
+          <Route
+            path="/CriarContaFuncionario"
+            element={<CriarConta tipo={"Funcionario"}></CriarConta>}
+          />
+          <Route
+            path="/CriarContaCliente"
+            element={<CriarConta tipo={"Cliente"}></CriarConta>}
+          />
         </Routes>
         <Footer></Footer>
       </BrowserRouter>

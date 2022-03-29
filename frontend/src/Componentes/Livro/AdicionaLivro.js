@@ -5,13 +5,7 @@ import { LivroForm } from "./LivroForm";
 const API_URL = "http://localhost:8080";
 
 export function AdicionaLivro(props) {
-  const { params } = useParams();
-  const [id, setId] = useState("1");
   const [info, setInfo] = useState("");
-
-  const childToParent = (data) => {
-    addLivro(data);
-  };
 
   function addLivro(data) {
     fetch(API_URL + "/addLivro", {

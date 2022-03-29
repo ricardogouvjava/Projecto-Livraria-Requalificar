@@ -1,0 +1,35 @@
+.DadosUser {
+  width: 30em;
+  margin: auto;
+  text-align: left;
+}
+.DadosUser p {
+  padding-top: 0.5em;
+  font-size: 1em;
+  height: 1em;
+  font-weight: bold;
+}
+
+.DivButtonCriarConta {
+  padding: 0.5em;
+  margin: 2em;
+  text-align: center;
+}
+
+.DivButtonCriarConta button {
+  padding: 1em;
+  margin: 2em;
+  text-align: center;
+}
+
+.DadosUser input[type="text"] {
+  width: 100%;
+  padding: 0.6em;
+  height: 1em;
+}
+
+.DadosUser input[type="password"] {
+  width: 100%;
+  padding: 0.6em;
+  height: 1em;
+}

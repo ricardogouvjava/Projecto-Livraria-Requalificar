@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import requalificar.projecto.models.Cliente;
 import requalificar.projecto.repository.ClienteRepo;
-import requalificar.projecto.utils.WrapperVerificaLogin;
 
 @Service
 public class ClienteService 

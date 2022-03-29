@@ -1,0 +1,30 @@
+.Login {
+  align-items: center;
+  padding-top: 10em;
+  margin: auto;
+  width: 90%;
+}
+.Login input[type="text"] {
+  width: 20em;
+  padding: 0em 1em;
+  background-color: wheat;
+}
+.Login input[type="password"] {
+  width: 20em;
+  padding: 0em 1em;
+  background-color: rgb(232, 240, 254);
+}
+
+.SelectUser {
+  padding: 0.5em 1em;
+  margin-top: 3em;
+  width: 11em;
+  background-color: rgb(232, 240, 254);
+}
+
+.Login button {
+  padding: 0.5em 1em;
+  margin-top: 3em;
+  width: 11em;
+  background-color: rgb(232, 240, 254);
+}

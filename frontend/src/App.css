@@ -212,25 +212,8 @@ input[type="password"] {
   font-weight: bold;
   background-color: wheat;
 }
-.CriaConta {
-  padding: 0.4em;
-  margin: 3em;
-  cursor: pointer;
-}
 
 /** Especificos **/
-.Login {
-  align-items: center;
-  padding-top: 10em;
-  margin: auto;
-  width: 90%;
-}
-.Login input[type="text"] {
-  width: 20em;
-}
-.Login input[type="password"] {
-  width: 20em;
-}
 
 .Button {
   padding: 0.5em;

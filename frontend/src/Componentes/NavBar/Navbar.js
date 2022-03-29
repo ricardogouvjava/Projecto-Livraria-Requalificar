@@ -1,48 +1,29 @@
-import { useNavigate } from "react-router-dom";
-import "./Navbar.css";
+import { useState, React, useEffect } from "react";
+import { NavBarCliente } from "./NavBarCliente";
+import { NavBarFuncionario } from "./NavBarFuncionario";
 
 export function Navbar(props) {
-  const navigate = useNavigate();
-  return (
-    <>
-      <div className="Header">Livraria Requalificar</div>
-      <div className="Navbar">
-        <button
-          onClick={() => {
-            navigate("/home");
-          }}
-        >
-          Home
-        </button>
-        <button
-          onClick={() => {
-            navigate("/Pesquisa");
-          }}
-        >
-          Pesquisa
-        </button>
-        <button
-          onClick={() => {
-            navigate("/Cliente/:id");
-          }}
-        >
-          Cliente
-        </button>
-        <button
-          onClick={() => {
-            navigate("/Autor");
-          }}
-        >
-          Autor
-        </button>
-        <button
-          onClick={() => {
-            navigate("/Funcionario");
-          }}
-        >
-          Funcionario
-        </button>
-      </div>
-    </>
-  );
+  const [opcao, setOpcao] = useState();
+
+  useEffect(() => {
+    verificaTipo();
+  }, []);
+
+  function verificaTipo() {
+    if (props.tipo === "Funcionario") {
+      console.log("Cliente Passou");
+      setOpcao(
+        <NavBarFuncionario
+          user={props.user}
+          tipo={props.tipo}
+        ></NavBarFuncionario>
+      );
+    } else if (props.tipo === "Cliente") {
+      console.log("Funcionario Passou");
+      setOpcao(
+        <NavBarCliente user={props.user} tipo={props.tipo}></NavBarCliente>
+      );
+    }
+  }
+  return <div>{opcao}</div>;
 }
