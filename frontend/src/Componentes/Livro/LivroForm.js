@@ -3,8 +3,11 @@ import { useState, React, useEffect } from "react";
 import "./LivroForm.css";
 const API_URL = "http://localhost:8080";
 export function LivroForm({ childToParent }) {
+  const [autor, setAutor] = useState([]);
   const [autores, setAutores] = useState([]);
+  const autoresToLivro = [];
   const [info, setInfo] = useState("");
+
   const [livro, setLivroInfo] = useState({
     id: 0,
     autores: [
@@ -54,6 +57,22 @@ export function LivroForm({ childToParent }) {
         setInfo("Nenhum Autor Encontrado");
         setAutores([]);
       });
+  }
+
+  function addAutorToLivro() {
+    {
+      const aux = autoresToLivro.push(autor);
+      setAutores(aux);
+      console.log(autoresToLivro);
+
+      /*livro = {
+      ...livro,
+      autores: {
+        ...livro.autores,
+        ArrayObject: [...livro.autores.ArrayObject, autor],
+      },
+    }; */
+    }
   }
 
   return (
@@ -192,16 +211,21 @@ export function LivroForm({ childToParent }) {
         ></input>
       </p>*/}
 
-      <select value="Autores" id="Autores">
+      <select
+        value="Autores"
+        id="Autores"
+        onChange={(e) => {
+          setAutor(e.target.value);
+        }}
+      >
         {autores.map((option) => (
-          <option key={option.index} value={option.key}>
+          <option key={option.index} value={option.index}>
             {option.nome}
           </option>
         ))}
-        {console.log(autores)}
       </select>
       <br></br>
-
+      <button onClick={addAutorToLivro}>addAutor</button>
       <button
         onClick={() => {
           childToParent(livro);
