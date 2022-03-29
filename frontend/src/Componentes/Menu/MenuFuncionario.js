@@ -1,12 +1,13 @@
 import { useState } from "react";
-import "./Funcionario.css";
-import { PesquisaLivro } from "../Livro/PesquisaLivro";
+import "./Menu.css";
+import { PesquisaLivro } from "../Pesquisa/PesquisaLivro";
 import { AdicionaLivro } from "../Livro/AdicionaLivro";
+import { PesquisaAutor } from "../Pesquisa/PesquisaAutor";
 
 const API_URL = "http://localhost:8080";
 //const API_URL = "https://livrariarequalificar.herokuapp.com/";
 
-export function FuncionarioService(props) {
+export function MenuFuncionario(props) {
   const [mostraLivroMenu, setMostraLivroMenu] = useState(false);
   const [mostraAutorMenu, setMostraAutorMenu] = useState(false);
   const [mostraEditoraMenu, setMostraEditoraMenu] = useState(false);
@@ -20,6 +21,10 @@ export function FuncionarioService(props) {
     SetOpcao(<AdicionaLivro></AdicionaLivro>);
   }
 
+  function pesuisaAutor() {
+    SetOpcao(<PesquisaAutor></PesquisaAutor>);
+  }
+
   return (
     <>
       <div className="MainBody">
@@ -27,7 +32,6 @@ export function FuncionarioService(props) {
           <div>{opcao}</div>
         </div>
         <div className="bodyright">
-          <h1>Menu</h1>
           <div>
             <button
               className="mainbutton"

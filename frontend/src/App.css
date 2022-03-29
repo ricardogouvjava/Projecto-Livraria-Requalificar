@@ -70,29 +70,6 @@ h3 {
   width: 70%;
   margin: auto;
 }
-.Pesquisa {
-  width: 90%;
-  margin: auto;
-  padding: 1em;
-}
-
-.Pesquisa div {
-  width: 90%;
-  margin: auto;
-  padding: 1em;
-}
-
-.Pesquisa input[type="text"] {
-  width: 400px;
-  padding: 1em;
-  margin: auto;
-}
-
-.Pesquisa button {
-  width: 100px;
-  cursor: pointer;
-  padding: 1em;
-}
 
 .Altera {
   display: block;

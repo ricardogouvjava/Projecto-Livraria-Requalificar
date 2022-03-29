@@ -31,6 +31,7 @@ export function CriarContaFuncionario() {
         .then((parsedResponse) => {
           console.log(parsedResponse);
           setInfo("Sucesso em adicionar Funcionario");
+          navigate("/");
         })
         .catch((error) => {
           console.log(error);

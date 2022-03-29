@@ -1,0 +1,28 @@
+.Pesquisa {
+  width: 90%;
+  margin: auto;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.Pesquisa div {
+  width: 90%;
+  margin: auto;
+  padding: 1em;
+}
+
+.Pesquisa input[type="text"] {
+  width: 400px;
+  padding: 0.5em;
+  margin: auto;
+}
+
+.Pesquisa button {
+  width: 100px;
+  cursor: pointer;
+  padding: 0.5em;
+}
+
+.Pesquisa h3 {
+  padding: 0.1em;
+}

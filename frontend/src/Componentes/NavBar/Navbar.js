@@ -11,7 +11,7 @@ export function Navbar(props) {
 
   function verificaTipo() {
     if (props.tipo === "Funcionario") {
-      console.log("Cliente Passou");
+      console.log("Funcionario passou para a navbar Funcionario");
       setOpcao(
         <NavBarFuncionario
           user={props.user}
@@ -19,7 +19,7 @@ export function Navbar(props) {
         ></NavBarFuncionario>
       );
     } else if (props.tipo === "Cliente") {
-      console.log("Funcionario Passou");
+      console.log("Cliente passou para a navbar Cliente");
       setOpcao(
         <NavBarCliente user={props.user} tipo={props.tipo}></NavBarCliente>
       );

@@ -27,7 +27,7 @@ const data = {
 export function LivroService(props) {
   return (
     <div className="LivroBody">
-      <div className="bodyleft">
+      <div className="Livrobodyleft">
         <div>Titulo: {data.titulo}</div>
         <div>ISBN: {data.isbn}</div>
         <div>Data de Lancamento: </div>
@@ -38,7 +38,7 @@ export function LivroService(props) {
         <div>Sinopse: </div>
         <div>vendidos: </div>
       </div>
-      <div className="bodyright">
+      <div className="Livrobodyright">
         <img src={imageteste} alt="image"></img>
       </div>
     </div>

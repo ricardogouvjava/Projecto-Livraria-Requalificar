@@ -17,7 +17,7 @@ export function LivroForm({ childToParent }) {
     paginas: 100,
     edicao: 1,
     sinopse: "string",
-    imagem: "string",
+    imagem: "srcComponentesLivroLivroForm.js",
     vendidos: 0,
   });
   return (

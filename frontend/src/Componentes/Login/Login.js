@@ -6,7 +6,6 @@ const API_URL = "http://localhost:8080";
 
 export function Login(props) {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(0);
   const [userchek, setUsercheck] = useState({ login: "", password: "" });
   const [info, setInfo] = useState("Aguarda Login!");
   const [tipo, setUserTipo] = useState("Cliente");
@@ -37,13 +36,14 @@ export function Login(props) {
           return response.json();
         })
         .then((parsedResponse) => {
+          console.log(parsedResponse);
           return parseInt(parsedResponse.cliente.id);
         })
         .then((idCliente) => {
-          props.doLogin(idCliente);
+          console.log(idCliente);
+          props.setUser(idCliente);
           props.setTipo(tipo);
-          navigate("/HomeCliente");
-          return idCliente;
+          navigate("/HomeCliente/:id");
         })
         .catch((error) => {
           console.log(error);
@@ -73,10 +73,9 @@ export function Login(props) {
           return parseInt(parsedResponse.funcionario.id);
         })
         .then((idFuncionario) => {
-          props.doLogin(idFuncionario);
+          props.setUser(idFuncionario);
           props.setTipo(tipo);
-          navigate("/HomeFuncionario");
-          return idFuncionario;
+          navigate("/HomeFuncionario/:id");
         })
         .catch((error) => {
           console.log(error);

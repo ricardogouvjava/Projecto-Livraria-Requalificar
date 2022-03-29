@@ -1,15 +1,19 @@
 import { useNavigate } from "react-router-dom";
+import { Logout } from "./Logout";
 import "./Navbar.css";
 
-export function NavBarCliente() {
+export function NavBarCliente(props) {
   const navigate = useNavigate();
+
   return (
     <>
+      {console.log("Entrou na NavBar Cliente id:" + props.user)}
+      {console.log("Entrou na NavBar Cliente id:" + props.tipo)}
       <div className="Header">Livraria Requalificar</div>
       <div className="Navbar">
         <button
           onClick={() => {
-            navigate("/HomeCliente");
+            navigate("/HomeCliente/:id");
           }}
         >
           Home
@@ -30,18 +34,13 @@ export function NavBarCliente() {
         </button>
         <button
           onClick={() => {
-            navigate("/Cliente/:id");
+            navigate("/MenuCliente/:id");
           }}
         >
-          Perfil
+          Menu
         </button>
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Logout
-        </button>
+
+        <Logout user={props.user}></Logout>
       </div>
     </>
   );

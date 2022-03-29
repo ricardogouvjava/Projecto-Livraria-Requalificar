@@ -7,23 +7,23 @@
   background-color: wheat;
 }
 
-.bodyleft {
+.Livrobodyleft {
   width: 65%;
   justify-content: center;
 }
 
-.bodyleft > div {
+.Livrobodyleft > div {
   text-align: left;
   padding: 1em 0em 1em 1em;
   border-left: 3px solid #0777ac;
 }
 
-.bodyright {
+.Livrobodyright {
   width: 35%;
   display: flex;
   justify-content: center;
 }
-.bodyright img {
+.Livrobodyright img {
   width: 80%;
   padding: 3em;
 }

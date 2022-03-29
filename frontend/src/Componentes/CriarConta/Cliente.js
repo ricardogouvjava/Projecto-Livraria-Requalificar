@@ -30,7 +30,7 @@ export function CriaContaCliente(props) {
         })
         .then((parsedResponse) => {
           console.log(parsedResponse);
-          setInfo("Sucesso em adicionar User");
+          setInfo("Sucesso em adicionar Cliente");
           navigate("/");
         })
         .catch((error) => {

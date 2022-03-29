@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Logout } from "./Logout";
 import "./Navbar.css";
 
 export function NavBarFuncionario() {
@@ -9,7 +10,7 @@ export function NavBarFuncionario() {
       <div className="Navbar">
         <button
           onClick={() => {
-            navigate("/HomeFuncionario");
+            navigate("/HomeFuncionario/:id");
           }}
         >
           Home
@@ -23,25 +24,12 @@ export function NavBarFuncionario() {
         </button>
         <button
           onClick={() => {
-            navigate("/Autor");
-          }}
-        >
-          Autor
-        </button>
-        <button
-          onClick={() => {
-            navigate("/Funcionario");
+            navigate("/MenuFuncionario");
           }}
         >
           Opcoes
         </button>
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Logout
-        </button>
+        <Logout></Logout>
       </div>
     </>
   );

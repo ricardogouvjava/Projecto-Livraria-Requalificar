@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, React } from "react";
+import { GetAutores } from "./GetAutores";
 import "./Autor.css";
 
 const API_URL = "http://localhost:8080";
@@ -17,29 +18,13 @@ export function AutorService(props) {
   }, []);
 
   function fetchAutores() {
-    fetch(API_URL + "/getAutores", {
-      mode: "cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status == 204) {
-          console.log(response);
-          throw new Error("Base de dados vazia");
-        }
-        if (response.status !== 200) {
-          throw new Error("Falha encontar Autores");
-        }
-        return response.json();
-      })
-      .then((parsedResponse) => {
-        setAutoresLista(parsedResponse.autores);
-        console.log(parsedResponse.autores);
-      })
-      .catch((error) => {
-        setInfo(error);
-      });
+    let autores = GetAutores();
+    if (autores.length < 1) {
+      setInfo("Base de dados vazia");
+    } else if (autores.length >= 1) {
+      setAutoresLista(autores);
+      setInfo("Autores encontrados");
+    }
   }
 
   function addAutor() {

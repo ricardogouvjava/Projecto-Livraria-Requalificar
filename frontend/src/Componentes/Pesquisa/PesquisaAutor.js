@@ -1,54 +1,43 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GetAutores } from "../Autor/GetAutores";
+import "./Pesquisa.css";
 
 const API_URL = "http://localhost:8080";
-const info1 = "Pode pesquisar por titulo autor ou editora.";
+const info1 = "Pode pesquisar por nome.";
 
-export function PesquisaLivro(props) {
+export function PesquisaAutor(props) {
   const navigate = useNavigate();
   const [pesquisa, setPesquisa] = useState("all");
   const [restultados, setResultados] = useState([]);
   const [info, setInfo] = useState(info1);
   const [selecinou, SetSelecinou] = useState(false);
   const [selecionado, setSelecionado] = useState({
-    titulo: "",
-    dataDeLancamento: "",
-    paginas: "",
+    nome: "",
+    email: "",
+    editora: "",
+    livros: [],
   });
 
   useEffect(() => {
-    getLivros();
+    fetchAutores();
   }, []);
 
-  function getLivros() {
-    fetch(API_URL + "/getLivros", {
-      mode: "cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        console.log(response);
-        if (response.status === 204) {
-          console.log(response);
-          throw new Error("Base de dados vazia");
-        }
-        if (response.status !== 200) {
-          throw new Error("Falha encontar Livros");
-        }
-        return response.json();
-      })
-      .then((parsedResponse) => {
-        setResultados(parsedResponse.livros);
-        console.log(parsedResponse.livros);
-      })
-      .catch((error) => {
-        setInfo(error);
-      });
+  function fetchAutores() {
+    let autores = <GetAutores></GetAutores>;
+    {
+      console.log(autores);
+    }
+    if (autores.length < 1) {
+      setInfo("Base de dados vazia");
+    } else if (autores.length >= 1) {
+      setResultados(autores);
+      setInfo("Autores encontrados");
+    }
   }
 
-  function getLivrosByPesquisa() {
-    fetch(API_URL + "/procuraLivros/" + pesquisa, {
+  function getAutoresByPesquisa() {
+    fetch(API_URL + "/procuraAutores/" + pesquisa, {
       mode: "cors",
       headers: {
         "Content-type": "application/json",
@@ -56,8 +45,9 @@ export function PesquisaLivro(props) {
     })
       .then((response) => {
         if (response.status === 204) {
-          setInfo("Nenhum Livro Encontrado");
+          setInfo("Nenhum Autor Encontrado");
           setResultados([]);
+          return null;
         } else if (response.status !== 200 && response.status !== 204) {
           throw new Error("error");
         } else {
@@ -66,13 +56,11 @@ export function PesquisaLivro(props) {
       })
       .then((parsedResponse) => {
         setResultados(parsedResponse.livros);
-        setInfo("");
+        setInfo("Autores Encontrados");
       })
-      .catch((error) => {
-        if (error === undefined) {
-          setInfo("Nenhum Livro Encontrado");
-          setResultados([]);
-        }
+      .catch(() => {
+        setInfo("Nenhum Autor Encontrado");
+        setResultados([]);
       });
   }
 
@@ -80,7 +68,7 @@ export function PesquisaLivro(props) {
     <>
       <div className="MainBodyClean">
         <div className="Pesquisa">
-          <h3>Pesquisa de Livros</h3>
+          <h3>Pesquisa de Autores</h3>
           <div>
             <input
               type="text"
@@ -91,7 +79,7 @@ export function PesquisaLivro(props) {
               }}
             ></input>
           </div>
-          <button className="butaoPesquisa" onClick={getLivrosByPesquisa}>
+          <button className="butaoPesquisa" onClick={getAutoresByPesquisa}>
             Pesquisa
           </button>
         </div>
@@ -102,7 +90,7 @@ export function PesquisaLivro(props) {
           <p>Selecionado: {selecionado.titulo} </p>{" "}
           <button
             onClick={() => {
-              navigate("/Livro");
+              navigate("/Autor");
             }}
           >
             Ver Livro
@@ -119,11 +107,13 @@ export function PesquisaLivro(props) {
                   SetSelecinou(true);
                 }}
               >
-                {element.titulo +
+                {element.nome +
                   " , " +
-                  element.paginas +
+                  element.email +
                   " , " +
-                  element.dataDeLancamento}
+                  element.editora +
+                  ", " +
+                  element.livros}
               </div>
             );
           })}

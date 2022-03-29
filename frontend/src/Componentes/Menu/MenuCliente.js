@@ -1,9 +1,10 @@
 import { Navigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import "./Menu.css";
 
 const API_URL = "http://localhost:8080";
 
-export function ClienteService(props) {
+export function MenuCliente(props) {
   const { params } = useParams();
   const [id, setId] = useState("1");
   const [cliente, setCliente] = useState({});
@@ -156,31 +157,29 @@ export function ClienteService(props) {
               ></input>
             </p>
             <p>
-              <p>
-                Data de Nascimento: (dd/MM/yyyy)
-                <input
-                  type="text"
-                  value={updateCliente.dataDeNascimento}
-                  onChange={(e) => {
-                    setUpdateClienteInfo({
-                      ...updateClienteInfo,
-                      dataDeNascimento: e.target.value,
-                    });
-                  }}
-                ></input>
-              </p>
-              Email:
+              Data de Nascimento: (dd/MM/yyyy)
               <input
                 type="text"
-                value={updateCliente.email}
+                value={updateCliente.dataDeNascimento}
                 onChange={(e) => {
                   setUpdateClienteInfo({
                     ...updateClienteInfo,
-                    email: e.target.value,
+                    dataDeNascimento: e.target.value,
                   });
                 }}
               ></input>
             </p>
+            Email:
+            <input
+              type="text"
+              value={updateCliente.email}
+              onChange={(e) => {
+                setUpdateClienteInfo({
+                  ...updateClienteInfo,
+                  email: e.target.value,
+                });
+              }}
+            ></input>
             <button className="Button" onClick={updateCliente}>
               Update Info
             </button>
@@ -188,15 +187,15 @@ export function ClienteService(props) {
           <p className="Informacao">{info}</p>
         </div>
         <div className="bodyright">
-          <div>
-            <h3>Cliente</h3>
-          </div>
-          <button className="Button" onClick={onClickInfo}>
+          <button className="ButtonMenu" onClick={onClickInfo}>
             Info Cliente
           </button>
-          <button className="Button" onClick={onClickForm}>
+          <button className="ButtonMenu" onClick={onClickForm}>
             Altera Info
           </button>
+          <button className="ButtonMenu">Ver Historico</button>
+
+          <button className="ButtonMenu">Ver Cupoes</button>
         </div>
       </div>
     </>

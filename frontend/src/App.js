@@ -6,9 +6,9 @@ import { Navbar } from "./Componentes/NavBar/Navbar";
 import { CriarConta } from "./Componentes/CriarConta/CriarConta";
 import { PesquisaService } from "./Componentes/Pesquisa/Pesquisa";
 import { Login } from "./Componentes/Login/Login";
-import { ClienteService } from "./Componentes/Cliente/Cliente";
+import { MenuCliente } from "./Componentes/Menu/MenuCliente";
 import { AutorService } from "./Componentes/Autor/Autor";
-import { FuncionarioService } from "./Componentes/Funcionario/Funcionario";
+import { MenuFuncionario } from "./Componentes/Menu/MenuFuncionario";
 import { Footer } from "./Footer/Footer";
 import { LivroService } from "./Componentes/Livro/Livro";
 import { HomePageFuncionario } from "./Componentes/Home/HomePageFuncionario";
@@ -23,7 +23,7 @@ function App() {
         {user && tipo && <Navbar user={user} tipo={tipo}></Navbar>}
         <Routes>
           <Route
-            path="/HomeFuncionario"
+            path="/HomeFuncionario/:id"
             element={
               <VerificaUser user={user}>
                 <HomePageFuncionario user={user}></HomePageFuncionario>
@@ -31,7 +31,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/HomeCliente"
+            path="/HomeCliente/:id"
             element={
               <VerificaUser user={user}>
                 <HomePageCliente user={user}></HomePageCliente>
@@ -47,10 +47,10 @@ function App() {
             }
           ></Route>
           <Route
-            path="/Cliente/:id"
+            path="/MenuCliente/:id"
             element={
               <VerificaUser user={user}>
-                <ClienteService user={user}></ClienteService>
+                <MenuCliente user={user}></MenuCliente>
               </VerificaUser>
             }
           />
@@ -63,10 +63,10 @@ function App() {
             }
           />
           <Route
-            path="/Funcionario"
+            path="/MenuFuncionario"
             element={
               <VerificaUser user={user}>
-                <FuncionarioService user={user}></FuncionarioService>
+                <MenuFuncionario user={user}></MenuFuncionario>
               </VerificaUser>
             }
           />
@@ -80,7 +80,7 @@ function App() {
           />
           <Route
             path="/*"
-            element={<Login doLogin={setUser} setTipo={setTipo}></Login>}
+            element={<Login setUser={setUser} setTipo={setTipo}></Login>}
           />
           <Route
             path="/CriarContaFuncionario"
