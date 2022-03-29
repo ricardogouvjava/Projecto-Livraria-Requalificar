@@ -11,17 +11,16 @@ const data = {
       email: "string",
     },
   ],
-  titulo: "string",
+  titulo: "O mundo dos Stringd",
   isbn: "string",
   preco: 0,
   stock: 0,
-  dataDeLancamento: "string",
+  dataDeLancamento: "20-10-2008",
   paginas: 0,
   edicao: 0,
   sinopse: "string",
   imagem: "string",
   vendidos: 0,
-  dataLancamento: "2022-03-29T00:51:16.759Z",
 };
 
 export function LivroService(props) {

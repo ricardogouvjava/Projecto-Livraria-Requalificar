@@ -1,25 +1,61 @@
-import { useState, React } from "react";
+import imageteste from "./teste.jpg";
+import { useState, React, useEffect } from "react";
 import "./LivroForm.css";
+const API_URL = "http://localhost:8080";
 export function LivroForm({ childToParent }) {
+  const [autores, setAutores] = useState([]);
+  const [info, setInfo] = useState("");
   const [livro, setLivroInfo] = useState({
     id: 0,
     autores: [
       {
-        nome: "string",
+        nome: "Autor X",
         email: "string",
       },
     ],
-    titulo: "string",
-    isbn: "string",
+    titulo: "O melhor Livro de Sempre",
+    isbn: "0123455",
     preco: 10,
     stock: 10,
     dataDeLancamento: "20-10-2000",
     paginas: 100,
     edicao: 1,
     sinopse: "string",
-    imagem: "srcComponentesLivroLivroForm.js",
+    imagem: "C:\\Users\\Java08\\Desktop\\teste.jpg",
     vendidos: 0,
   });
+
+  useEffect(() => {
+    getAutores();
+  }, []);
+
+  function getAutores() {
+    fetch(API_URL + "/getAutores", {
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status == 204) {
+          setInfo("Nenhum Autor Encontrado");
+          setAutores([]);
+        } else if (response.status !== 200 && response.status !== 204) {
+          throw new Error("error");
+        } else {
+          return response.json();
+        }
+      })
+      .then((parsedResponse) => {
+        setAutores(parsedResponse.autores);
+        console.log("Autores Encontrados:" + parsedResponse);
+      })
+      .catch((error) => {
+        setInfo("Nenhum Autor Encontrado");
+        setAutores([]);
+      });
+  }
+
   return (
     <div className="LivroForm">
       <h4>Alterar Dados</h4>
@@ -62,7 +98,6 @@ export function LivroForm({ childToParent }) {
           }}
         ></input>
       </p>
-
       <p>
         <b>Edicao:</b>
         <input
@@ -115,7 +150,6 @@ export function LivroForm({ childToParent }) {
           }}
         ></input>
       </p>
-
       <p>
         <b>stock: </b>
         <input
@@ -142,8 +176,10 @@ export function LivroForm({ childToParent }) {
           }}
         ></input>
       </p>
+      <b>imagem: </b>
+      <img src={imageteste} style={{ width: "100px" }} alt="image"></img>
+      {/*
       <p>
-        <b>imagem: </b>
         <input
           type="text"
           value={livro.imagem}
@@ -154,15 +190,17 @@ export function LivroForm({ childToParent }) {
             });
           }}
         ></input>
-      </p>
+      </p>*/}
 
-      {/*
-      <select>
-        {options.map((option) => (
-          <option value={option.value}>{option.label}</option>
+      <select value="Autores" id="Autores">
+        {autores.map((option) => (
+          <option key={option.index} value={option.key}>
+            {option.nome}
+          </option>
         ))}
+        {console.log(autores)}
       </select>
-*/}
+      <br></br>
 
       <button
         onClick={() => {
@@ -171,6 +209,7 @@ export function LivroForm({ childToParent }) {
       >
         Adiciona Livro
       </button>
+      <div>{info}</div>
     </div>
   );
 }

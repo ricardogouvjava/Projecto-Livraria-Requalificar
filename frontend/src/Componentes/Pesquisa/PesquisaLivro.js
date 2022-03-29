@@ -7,7 +7,7 @@ const info1 = "Pode pesquisar por titulo autor ou editora.";
 
 export function PesquisaLivro(props) {
   const navigate = useNavigate();
-  const [pesquisa, setPesquisa] = useState("all");
+  const [pesquisa, setPesquisa] = useState("");
   const [restultados, setResultados] = useState([]);
   const [info, setInfo] = useState(info1);
   const [selecinou, SetSelecinou] = useState(false);
@@ -41,7 +41,7 @@ export function PesquisaLivro(props) {
       })
       .then((parsedResponse) => {
         setResultados(parsedResponse.livros);
-        console.log(parsedResponse.livros);
+        console.log("Livro Econtrados:" + parsedResponse);
       })
       .catch(() => {
         setInfo("Nenhum Livro Encontrado");

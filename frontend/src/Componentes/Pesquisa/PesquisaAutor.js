@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetAutores } from "../Autor/GetAutores";
 import "./Pesquisa.css";
 
 const API_URL = "http://localhost:8080";
@@ -9,7 +8,7 @@ const info1 = "Pode pesquisar por nome.";
 export function PesquisaAutor(props) {
   const navigate = useNavigate();
   const [pesquisa, setPesquisa] = useState("all");
-  const [restultados, setResultados] = useState([]);
+  const [autores, setAutores] = useState([]);
   const [info, setInfo] = useState(info1);
   const [selecinou, SetSelecinou] = useState(false);
   const [selecionado, setSelecionado] = useState({
@@ -23,15 +22,39 @@ export function PesquisaAutor(props) {
     fetchAutores();
   }, []);
 
+  function getAutores() {
+    fetch(API_URL + "/getAutores", {
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status == 204) {
+          console.log(response.status);
+          throw new Error("Base de dados vazia");
+        }
+        if (response.status !== 200) {
+          throw new Error("Falha encontar Autores");
+        }
+        return response.json();
+      })
+      .then((parsedResponse) => {
+        setAutores(parsedResponse);
+        console.log("Tentou bugar Clientes" + parsedResponse);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   function fetchAutores() {
-    let autores = <GetAutores></GetAutores>;
-    {
-      console.log(autores);
-    }
+    getAutores();
+    console.log(autores);
+
     if (autores.length < 1) {
       setInfo("Base de dados vazia");
     } else if (autores.length >= 1) {
-      setResultados(autores);
       setInfo("Autores encontrados");
     }
   }
@@ -46,7 +69,7 @@ export function PesquisaAutor(props) {
       .then((response) => {
         if (response.status === 204) {
           setInfo("Nenhum Autor Encontrado");
-          setResultados([]);
+          setAutores([]);
           return null;
         } else if (response.status !== 200 && response.status !== 204) {
           throw new Error("error");
@@ -55,12 +78,12 @@ export function PesquisaAutor(props) {
         }
       })
       .then((parsedResponse) => {
-        setResultados(parsedResponse.livros);
+        setAutores(parsedResponse.livros);
         setInfo("Autores Encontrados");
       })
       .catch(() => {
         setInfo("Nenhum Autor Encontrado");
-        setResultados([]);
+        setAutores([]);
       });
   }
 
@@ -79,7 +102,7 @@ export function PesquisaAutor(props) {
               }}
             ></input>
           </div>
-          <button className="butaoPesquisa" onClick={getAutoresByPesquisa}>
+          <button className="butaoPesquisa" onClick={fetchAutores}>
             Pesquisa
           </button>
         </div>
@@ -97,7 +120,7 @@ export function PesquisaAutor(props) {
           </button>
         </div>
         <div className="Listagem">
-          {restultados.map(function (element, index) {
+          {autores.map(function (element, index) {
             return (
               <div
                 key={index}
