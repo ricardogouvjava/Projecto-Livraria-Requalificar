@@ -65,5 +65,28 @@ public class EditoraService
 		return editoraRepo.findById(id);
 	}
 
+	public boolean updateEditora(Editora editora) {
+		try {
+			Editora editoraToChange = editoraRepo.findById(editora.getId()).get();
+			editoraToChange.setNome(editora.getNome());
+			editoraToChange.setMorada(editora.getMorada());
+			editoraRepo.save(editoraToChange);
+			return true;
+		}catch(Exception e) {
+		return true;
+		}
+	}
 
+	public List<Editora> procuraEditora(String string) {
+		List<Editora> editoras = new ArrayList<Editora>();
+		for(Editora editora : getEditoras())
+		{
+			if(editora.getNome().contains(string) && editora.getMorada().contains(string)) {
+				editoras.add(editora);
+			}
+		}
+		return editoras;
+	}
+
+	
 }

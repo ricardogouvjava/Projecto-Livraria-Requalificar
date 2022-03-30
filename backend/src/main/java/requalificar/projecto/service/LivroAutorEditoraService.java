@@ -95,6 +95,7 @@ public class LivroAutorEditoraService
 			}
 				
 			editoraRepo.delete(editora);
+			return true;
 		}
 		catch (Exception e) 
 		{

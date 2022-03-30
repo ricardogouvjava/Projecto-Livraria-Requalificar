@@ -7,12 +7,12 @@ import { CriarConta } from "./Componentes/CriarConta/CriarConta";
 import { PesquisaService } from "./Componentes/Pesquisa/Pesquisa";
 import { Login } from "./Componentes/Login/Login";
 import { MenuCliente } from "./Componentes/Menu/MenuCliente";
-import { AutorService } from "./Componentes/Autor/Autor";
 import { MenuFuncionario } from "./Componentes/Menu/MenuFuncionario";
 import { Footer } from "./Footer/Footer";
 import { LivroService } from "./Componentes/Livro/Livro";
 import { HomePageFuncionario } from "./Componentes/Home/HomePageFuncionario";
 import { HomePageCliente } from "./Componentes/Home/HomePageCliente";
+import { AutorService } from "./Componentes/Autor/AutorService";
 
 function App() {
   const [user, setUser] = useState();
@@ -55,7 +55,7 @@ function App() {
             }
           />
           <Route
-            path="/Autor"
+            path="/AutorService"
             element={
               <VerificaUser user={user}>
                 <AutorService user={user}></AutorService>

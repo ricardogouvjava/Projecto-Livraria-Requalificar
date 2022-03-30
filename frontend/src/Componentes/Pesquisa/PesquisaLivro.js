@@ -41,7 +41,7 @@ export function PesquisaLivro(props) {
       })
       .then((parsedResponse) => {
         setResultados(parsedResponse.livros);
-        console.log("Livro Econtrados:" + parsedResponse);
+        console.log("Livro Econtrados:" + parsedResponse.livros);
       })
       .catch(() => {
         setInfo("Nenhum Livro Encontrado");

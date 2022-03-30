@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import requalificar.projecto.dto.SimpleResponse;
 import requalificar.projecto.dto.SimpleResponseEditora;
+import requalificar.projecto.dto.SimpleResponseEditoras;
 import requalificar.projecto.dto.SimpleResponseLivroAutorEditora;
 import requalificar.projecto.models.Autor;
 import requalificar.projecto.models.Editora;
@@ -20,7 +22,7 @@ import requalificar.projecto.service.AutorService;
 import requalificar.projecto.service.EditoraService;
 import requalificar.projecto.service.LivroAutorEditoraService;
 import requalificar.projecto.service.LivroService;
-
+@CrossOrigin
 @RestController
 public class LivroAutorEditoraController 
 {
@@ -37,7 +39,7 @@ public class LivroAutorEditoraController
 		this.autorService = autorService;
 		this.editoraService = editoraService;
 	}
-	
+	@CrossOrigin
 	@PostMapping("/addAutor/{autorId}/ToLivro/{livroId}")
 	public ResponseEntity<SimpleResponse> addAutorToLivro(@PathVariable String autorId, @PathVariable String livroId)
 	{
@@ -91,7 +93,7 @@ public class LivroAutorEditoraController
 
 		
 	}
-	
+	@CrossOrigin
 	@PostMapping("/addAutor/{autorId}/ToEditora/{erditoraId}")
 	public ResponseEntity<SimpleResponse> addAutorToEditora(@PathVariable String autorId, @PathVariable String erditoraId)
 	{
@@ -134,7 +136,7 @@ public class LivroAutorEditoraController
 		
 		if(livroAutorEditoraService.addAutorToEditora(autor, editora)) 
 		{
-			srLAE.setAsSuccess("Sucesso em associar Livro a Editora");
+			srLAE.setAsSuccess("Sucesso em associar Autor a Editora");
 			srLAE.setAutor(autor);
 			srLAE.setEditora(editora);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srLAE);	
@@ -147,40 +149,42 @@ public class LivroAutorEditoraController
 	}
 	
 	/** Remove editora **/
+	@CrossOrigin
 	@DeleteMapping("/removeEditora/{id}")
 	public ResponseEntity<SimpleResponse> removeEditora(@PathVariable String id)
 	{
-		SimpleResponseEditora srE = new SimpleResponseEditora();
+		SimpleResponseEditoras srEs = new SimpleResponseEditoras();
 		
 		if(id.equals(null) || id.isBlank())
 		{
-			srE.setAsError("Falha no valor id");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);
+			srEs.setAsError("Falha no valor id");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srEs);
 		}
 
 		Long idToDelete = Long.parseLong(id);
 		
 		if(!editoraService.existeId(idToDelete))
 		{
-			srE.setAsError("Editora inexistente com este id");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);
+			srEs.setAsError("Editora inexistente com este id");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srEs);
 		}
 		
 		Optional<Editora> editora = editoraService.getEditoraById(idToDelete);
 		
 		if(editora.equals(null) || editora.isEmpty())
 		{
-			srE.setAsError("Falha em encontar Editora");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);	
+			srEs.setAsError("Falha em encontar Editora");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srEs);	
 		}
 				
 		if(livroAutorEditoraService.removeEditora(editora.get()))
 		{
-			srE.setAsSuccess("Editora removida na base de dados:");
-			return ResponseEntity.status(HttpStatus.OK).body(srE);
+			srEs.setAsSuccess("Editora removida na base de dados:");
+			srEs.setEditoras(editoraService.getEditoras());
+			return ResponseEntity.status(HttpStatus.OK).body(srEs);
 		}
-		srE.setAsError("Nao foi possivel remover da base de dados");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srE);	
+		srEs.setAsError("Nao foi possivel remover da base de dados");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srEs);	
 	}
 	
 	

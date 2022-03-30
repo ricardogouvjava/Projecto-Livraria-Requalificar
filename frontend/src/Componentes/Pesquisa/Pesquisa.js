@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { PesquisaAutor } from "./PesquisaAutor";
 import { PesquisaLivro } from "./PesquisaLivro";
 
 const API_URL = "http://localhost:8080";
@@ -27,7 +26,7 @@ export function PesquisaService(props) {
         <div
           className={mostraPesquisaAutor ? "MostraSelecao" : "EscondeSelecao"}
         >
-          <PesquisaAutor></PesquisaAutor>
+          <></>
         </div>
         <p className="Informacao">{info}</p>
       </div>

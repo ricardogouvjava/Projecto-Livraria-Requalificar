@@ -13,6 +13,7 @@ public class Editora
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 
 	
+	private String nome;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "editora", targetEntity=Autor.class)
 	List<Autor> autores = new ArrayList<Autor>();
@@ -58,7 +59,7 @@ public class Editora
 		this.id = id;
 	}
 
-	private String nome;
+
 
 	public String getNome() {
 		return nome;

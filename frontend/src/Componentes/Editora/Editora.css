@@ -1,0 +1,34 @@
+.EditoraBody {
+  text-align: center;
+}
+.PesquisaEditora {
+  text-align: center;
+}
+
+.MostraPesquisa {
+  visibility: visible;
+  display: block;
+  width: 90%;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+}
+
+.EscondePesquisa {
+  visibility: hidden;
+  display: none;
+}
+
+.MostraPesquisa div {
+  text-align: center;
+  padding: 0.4em;
+}
+
+.MostraPesquisa input[type="text"] {
+  width: 60%;
+  height: 2em;
+}
+
+.MostraPesquisa h3 {
+  text-align: center;
+}

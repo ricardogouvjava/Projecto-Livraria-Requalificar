@@ -2,12 +2,15 @@ import { useState } from "react";
 import "./Menu.css";
 import { PesquisaLivro } from "../Pesquisa/PesquisaLivro";
 import { AdicionaLivro } from "../Livro/AdicionaLivro";
-import { PesquisaAutor } from "../Pesquisa/PesquisaAutor";
+import { AdicionaAutor } from "../Autor/AdicionaAutor";
+import { AdicionaEditora } from "../Editora/AdicionarEditora";
+import { EditoraService } from "../Editora/EditoraService";
+import { AutorService } from "../Autor/AutorService";
 
 const API_URL = "http://localhost:8080";
 //const API_URL = "https://livrariarequalificar.herokuapp.com/";
 
-export function MenuFuncionario(props) {
+export function MenuFuncionario({ SetMostra }) {
   const [mostraLivroMenu, setMostraLivroMenu] = useState(false);
   const [mostraAutorMenu, setMostraAutorMenu] = useState(false);
   const [mostraEditoraMenu, setMostraEditoraMenu] = useState(false);
@@ -21,8 +24,19 @@ export function MenuFuncionario(props) {
     SetOpcao(<AdicionaLivro></AdicionaLivro>);
   }
 
-  function pesuisaAutor() {
-    SetOpcao(<PesquisaAutor></PesquisaAutor>);
+  function addicionaAutor() {
+    SetOpcao(<AdicionaAutor></AdicionaAutor>);
+  }
+
+  function opcoesAutor() {
+    SetOpcao(<AutorService></AutorService>);
+  }
+
+  function adicionaEditora() {
+    SetOpcao(<AdicionaEditora></AdicionaEditora>);
+  }
+  function opcoesEditora() {
+    SetOpcao(<EditoraService></EditoraService>);
   }
 
   return (
@@ -30,6 +44,12 @@ export function MenuFuncionario(props) {
       <div className="MainBody">
         <div className="bodyleft">
           <div>{opcao}</div>
+          <div className={mostraAutorMenu ? "MostraButtons" : "EscondeButtons"}>
+            <></>
+          </div>
+          <div className={mostraAutorMenu ? "MostraButtons" : "EscondeButtons"}>
+            <PesquisaLivro></PesquisaLivro>
+          </div>
         </div>
         <div className="bodyright">
           <div>
@@ -46,8 +66,7 @@ export function MenuFuncionario(props) {
             >
               <button onClick={pesquisaLivros}>Pesquisa Livro</button>
               <button onClick={adicionaLivro}>Adiciona Livro</button>
-              <button>Modifica Livro</button>
-              <button>Remove Livro</button>
+              <button>Outras Opcoes</button>
             </div>
             <button
               className="mainbutton"
@@ -60,10 +79,8 @@ export function MenuFuncionario(props) {
             <div
               className={mostraAutorMenu ? "MostraButtons" : "EscondeButtons"}
             >
-              <button>Procura Autor</button>
-              <button>Adiciona Autor</button>
-              <button>Actualiza Autor</button>
-              <button>Remove Autor</button>
+              <button onClick={addicionaAutor}>Adiciona Autor</button>
+              <button onClick={opcoesAutor}>Outras Opcoes</button>
             </div>
             <button
               className="mainbutton"
@@ -76,10 +93,8 @@ export function MenuFuncionario(props) {
             <div
               className={mostraEditoraMenu ? "MostraButtons" : "EscondeButtons"}
             >
-              <button>Procura Editora</button>
-              <button>Adiciona Editora</button>
-              <button>Actualiza Editora</button>
-              <button>Remove Editora</button>
+              <button onClick={adicionaEditora}>Adiciona</button>
+              <button onClick={opcoesEditora}>Outras Opcoes</button>
             </div>
           </div>
         </div>
