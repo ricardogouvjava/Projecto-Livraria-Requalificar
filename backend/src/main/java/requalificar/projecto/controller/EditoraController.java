@@ -110,7 +110,7 @@ public class EditoraController
 			srEs.setEditoras(editoras);
 			return ResponseEntity.status(HttpStatus.OK).body(srEs);
 		}
-		srEs.setAsError("Nehum cliente na base de dados");
+		srEs.setAsError("Nehuma Editora na base de dados");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srEs);	
 	}
 		

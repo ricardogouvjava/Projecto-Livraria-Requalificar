@@ -4,16 +4,19 @@ import "./Navbar.css";
 
 export function NavBarCliente(props) {
   const navigate = useNavigate();
-
+  {
+    console.log("Entrou na NavBar Cliente id:" + props.user);
+  }
+  {
+    console.log("Entrou na NavBar Cliente id:" + props.tipo);
+  }
   return (
     <>
-      {console.log("Entrou na NavBar Cliente id:" + props.user)}
-      {console.log("Entrou na NavBar Cliente id:" + props.tipo)}
       <div className="Header">Livraria Requalificar</div>
       <div className="Navbar">
         <button
           onClick={() => {
-            navigate("/HomeCliente/:id");
+            navigate("/HomeCliente/" + props.user);
           }}
         >
           Home
@@ -34,7 +37,8 @@ export function NavBarCliente(props) {
         </button>
         <button
           onClick={() => {
-            navigate("/MenuCliente/:id");
+            console.log(props.user);
+            navigate("/MenuCliente/" + props.user);
           }}
         >
           Menu

@@ -55,15 +55,7 @@ function App() {
             }
           />
           <Route
-            path="/AutorService"
-            element={
-              <VerificaUser user={user}>
-                <AutorService user={user}></AutorService>
-              </VerificaUser>
-            }
-          />
-          <Route
-            path="/MenuFuncionario"
+            path="/MenuFuncionario/:id"
             element={
               <VerificaUser user={user}>
                 <MenuFuncionario user={user}></MenuFuncionario>

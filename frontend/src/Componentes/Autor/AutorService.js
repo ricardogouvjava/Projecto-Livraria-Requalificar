@@ -1,32 +1,84 @@
 import { useEffect, useState, React } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./Autor.css";
 
 const API_URL = "http://localhost:8080";
 
 export function AutorService(props) {
   const navigate = useNavigate();
-  const [opcao, SetOpcao] = useState();
-
-  const [autorLista, setAutoresLista] = useState([]);
-  const [novoAutor, setNovoAutor] = useState({ nome: "", email: "" });
-  const [autorSelecionado, setAutorSelecionado] = useState({});
   const [info, setInfo] = useState("");
-  const [restultados, setResultados] = useState([]);
-  const [pesquisa, setPesquisa] = useState("");
-  const [autoresPesquisa, setAutoresPesquisa] = useState([]);
-  const [selecionado, setSelecionado] = useState({
+  const [opcao, SetOpcao] = useState();
+  const [autorLista, setAutoresLista] = useState([]);
+  const [autorSelecionado, setAutorSelecionado] = useState({});
+  const [selecinou, SetSelecinou] = useState(false);
+  const [novoAutor, setNovoAutor] = useState({
     nome: "",
     email: "",
     editora: "",
     livros: [],
   });
-  const [selecinou, SetSelecinou] = useState(false);
+  const [editora, SetEditora] = useState({});
+  const [editoras, SetEditoras] = useState([]);
+  //const [autoresPesquisa, setAutoresPesquisa] = useState([]);
+
+  // O que foi pesquisado
+  const [pesquisa, setPesquisa] = useState("");
+  //const [selecionado, setSelecionado] = useState({
+  //  nome: "",
+  // email: "",
+  //  editora: "",
+  //  livros: [],
+  //});
+
   const [mostra, SetMostra] = useState(false);
 
   useEffect(() => {
     getAutores();
   }, []);
+
+  function fetchAutores() {
+    getAutores();
+    if (autorLista.length < 1) {
+      setInfo("Base de dados vazia");
+    } else if (autorLista.length >= 1) {
+      setInfo("Autores encontrados");
+    }
+  }
+
+  function AdicionaEditoraAutor() {
+    let tempAutor = novoAutor;
+    tempAutor.editora = editora;
+    SetEditora({});
+  }
+
+  function getEditoras() {
+    fetch(API_URL + "/getEditoras", {
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 204) {
+          setInfo("Nenhum Editora Encontrada");
+          SetEditoras([]);
+          return null;
+        } else if (response.status !== 200 && response.status !== 204) {
+          throw new Error("error");
+        } else {
+          return response.json();
+        }
+      })
+      .then((parsedResponse) => {
+        SetEditoras(parsedResponse.editoras);
+        console.log("Editoras Econtrados:" + parsedResponse.editoras);
+      })
+      .catch(() => {
+        setInfo("Nenhums Editora Encontrada");
+        SetEditoras([]);
+      });
+  }
 
   function getAutores() {
     fetch(API_URL + "/getAutores", {
@@ -38,7 +90,7 @@ export function AutorService(props) {
       .then((response) => {
         if (response.status === 204) {
           setInfo("Nenhum Autor Encontrado");
-          setResultados([]);
+          setAutoresLista([]);
           return null;
         } else if (response.status !== 200 && response.status !== 204) {
           throw new Error("error");
@@ -47,22 +99,13 @@ export function AutorService(props) {
         }
       })
       .then((parsedResponse) => {
-        setResultados(parsedResponse.livros);
+        setAutoresLista(parsedResponse.livros);
         console.log("Autores Econtrados:" + parsedResponse.autores);
       })
       .catch(() => {
         setInfo("Nenhum Autor Encontrado");
-        setResultados([]);
+        setAutoresLista([]);
       });
-  }
-
-  function fetchAutores() {
-    getAutores();
-    if (autorLista.length < 1) {
-      setInfo("Base de dados vazia");
-    } else if (autorLista.length >= 1) {
-      setInfo("Autores encontrados");
-    }
   }
 
   function getAutoresByPesquisa() {
@@ -75,7 +118,7 @@ export function AutorService(props) {
       .then((response) => {
         if (response.status === 204) {
           setInfo("Nenhum Autor Encontrado");
-          setResultados([]);
+          setAutoresLista([]);
         } else if (response.status !== 200 && response.status !== 204) {
           throw new Error("error");
         } else {
@@ -83,12 +126,12 @@ export function AutorService(props) {
         }
       })
       .then((parsedResponse) => {
-        setResultados(parsedResponse.livros);
+        setAutoresLista(parsedResponse.livros);
       })
       .catch((error) => {
         if (error === undefined) {
           setInfo("Nenhum Autor Encontrado");
-          setResultados([]);
+          setAutoresLista([]);
         }
       });
   }
@@ -130,10 +173,8 @@ export function AutorService(props) {
   }
 
   function removeAutor(id) {
-    //Fazer uma copia dos 'to dos' que temos atualmente para evitar estragos colaterais
     let autorListaaux = autorLista;
     console.log(id);
-    //Da set do selecionado a null caso seja apagado
     if (autorSelecionado.id === id) {
       setAutorSelecionado(null);
     }
@@ -151,7 +192,7 @@ export function AutorService(props) {
       })
       .then((res) => {
         console.log(res);
-        //Filtramos o que não queremos
+
         autorListaaux = autorListaaux.filter((e, i) => e.id !== id);
 
         setAutoresLista(autorListaaux);
@@ -195,8 +236,48 @@ export function AutorService(props) {
   return (
     <>
       <div className="MainBody">
+        <div className="PesquisaEditora">
+          <h3>Pesquisa de Editoras</h3>
+          <div>
+            <input
+              type="text"
+              name="Pesquisa"
+              value={pesquisa}
+              onChange={(char) => {
+                setPesquisa(char.target.value);
+              }}
+            ></input>
+          </div>
+          <div>
+            <button onClick={getAutoresByPesquisa}>Pesquisa</button>
+          </div>
+
+          <div className="Listagem">
+            {" "}
+            <h3>Resultados</h3>
+            {pesquisa.length > 0 && (
+              <div>
+                {editoras.map(function (element, index) {
+                  return (
+                    <div
+                      key={index}
+                      className="ElementoListagem"
+                      onClick={() => {
+                        setAutorSelecionado(element);
+                        console.log(element);
+                        SetSelecinou(true);
+                      }}
+                    >
+                      {element.nome + " , " + element.morada}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+        {/*
         <div className={mostra ? "MostraSelecao" : "EscondeSelecao"}>
-          <h3>Pesquisa de Autores</h3>
           <div>
             <input
               type="text"
@@ -215,7 +296,7 @@ export function AutorService(props) {
             <p>{info}</p>
           </div>
           <div className={selecinou ? "MostraSelecao" : "EscondeSelecao"}>
-            <p>Selecionado: {selecionado.titulo} </p>{" "}
+            <p>Selecionado: {autorSelecionado.titulo} </p>{" "}
             <button
               onClick={() => {
                 navigate("/Autor");
@@ -224,15 +305,15 @@ export function AutorService(props) {
               Ver Livro
             </button>
           </div>
-          {autoresPesquisa.length > 0 && (
+          {autorLista.length > 0 && (
             <div className="Listagem">
-              {autoresPesquisa.map(function (element, index) {
+              {autorLista.map(function (element, index) {
                 return (
                   <div
                     key={index}
                     className="ElementoListagem"
                     onClick={() => {
-                      setSelecionado(element);
+                      setAutorSelecionado(element);
                       SetSelecinou(true);
                     }}
                   >
@@ -280,6 +361,7 @@ export function AutorService(props) {
             </div>
           </div>
         </div>
+*/}
         <div className="Informacao">Info: {info}</div>
       </div>
     </>

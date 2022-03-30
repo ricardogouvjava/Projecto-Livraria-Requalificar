@@ -44,12 +44,6 @@ export function MenuFuncionario({ SetMostra }) {
       <div className="MainBody">
         <div className="bodyleft">
           <div>{opcao}</div>
-          <div className={mostraAutorMenu ? "MostraButtons" : "EscondeButtons"}>
-            <></>
-          </div>
-          <div className={mostraAutorMenu ? "MostraButtons" : "EscondeButtons"}>
-            <PesquisaLivro></PesquisaLivro>
-          </div>
         </div>
         <div className="bodyright">
           <div>

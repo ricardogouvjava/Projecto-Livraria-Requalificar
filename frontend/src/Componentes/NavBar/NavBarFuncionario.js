@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Logout } from "./Logout";
 import "./Navbar.css";
 
-export function NavBarFuncionario() {
+export function NavBarFuncionario(props) {
   const navigate = useNavigate();
   return (
     <>
@@ -10,7 +10,7 @@ export function NavBarFuncionario() {
       <div className="Navbar">
         <button
           onClick={() => {
-            navigate("/HomeFuncionario/:id");
+            navigate("/HomeFuncionario/" + props.user);
           }}
         >
           Home
@@ -24,7 +24,7 @@ export function NavBarFuncionario() {
         </button>
         <button
           onClick={() => {
-            navigate("/MenuFuncionario");
+            navigate("/MenuFuncionario/" + props.user);
           }}
         >
           Opcoes

@@ -1,5 +1,8 @@
 package requalificar.projecto.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,13 +88,22 @@ public class LivroAutorEditoraService
 	public boolean removeEditora(Editora editora)
 	{
 		try {
-			for(Autor autor: editora.getAutores())
-			{
-				for(Livro livro : autor.getLivros())
+			List<Autor> autores = editora.getAutores();
+			
+			if(autores.size() > 0) {
+				for(Autor autor: autores)
 				{
-					livroRepo.delete(livro);
+					List<Livro> livros = autor.getLivros();
+					if(livros.size()>0)
+					{
+						for(Livro livro : livros)
+						{
+							livroRepo.delete(livro);
+						}
+					}
+					
+					autorRepo.delete(autor);				
 				}
-				autorRepo.delete(autor);				
 			}
 				
 			editoraRepo.delete(editora);

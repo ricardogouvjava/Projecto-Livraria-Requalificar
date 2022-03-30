@@ -43,7 +43,7 @@ export function Login(props) {
           console.log(idCliente);
           props.setUser(idCliente);
           props.setTipo(tipo);
-          navigate("/HomeCliente/:id");
+          navigate("/HomeCliente/" + idCliente);
         })
         .catch((error) => {
           console.log(error);

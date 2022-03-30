@@ -6,7 +6,7 @@ const API_URL = "http://localhost:8080";
 
 export function MenuCliente(props) {
   const { params } = useParams();
-  const [id, setId] = useState("1");
+  const [id, setId] = useState();
   const [cliente, setCliente] = useState({});
   const [mostraInfo, setMostraInfo] = useState(false);
   const [mostraForm, setMostraForm] = useState(false);
@@ -25,12 +25,14 @@ export function MenuCliente(props) {
     setMostraForm(!mostraForm);
   };
   useEffect(() => {
-    getCliente();
+    setId(props.user);
+    console.log("Menu Cliente:" + props.user);
+    getCliente(props.user);
   }, []);
 
-  function getCliente() {
-    console.log(id);
-    fetch(API_URL + "/getClienteById/" + id, {
+  function getCliente(userid) {
+    console.log(" Busca Cçoetne" + userid);
+    fetch(API_URL + "/getClienteById/" + userid, {
       mode: "cors",
       method: "GET",
     })
@@ -46,7 +48,7 @@ export function MenuCliente(props) {
         setCliente(parsedResponse.cliente);
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
   }
 
