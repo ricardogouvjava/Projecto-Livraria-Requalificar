@@ -110,6 +110,7 @@
   width: 200px;
   background-color: wheat;
   text-align: left;
+  font-size: 0.8em;
 }
 .EscondeCarrinho {
   display: none;

@@ -41,7 +41,7 @@ function App() {
             path="/Pesquisa"
             element={
               <VerificaUser user={user}>
-                <PesquisaService user={user}></PesquisaService>
+                <PesquisaService tipo={tipo} user={user}></PesquisaService>
               </VerificaUser>
             }
           ></Route>

@@ -17,18 +17,15 @@ export function PesquisaCliente(props) {
   const [abreLivro, SetAbreLivro] = useState(false);
   const [carrinhoAtivo, SetCarrinhoAtivo] = useState(false);
   const [selecionado, setSelecionado] = useState({
+    id: "",
     titulo: "",
     dataDeLancamento: "",
     paginas: "",
   });
+  const [carrinho, setCarrinho] = useState([]);
+  const [total, setTotal] = useState(0);
 
-  const [carrinho, setCarrinho] = useState({
-    livro: {},
-    quantidade: 0,
-    cliente: {},
-    valor: 0,
-    data: "",
-  });
+  let totalSaco = 0;
 
   useEffect(() => {
     getLivros();
@@ -39,9 +36,30 @@ export function PesquisaCliente(props) {
   }
 
   function adicionaLivroCarrinho() {
-    setCarrinho({ ...carrinho, livro: selecionado });
+    setCarrinho([
+      ...carrinho,
+      {
+        id: selecionado.id,
+        preco: selecionado.preco,
+        titulo: selecionado.titulo,
+        numero: quantidade,
+      },
+    ]);
+    //console.log(selecionado);
+    //console.log(carrinho);
     SetCarrinhoAtivo(true);
     SetSelecinou(!selecinou);
+    totalSaco = calculaTotal();
+    setTotal(calculaTotal());
+  }
+
+  function calculaTotal() {
+    let soma = 0;
+    carrinho.forEach(function (arrayItem) {
+      soma = arrayItem.preco * arrayItem.numero;
+    });
+    console.log(soma);
+    return soma;
   }
 
   function getLivros() {
@@ -120,16 +138,15 @@ export function PesquisaCliente(props) {
               </button>
             </div>
           </div>
-          {carrinho.livro && (
+          {carrinho && (
             <div className={carrinhoAtivo ? "Carinho" : "EscondeCarrinho"}>
-              Carrinho
-              {
-                //carrinho.livro.map((item, index) => (<div key={index}>{item.nome}</div>))
-              }
-              <div>
-                {" "}
-                {carrinho.livro} : {carrinho.quantidade}{" "}
-              </div>
+              ___Carrinho___
+              {carrinho.map((item, index) => (
+                <div key={index}>
+                  {item.titulo} : {item.numero}
+                </div>
+              ))}
+              Total : {calculaTotal()}
             </div>
           )}
         </div>
@@ -148,13 +165,12 @@ export function PesquisaCliente(props) {
 
           <input
             type="number"
-            id="quantidade"
-            name="quantidade"
-            value={0}
-            min={1}
+            id="number"
+            name="numerodeLivros"
+            //value={quantidade}
+            min={0}
             onChange={(e) => {
               mudaquantidade(e.target.valueAsNumber);
-              console.log(quantidade);
             }}
           ></input>
           <button onClick={adicionaLivroCarrinho}>Adicionar Carrinho</button>

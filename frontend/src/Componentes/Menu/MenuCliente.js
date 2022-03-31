@@ -5,7 +5,6 @@ import "./Menu.css";
 const API_URL = "http://localhost:8080";
 
 export function MenuCliente(props) {
-  const { params } = useParams();
   const [id, setId] = useState();
   const [cliente, setCliente] = useState({});
   const [mostraInfo, setMostraInfo] = useState(false);
