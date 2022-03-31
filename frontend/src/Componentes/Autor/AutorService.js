@@ -149,8 +149,8 @@ export function AutorService(props) {
       .catch((error) => {
         if (error === undefined) {
           setInfo("Nenhum Autor Encontrado");
-          setAutoresLista([]);
         }
+        getAutores();
       });
   }
 
@@ -296,7 +296,7 @@ export function AutorService(props) {
       <div className={selecinou ? "MostraSeleciondo" : "EscondeSeleciondo"}>
         <h4>Autor Seleciondado</h4>
         <div>
-          {selecionado.nome}, Morada: {selecionado.email}
+          Nome: {autorSelecionado.nome}, Morada: {autorSelecionado.email}
         </div>
         <button onClick={verAutor}>Ver do Autor</button>
         <button onClick={opcaoEditar}>Altera dados do autor</button>
@@ -305,7 +305,7 @@ export function AutorService(props) {
       </div>
       <div className={selectEditar ? "MostraEditar" : "EscondeEditar"}>
         <div className="DadosUser">
-          <h4> Editar Autor: {selecionado.nome}</h4>
+          <h4> Editar Autor: {autorSelecionado.nome}</h4>
           <p>Nome:</p>
           <input
             type="text"
@@ -322,17 +322,6 @@ export function AutorService(props) {
               setNovoAutor({
                 ...novoAutor,
                 email: e.target.value,
-              });
-            }}
-          ></input>
-          <p>Editora: </p>
-          <input
-            type="text"
-            value={novoAutor.editora}
-            onChange={(e) => {
-              setNovoAutor({
-                ...novoAutor,
-                editora: e.target.value,
               });
             }}
           ></input>

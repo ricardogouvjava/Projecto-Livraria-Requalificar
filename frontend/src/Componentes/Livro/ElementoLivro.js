@@ -7,6 +7,7 @@ export function ElementoLivro(props) {
   return (
     <div className="LivroBodyZoom">
       <div className="LivroInfoZoom">
+        <div>Id: {data.id}</div>
         <div>Titulo: {data.titulo}</div>
         <div>ISBN: {data.isbn}</div>
         <div>Data de Lancamento: {data.dataDeLancamento} </div>

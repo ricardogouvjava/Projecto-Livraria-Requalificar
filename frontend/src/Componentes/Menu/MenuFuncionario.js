@@ -5,6 +5,7 @@ import { AdicionaAutor } from "../Autor/AdicionaAutor";
 import { AdicionaEditora } from "../Editora/AdicionarEditora";
 import { EditoraService } from "../Editora/EditoraService";
 import { AutorService } from "../Autor/AutorService";
+import { LivroService } from "../Livro/LivroService";
 
 const API_URL = "http://localhost:8080";
 //const API_URL = "https://livrariarequalificar.herokuapp.com/";
@@ -19,6 +20,9 @@ export function MenuFuncionario({ SetMostra }) {
     SetOpcao(<AdicionaLivro></AdicionaLivro>);
   }
 
+  function opcoesLivro() {
+    SetOpcao(<LivroService></LivroService>);
+  }
   function addicionaAutor() {
     SetOpcao(<AdicionaAutor></AdicionaAutor>);
   }
@@ -54,7 +58,7 @@ export function MenuFuncionario({ SetMostra }) {
               className={mostraLivroMenu ? "MostraButtons" : "EscondeButtons"}
             >
               <button onClick={adicionaLivro}>Adiciona Livro</button>
-              <button>Outras Opcoes</button>
+              <button onClick={opcoesLivro}>Outras Opcoes</button>
             </div>
             <button
               className="mainbutton"

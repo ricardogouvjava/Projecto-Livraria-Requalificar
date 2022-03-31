@@ -81,3 +81,37 @@
   border-bottom: wheat 3px solid;
   margin-bottom: 1em;
 }
+
+.EscondeLivroSelecionadoZoom {
+  visibility: hidden;
+  display: none;
+}
+
+.MostraLivroSeleciondadoZoom {
+  visibility: visible;
+  display: block;
+  font-weight: bold;
+  width: 600px;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+}
+.MostraLivroSeleciondadoZoom button {
+  margin: 1em;
+}
+
+.PesquisaCarrinho {
+  display: flex;
+  width: 100%;
+}
+.Carinho {
+  display: block;
+  visibility: visible;
+  width: 200px;
+  background-color: wheat;
+  text-align: left;
+}
+.EscondeCarrinho {
+  display: none;
+  visibility: hidden;
+}

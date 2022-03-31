@@ -28,12 +28,11 @@
   width: 100%;
 }
 
-.EscondeLivroSelecionadoZoom {
-  visibility: hidden;
-  display: none;
+.LivroOpcoesBody {
+  width: 90%;
 }
 
-.MostraLivroSeleciondadoZoom {
+.LivroSelecionadoOpcoesMostra {
   visibility: visible;
   display: block;
   font-weight: bold;
@@ -41,4 +40,8 @@
   margin: auto;
   padding: 1em;
   text-align: left;
+}
+.LivroSelecionadoOpcoesEsconde {
+  visibility: hidden;
+  display: none;
 }

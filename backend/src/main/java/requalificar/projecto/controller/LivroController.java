@@ -167,7 +167,6 @@ public class LivroController
 		{
 			livroService.removeLivro(livroToDelete);
 			srL.setAsSuccess("Sucesso ao remover livro");
-			srL.setLivro(livroToDelete);
 			return ResponseEntity.status(HttpStatus.OK).body(srL);
 		}	
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);	
@@ -197,7 +196,7 @@ public class LivroController
 		if(!livroService.existeIsbn(aLivro.getIsbn()) || !livroService.existeId(aLivro.getId()))
 		{
 			srL.setAsError("Isbn / id nao existente na base de dados");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srL);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(srL);
 		}
 		
 		SimpleResponseLivro checkData = verificaDados(aLivro);

@@ -18,23 +18,24 @@ export function AdicionaLivro(props) {
     })
       .then((response) => {
         if (response.status !== 200) {
-          throw new Error("Erro actualizar livro");
+          throw new Error("Erro adicionar livro");
         }
 
         return response.json();
       })
       .then((res) => {
-        setInfo("Sucesso em actualizar os dados da conta");
+        setInfo("Sucesso em adicionar livro");
         console.log(res);
       })
       .catch((error) => {
-        setInfo("Falha em actualizar os dados da conta");
+        setInfo("Erro adicionar livro");
       });
   }
 
   return (
     <>
       <LivroForm childToParent={addLivro}></LivroForm>
+      {info}
     </>
   );
 }

@@ -12,7 +12,6 @@ import { Footer } from "./Footer/Footer";
 import { LivroService } from "./Componentes/Livro/Livro";
 import { HomePageFuncionario } from "./Componentes/Home/HomePageFuncionario";
 import { HomePageCliente } from "./Componentes/Home/HomePageCliente";
-import { AutorService } from "./Componentes/Autor/AutorService";
 
 function App() {
   const [user, setUser] = useState();
@@ -50,7 +49,7 @@ function App() {
             path="/MenuCliente/:id"
             element={
               <VerificaUser user={user}>
-                <MenuCliente user={user}></MenuCliente>
+                <MenuCliente user={user} tipo={tipo}></MenuCliente>
               </VerificaUser>
             }
           />
