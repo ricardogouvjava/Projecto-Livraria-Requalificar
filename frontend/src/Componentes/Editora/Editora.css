@@ -1,5 +1,6 @@
 .EditoraBody {
   text-align: center;
+  width: 90%;
 }
 .PesquisaEditora {
   text-align: center;
@@ -31,4 +32,42 @@
 
 .MostraPesquisa h3 {
   text-align: center;
+}
+
+.MostraSeleciondo {
+  visibility: visible;
+  display: block;
+  width: 90%;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+  border: 2px solid white;
+}
+
+.EscondeSeleciondo {
+  visibility: hidden;
+  display: none;
+}
+
+.MostraSeleciondo div {
+  padding-bottom: 1em;
+}
+.MostraSeleciondo button {
+  border: 1em;
+  margin: 1em;
+}
+
+.MostraEditar {
+  visibility: visible;
+  display: block;
+  width: 90%;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+  border: 2px solid white;
+}
+
+.EscondeEditar {
+  visibility: hidden;
+  display: none;
 }

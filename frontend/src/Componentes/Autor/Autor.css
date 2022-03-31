@@ -1,2 +1,14 @@
+.selectEditora {
+  border: 1em;
+}
+.selectEditora button {
+  margin: 1em 1em 0 0;
+}
 
+.EditoraSelecionada {
+  margin: 3em;
+}
 
+.PesquisaEditora {
+  width: 90%;
+}

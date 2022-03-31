@@ -26,3 +26,58 @@
 .Pesquisa h3 {
   padding: 0.1em;
 }
+
+.Grelha {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 1em;
+  max-height: 850px;
+  overflow-y: scroll;
+}
+.ElementoGrelha {
+  display: inline-grid;
+  border: 1px wheat solid;
+  cursor: pointer;
+}
+
+.LivroBody {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: auto;
+  background-color: wheat;
+}
+
+.LivroInfo {
+  width: 100%;
+  justify-content: center;
+  font-size: small;
+}
+
+.LivroInfo > div {
+  text-align: center;
+  padding: 1em 0em 1em 1em;
+  border-left: 3px solid #0777ac;
+}
+
+.LivroImage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.LivroImage img {
+  width: 100%;
+}
+
+.MostraLivroSeleciondado {
+  width: 70%;
+  margin: auto;
+  padding: 2em;
+  font-weight: bolder;
+  border-top: wheat 3px solid;
+  border-bottom: wheat 3px solid;
+  margin-bottom: 1em;
+}

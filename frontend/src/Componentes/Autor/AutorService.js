@@ -1,5 +1,6 @@
 import { useEffect, useState, React } from "react";
 import { useNavigate } from "react-router-dom";
+import { AdicionaEditora } from "../Editora/AdicionarEditora";
 
 import "./Autor.css";
 
@@ -11,7 +12,10 @@ export function AutorService(props) {
   const [opcao, SetOpcao] = useState();
   const [autorLista, setAutoresLista] = useState([]);
   const [autorSelecionado, setAutorSelecionado] = useState({});
+  const [selectEditar, SetSelectEditar] = useState(false);
+  const [selectVerdadosAutor, SetSelectVerdadosAutor] = useState(false);
   const [selecinou, SetSelecinou] = useState(false);
+  const [selectRemover, SetSelectRemover] = useState(false);
   const [novoAutor, setNovoAutor] = useState({
     nome: "",
     email: "",
@@ -24,26 +28,40 @@ export function AutorService(props) {
 
   // O que foi pesquisado
   const [pesquisa, setPesquisa] = useState("");
-  //const [selecionado, setSelecionado] = useState({
-  //  nome: "",
-  // email: "",
-  //  editora: "",
-  //  livros: [],
-  //});
-
-  const [mostra, SetMostra] = useState(false);
+  const [selecionado, setSelecionado] = useState({
+    nome: "",
+    email: "",
+    editora: "",
+    livros: [],
+  });
 
   useEffect(() => {
-    getAutores();
+    fetchAutores();
   }, []);
 
   function fetchAutores() {
     getAutores();
-    if (autorLista.length < 1) {
+    if (autorLista.length === 0) {
       setInfo("Base de dados vazia");
-    } else if (autorLista.length >= 1) {
+    } else {
       setInfo("Autores encontrados");
     }
+  }
+
+  function opcaoEditar() {
+    SetSelectEditar(!selectEditar);
+  }
+
+  function opcaoRemover() {
+    SetSelectRemover(!selectRemover);
+  }
+
+  function verAutor() {
+    SetSelectVerdadosAutor(!selectVerdadosAutor);
+  }
+
+  function adicionarEditora() {
+    <AdicionaEditora></AdicionaEditora>;
   }
 
   function AdicionaEditoraAutor() {
@@ -99,7 +117,7 @@ export function AutorService(props) {
         }
       })
       .then((parsedResponse) => {
-        setAutoresLista(parsedResponse.livros);
+        setAutoresLista(parsedResponse.autores);
         console.log("Autores Econtrados:" + parsedResponse.autores);
       })
       .catch(() => {
@@ -172,9 +190,8 @@ export function AutorService(props) {
     }
   }
 
-  function removeAutor(id) {
-    let autorListaaux = autorLista;
-    console.log(id);
+  function removeAutor() {
+    let id = selecionado.id;
     if (autorSelecionado.id === id) {
       setAutorSelecionado(null);
     }
@@ -191,11 +208,10 @@ export function AutorService(props) {
         return response.json();
       })
       .then((res) => {
-        console.log(res);
-
-        autorListaaux = autorListaaux.filter((e, i) => e.id !== id);
-
-        setAutoresLista(autorListaaux);
+        setInfo("Sucesso em remover autor");
+        SetSelectEditar(false);
+        SetSelectRemover(false);
+        SetSelecinou(false);
       })
       .catch((error) => {
         console.log(error);
@@ -237,7 +253,7 @@ export function AutorService(props) {
     <>
       <div className="MainBody">
         <div className="PesquisaEditora">
-          <h3>Pesquisa de Editoras</h3>
+          <h3>Pesquisa Autores</h3>
           <div>
             <input
               type="text"
@@ -253,11 +269,10 @@ export function AutorService(props) {
           </div>
 
           <div className="Listagem">
-            {" "}
             <h3>Resultados</h3>
             {pesquisa.length > 0 && (
               <div>
-                {editoras.map(function (element, index) {
+                {autorLista.map(function (element, index) {
                   return (
                     <div
                       key={index}
@@ -268,7 +283,7 @@ export function AutorService(props) {
                         SetSelecinou(true);
                       }}
                     >
-                      {element.nome + " , " + element.morada}
+                      {element.nome + " , " + element.email}
                     </div>
                   );
                 })}
@@ -276,7 +291,78 @@ export function AutorService(props) {
             )}
           </div>
         </div>
-        {/*
+        <div className="Informacao">Info: {info}</div>
+      </div>
+      <div className={selecinou ? "MostraSeleciondo" : "EscondeSeleciondo"}>
+        <h4>Autor Seleciondado</h4>
+        <div>
+          {selecionado.nome}, Morada: {selecionado.email}
+        </div>
+        <button onClick={verAutor}>Ver do Autor</button>
+        <button onClick={opcaoEditar}>Altera dados do autor</button>
+        <button onClick={opcaoRemover}>Remove autor</button>
+        <button onClick={adicionarEditora}>Adiciona Editora</button>
+      </div>
+      <div className={selectEditar ? "MostraEditar" : "EscondeEditar"}>
+        <div className="DadosUser">
+          <h4> Editar Autor: {selecionado.nome}</h4>
+          <p>Nome:</p>
+          <input
+            type="text"
+            value={novoAutor.nome}
+            onChange={(e) => {
+              setNovoAutor({ ...novoAutor, nome: e.target.value });
+            }}
+          />
+          <p>Email: </p>
+          <input
+            type="text"
+            value={novoAutor.email}
+            onChange={(e) => {
+              setNovoAutor({
+                ...novoAutor,
+                email: e.target.value,
+              });
+            }}
+          ></input>
+          <p>Editora: </p>
+          <input
+            type="text"
+            value={novoAutor.editora}
+            onChange={(e) => {
+              setNovoAutor({
+                ...novoAutor,
+                editora: e.target.value,
+              });
+            }}
+          ></input>
+          <div className="DivButtonCriarConta">
+            <button onClick={updateAutor}>Finalizar</button>
+          </div>
+        </div>
+      </div>
+      <div className={selectRemover ? "MostraSelecao" : "EscondeSelecao"}>
+        <div>
+          <p>Tem a certeza que pretende Remover?</p>
+        </div>
+        <button onClick={removeAutor}>Sim</button>
+        <button onClick={opcaoRemover}>Nao</button>
+      </div>
+
+      <div className={selectVerdadosAutor ? "MostraSelecao" : "EscondeSelecao"}>
+        <div>
+          <p>Nome : {selecionado.nome}</p>
+          <p>Email : {selecionado.email}</p>
+          <p>Editora : {selecionado.nome}</p>
+          <div>
+            {selecionado.livros.map((liv) => (
+              <div key={liv.id}> autor: {liv.nome}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/*
         <div className={mostra ? "MostraSelecao" : "EscondeSelecao"}>
           <div>
             <input
@@ -362,8 +448,6 @@ export function AutorService(props) {
           </div>
         </div>
 */}
-        <div className="Informacao">Info: {info}</div>
-      </div>
     </>
   );
 }

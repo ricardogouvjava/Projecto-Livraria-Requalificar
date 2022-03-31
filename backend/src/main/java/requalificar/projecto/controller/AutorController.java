@@ -160,7 +160,7 @@ public class AutorController
 	}
 	/** Devolve Autor atravez de id **/
 	@CrossOrigin
-	@GetMapping("getAutor/{string}")
+	@GetMapping("procuraAutor/{string}")
 	public ResponseEntity<SimpleResponse> procuraAutor(@PathVariable String string)
 	{
 		SimpleResponseAutores srAs = new SimpleResponseAutores();

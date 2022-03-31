@@ -1,29 +1,44 @@
-.LivroBody {
+.LivroBodyZoom {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   width: 100%;
   margin: auto;
   background-color: wheat;
 }
 
-.Livrobodyleft {
-  width: 65%;
+.LivroInfoZoom {
+  width: 60%;
   justify-content: center;
+  font-size: small;
 }
 
-.Livrobodyleft > div {
+.LivroInfoZoom > div {
   text-align: left;
   padding: 1em 0em 1em 1em;
   border-left: 3px solid #0777ac;
 }
 
-.Livrobodyright {
-  width: 35%;
+.LivroImageZoom {
+  width: 40%;
   display: flex;
   justify-content: center;
 }
-.Livrobodyright img {
-  width: 80%;
-  padding: 3em;
+.LivroImageZoom img {
+  width: 100%;
+}
+
+.EscondeLivroSelecionadoZoom {
+  visibility: hidden;
+  display: none;
+}
+
+.MostraLivroSeleciondadoZoom {
+  visibility: visible;
+  display: block;
+  font-weight: bold;
+  width: 800px;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
 }

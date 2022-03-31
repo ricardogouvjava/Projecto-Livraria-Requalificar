@@ -17,19 +17,19 @@
 }
 
 .DivButtonCriarConta button {
-  padding: 1em;
-  margin: 2em;
+  padding: 0.5em;
+  margin: 1em;
   text-align: center;
 }
 
 .DadosUser input[type="text"] {
   width: 100%;
-  padding: 0.6em;
-  height: 1em;
+  padding: 0.5em;
+  height: 0.5em;
 }
 
 .DadosUser input[type="password"] {
   width: 100%;
-  padding: 0.6em;
-  height: 1em;
+  padding: 0.5em;
+  height: 0.5em;
 }

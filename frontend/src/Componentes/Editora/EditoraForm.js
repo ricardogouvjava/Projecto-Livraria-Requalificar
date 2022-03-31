@@ -2,8 +2,8 @@ import { useState, React } from "react";
 
 export function EditoraForm({ childToParent }) {
   const [editora, setEditora] = useState({
-    nome: "editora",
-    morada: "Efitoras Editoras",
+    nome: "Bananas da Madeira Editora",
+    morada: "Caminho das Editoras 37",
   });
 
   return (

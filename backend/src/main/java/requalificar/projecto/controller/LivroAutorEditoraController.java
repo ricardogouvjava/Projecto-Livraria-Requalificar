@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import requalificar.projecto.dto.SimpleResponse;
-import requalificar.projecto.dto.SimpleResponseEditora;
 import requalificar.projecto.dto.SimpleResponseEditoras;
 import requalificar.projecto.dto.SimpleResponseLivroAutorEditora;
 import requalificar.projecto.models.Autor;

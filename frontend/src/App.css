@@ -9,7 +9,7 @@ html,
 body,
 #app,
 #app > div {
-  height: 98%;
+  height: 96%;
   background-color: #0777ac;
   overflow-y: auto;
 }
@@ -22,7 +22,7 @@ h3 {
 /** Corpo **/
 .Listagem {
   margin: auto;
-  width: 90%;
+  width: 95%;
 }
 
 .ElementoListagem {

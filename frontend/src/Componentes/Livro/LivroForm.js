@@ -1,19 +1,21 @@
 import imageteste from "./teste.jpg";
 import { useState, React, useEffect } from "react";
+import Select from "react-select";
 import "./LivroForm.css";
+import { AdicionaAutor } from "../Autor/AdicionaAutor";
 const API_URL = "http://localhost:8080";
 export function LivroForm({ childToParent }) {
-  const [autor, setAutor] = useState([]);
+  const [selecionado, setSelecionado] = useState(false);
   const [autores, setAutores] = useState([]);
-  const autoresToLivro = [];
+  const [autorToLivro, setAutorToLivro] = useState({});
+  const [autoresToLivro, setAutoresToLivro] = useState([]);
   const [info, setInfo] = useState("");
-
+  const [mostraAdicionaAutorNovo, setMostraAdicionaAutorNovo] = useState(false);
   const [livro, setLivroInfo] = useState({
     id: 0,
     autores: [
       {
-        nome: "Autor X",
-        email: "string",
+        id: "",
       },
     ],
     titulo: "O melhor Livro de Sempre",
@@ -31,6 +33,46 @@ export function LivroForm({ childToParent }) {
   useEffect(() => {
     getAutores();
   }, []);
+
+  const onChangesetAutor = (item) => {
+    console.log("Selecionado: " + item.id);
+    setSelecionado(true);
+    setAutorToLivro(item);
+    console.log("autor to livro: " + autorToLivro);
+  };
+
+  function naoexiste(lista, item) {
+    for (var i = 0; i <= lista.length; ++i) {
+      console.log("dsdsdsdsd: " + lista[i].id);
+      console.log("ds;p,p,p: " + item.id);
+      if (lista[i].id === item.id) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function adicionaAutorToLivro() {
+    let tempAutores = autoresToLivro;
+    console.log(" length " + autoresToLivro.length);
+    console.log(" lth " + autorToLivro.id);
+    if (tempAutores.length <= 0) {
+      tempAutores.push(autorToLivro);
+      setAutoresToLivro(tempAutores);
+      setSelecionado(false);
+      setAutorToLivro({});
+    } else if (tempAutores.length > 0 && naoexiste(tempAutores, autorToLivro)) {
+      tempAutores.push(autorToLivro);
+      setAutoresToLivro(tempAutores);
+      setSelecionado(false);
+      setAutorToLivro({});
+      console.log("Adicionado por fora");
+    }
+  }
+
+  function adicionaAutorNovo() {
+    setMostraAdicionaAutorNovo(!mostraAdicionaAutorNovo);
+  }
 
   function getAutores() {
     fetch(API_URL + "/getAutores", {
@@ -57,22 +99,6 @@ export function LivroForm({ childToParent }) {
         setInfo("Nenhum Autor Encontrado");
         setAutores([]);
       });
-  }
-
-  function addAutorToLivro() {
-    {
-      const aux = autoresToLivro.push(autor);
-      setAutores(aux);
-      console.log(autoresToLivro);
-
-      /*livro = {
-      ...livro,
-      autores: {
-        ...livro.autores,
-        ArrayObject: [...livro.autores.ArrayObject, autor],
-      },
-    }; */
-    }
   }
 
   return (
@@ -170,7 +196,7 @@ export function LivroForm({ childToParent }) {
         ></input>
       </p>
       <p>
-        <b>stock: </b>
+        stock:
         <input
           type="text"
           value={livro.stock}
@@ -183,7 +209,7 @@ export function LivroForm({ childToParent }) {
         ></input>
       </p>
       <p>
-        <b>vendidos: </b>
+        vendidos:
         <input
           type="text"
           value={livro.vendidos}
@@ -195,37 +221,40 @@ export function LivroForm({ childToParent }) {
           }}
         ></input>
       </p>
+      {autores &&
+        autoresToLivro.map((autor) => (
+          <div key={autor.id}>
+            Id: {autor.id} Nome: {autor.nome}
+          </div>
+        ))}
       <b>imagem: </b>
       <img src={imageteste} style={{ width: "100px" }} alt="image"></img>
-      {/*
-      <p>
-        <input
-          type="text"
-          value={livro.imagem}
-          onChange={(e) => {
-            setLivroInfo({
-              ...livro,
-              imagem: e.target.value,
-            });
-          }}
-        ></input>
-      </p>*/}
 
-      <select
-        value="Autores"
-        id="Autores"
-        onChange={(e) => {
-          setAutor(e.target.value);
-        }}
-      >
-        {autores.map((option) => (
-          <option key={option.index} value={option.index}>
-            {option.nome}
-          </option>
-        ))}
-      </select>
+      <div className={selecionado ? "MostraSelecao" : "EscondeSelecao"}>
+        Autor Seleciondado Para adicionar: {autorToLivro.nome}
+      </div>
+      <div className="SelectAutor">
+        <p>Seleciona Autor</p>
+        <Select
+          value={autorToLivro}
+          onChange={onChangesetAutor}
+          options={autores}
+          getOptionValue={(option) => option.id}
+          getOptionLabel={(option) => option.nome}
+        />
+        <button onClick={adicionaAutorToLivro}>Adicona Autor ao Livro</button>
+        <button onClick={adicionaAutorNovo}>Adiciona Autor Novo</button>
+        <button onClick={getAutores}>Actualizar Autores</button>
+        <div
+          className={
+            mostraAdicionaAutorNovo ? "MostraSelecao" : "EscondeSelecao"
+          }
+        >
+          <AdicionaAutor></AdicionaAutor>
+        </div>
+      </div>
       <br></br>
-      <button onClick={addAutorToLivro}>addAutor</button>
+
       <button
         onClick={() => {
           childToParent(livro);

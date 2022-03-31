@@ -1,45 +1,164 @@
-import { useState } from "react";
-import { PesquisaLivro } from "./PesquisaLivro";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ElementoLivro } from "../Livro/ElementoLivro";
+import "./Pesquisa.css";
+import imageteste from "./teste.jpg";
 
 const API_URL = "http://localhost:8080";
-//const API_URL = "https://livrariarequalificar.herokuapp.com/";
+const info1 = "Pode pesquisar por titulo autor ou editora.";
 
 export function PesquisaService(props) {
-  const [mostraPesquisaLivro, setMostraPesquisaLivro] = useState(false);
-  const [mostraPesquisaAutor, setMostraPequisaAutor] = useState(false);
-  const [info, setInfo] = useState("");
-  const onClickPesquisaLivro = () => {
-    setMostraPesquisaLivro(!mostraPesquisaLivro);
-  };
+  const navigate = useNavigate();
+  const [quantidade, setQuantidade] = useState(0);
+  const [pesquisa, setPesquisa] = useState("");
+  const [restultados, setResultados] = useState([]);
+  const [info, setInfo] = useState(info1);
+  const [selecinou, SetSelecinou] = useState(false);
+  const [abreLivro, SetAbreLivro] = useState(false);
+  const [selecionado, setSelecionado] = useState({
+    titulo: "",
+    dataDeLancamento: "",
+    paginas: "",
+  });
 
-  const onClickPesquisaAutor = () => {
-    setMostraPequisaAutor(!mostraPesquisaAutor);
-  };
+  const [carrinho, setCarrinho] = useState({
+    livros: [{ id: "" }],
+    cliente: { id: "" },
+    valor: 0,
+  });
+
+  useEffect(() => {
+    getLivros();
+  }, []);
+
+  function mudaquantidade(quant) {
+    setQuantidade(quant);
+  }
+
+  function getLivros() {
+    fetch(API_URL + "/getLivros", {
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 204) {
+          setInfo("Nenhum Livro Encontrado");
+          setResultados([]);
+          return null;
+        } else if (response.status !== 200 && response.status !== 204) {
+          throw new Error("error");
+        } else {
+          return response.json();
+        }
+      })
+      .then((parsedResponse) => {
+        setResultados(parsedResponse.livros);
+        console.log("Livro Econtrados:" + parsedResponse.livros);
+      })
+      .catch(() => {
+        setInfo("Nenhum Livro Encontrado");
+        setResultados([]);
+      });
+  }
+
+  function getLivrosByPesquisa() {
+    fetch(API_URL + "/procuraLivros/" + pesquisa, {
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 204) {
+          setInfo("Nenhum Livro Encontrado");
+          setResultados([]);
+          return null;
+        } else if (response.status !== 200 && response.status !== 204) {
+          throw new Error("error");
+        } else {
+          return response.json();
+        }
+      })
+      .then((parsedResponse) => {
+        setResultados(parsedResponse.livros);
+        setInfo("Livros Encontrados");
+      })
+      .catch(() => {
+        setInfo("Nenhum Livro Encontrado");
+        setResultados([]);
+      });
+  }
+
   return (
-    <div className="MainBody">
-      <div className="bodyleft">
-        <div
-          className={mostraPesquisaLivro ? "MostraSelecao" : "EscondeSelecao"}
-        >
-          <PesquisaLivro></PesquisaLivro>
+    <>
+      <div className="MainBodyClean">
+        <div className="Pesquisa">
+          <h3>Pesquisa de Livros</h3>
+          <div>
+            <input
+              type="text"
+              name="Pesquisa"
+              value={pesquisa}
+              onChange={(char) => {
+                setPesquisa(char.target.value);
+              }}
+            ></input>
+          </div>
+          <button className="butaoPesquisa" onClick={getLivrosByPesquisa}>
+            Pesquisa
+          </button>
+        </div>
+        <div className="Informacao">
+          <p>{info}</p>
         </div>
         <div
-          className={mostraPesquisaAutor ? "MostraSelecao" : "EscondeSelecao"}
+          className={
+            abreLivro
+              ? "MostraLivroSeleciondadoZoom"
+              : "EscondeLivroSelecionadoZoom"
+          }
         >
-          <></>
+          <ElementoLivro livro={selecionado}></ElementoLivro>
+          <button>Adicionar Carrinho</button>
+          <input
+            type="number"
+            id="quantidade"
+            name="quantidade"
+            min={1}
+            onChange={(e) => {
+              mudaquantidade(e.target.valueAsNumber);
+              console.log(quantidade);
+            }}
+          ></input>
         </div>
-        <p className="Informacao">{info}</p>
+        <div className="Grelha">
+          {restultados.map(function (element, index) {
+            return (
+              <div
+                key={index}
+                className="ElementoGrelha"
+                onClick={() => {
+                  setSelecionado(element);
+                  SetSelecinou(true);
+                  SetAbreLivro(!abreLivro);
+                }}
+              >
+                <div className="LivroBody">
+                  <div className="LivroImage">
+                    <img src={imageteste} alt="image"></img>
+                  </div>
+                  <div className="LivroInfo">
+                    <p>{element.titulo}</p>
+                    <p>{element.dataDeLancamento}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div className="bodyright">
-        <button className="ButtonMenu" onClick={onClickPesquisaLivro}>
-          PesquisaLivro
-        </button>
-        <button className="ButtonMenu" onClick={onClickPesquisaAutor}>
-          Pesquisa Autor
-        </button>
-        <button className="ButtonMenu">Pesquisa Editora</button>
-        <button className="ButtonMenu">Ver Cupoes</button>
-      </div>
-    </div>
+    </>
   );
 }

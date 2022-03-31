@@ -7,28 +7,32 @@ export function AdicionaAutor(props) {
   const [info, setInfo] = useState("");
 
   function addAutor(data) {
-    fetch(API_URL + "/addAutor", {
-      mode: "cors",
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (response.status !== 200) {
-          throw new Error("Erro adicionar autor");
-        }
+    if (data.editora === "") {
+      setInfo("Preencha campo editora");
+    } else {
+      fetch(API_URL + "/addAutor", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error("Erro adicionar autor");
+          }
 
-        return response.json();
-      })
-      .then((res) => {
-        setInfo("Sucesso em criar autor");
-        console.log(res);
-      })
-      .catch((error) => {
-        setInfo("Falha criar autor");
-      });
+          return response.json();
+        })
+        .then((res) => {
+          setInfo("Sucesso em criar autor");
+          console.log(res);
+        })
+        .catch((error) => {
+          setInfo("Falha criar autor");
+        });
+    }
   }
 
   return (

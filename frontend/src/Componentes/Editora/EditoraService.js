@@ -29,6 +29,7 @@ export function EditoraService(props) {
     autores: [],
   });
   const [novoEditora, setNovoEditora] = useState({ nome: "", morada: "" });
+
   useEffect(() => {
     getEditoras();
   }, []);
@@ -288,19 +289,19 @@ export function EditoraService(props) {
         <div className="Informacao">
           <p>{info}</p>
         </div>
-        <div className={selecinou ? "MostraSelecao" : "EscondeSelecao"}>
-          <p>
-            Selecionado -- Editora: {selecionado.nome}, Morada:{" "}
-            {selecionado.morada}
-          </p>
+        <div className={selecinou ? "MostraSeleciondo" : "EscondeSeleciondo"}>
+          <h4>Editora Seleciondada</h4>
+          <div>
+            {selecionado.nome}, Morada: {selecionado.morada}
+          </div>
           <button onClick={verEditora}>Ver dados Editora</button>
           <button onClick={opcaoEditar}>Altera Dados Editora</button>
           <button onClick={opcaoRemover}>Remove Editora</button>
           <button onClick={opcaoAdicionaAutor}>Adiciona Autor</button>
         </div>
-        <div className={selectEditar ? "MostraSelecao" : "EscondeSelecao"}>
+        <div className={selectEditar ? "MostraEditar" : "EscondeEditar"}>
           <div className="DadosUser">
-            <h3> Editar Editora: {selecionado.nome}</h3>
+            <h4> Editar Editora: {selecionado.nome}</h4>
             <p>Nome:</p>
             <input
               type="text"

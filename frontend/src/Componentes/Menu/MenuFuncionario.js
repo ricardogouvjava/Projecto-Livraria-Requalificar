@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./Menu.css";
-import { PesquisaLivro } from "../Pesquisa/PesquisaLivro";
 import { AdicionaLivro } from "../Livro/AdicionaLivro";
 import { AdicionaAutor } from "../Autor/AdicionaAutor";
 import { AdicionaEditora } from "../Editora/AdicionarEditora";
@@ -15,10 +14,6 @@ export function MenuFuncionario({ SetMostra }) {
   const [mostraAutorMenu, setMostraAutorMenu] = useState(false);
   const [mostraEditoraMenu, setMostraEditoraMenu] = useState(false);
   const [opcao, SetOpcao] = useState();
-
-  function pesquisaLivros() {
-    SetOpcao(<PesquisaLivro></PesquisaLivro>);
-  }
 
   function adicionaLivro() {
     SetOpcao(<AdicionaLivro></AdicionaLivro>);
@@ -58,7 +53,6 @@ export function MenuFuncionario({ SetMostra }) {
             <div
               className={mostraLivroMenu ? "MostraButtons" : "EscondeButtons"}
             >
-              <button onClick={pesquisaLivros}>Pesquisa Livro</button>
               <button onClick={adicionaLivro}>Adiciona Livro</button>
               <button>Outras Opcoes</button>
             </div>

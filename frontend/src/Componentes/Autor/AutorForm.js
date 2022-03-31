@@ -3,29 +3,31 @@ import { AdicionaEditora } from "../Editora/AdicionarEditora";
 import Select from "react-select";
 const API_URL = "http://localhost:8080";
 export function AutorForm({ childToParent }) {
+  const [editorasList, setEditorasList] = useState([]);
+  const [editora, setEditora] = useState(editorasList[0]);
+  const [mostra, SetMostra] = useState(false);
+  const [info, setInfo] = useState("");
   const [autor, setAutor] = useState({
     nome: "autor",
     email: "autor@autor",
     editora: "",
   });
-  const [editorasList, setEditorasList] = useState([]);
-  const [selectState, SetSelectState] = useState({});
-  const [editora, setEditora] = useState(editorasList[0]);
-  const [mostra, SetMostra] = useState(false);
 
   const onChangesetEditora = (item) => {
     setEditora(item);
-    // console.log("Editora:" + editora.nome);
   };
+
+  // Quando confirmado adiciona editora
   function AdicionaEditoraAutor() {
     let tempAutor = autor;
     tempAutor.editora = editora;
+    setAutor(tempAutor);
   }
+
   function AdicionaEditoraNova() {
     SetMostra(!mostra);
   }
 
-  const [info, setInfo] = useState("");
   function getEditoras() {
     fetch(API_URL + "/getEditoras", {
       mode: "cors",
@@ -79,8 +81,8 @@ export function AutorForm({ childToParent }) {
         }}
       ></input>
 
-      <div className="DadosUser">
-        <p>Editora: </p> <p> {editora && editora.nome} </p>
+      <div className="EditoraSelecionada">
+        <p>Editora Seleciondada: {editora && editora.nome} </p>
       </div>
 
       <div className="selectEditora">
@@ -108,6 +110,7 @@ export function AutorForm({ childToParent }) {
           Cria Autor
         </button>
       </div>
+      {info}
     </div>
   );
 }

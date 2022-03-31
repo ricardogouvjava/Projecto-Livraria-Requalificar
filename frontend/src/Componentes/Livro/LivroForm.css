@@ -2,3 +2,13 @@
   width: 75%;
   margin: auto;
 }
+
+.SelectAutor button {
+  margin: 1em;
+}
+
+.MostraSelecao {
+  border: none;
+  padding: 1em;
+  margin: 2em;
+}
