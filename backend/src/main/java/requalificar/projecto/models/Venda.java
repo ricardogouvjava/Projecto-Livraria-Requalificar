@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -19,6 +20,7 @@ public class Venda
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", referencedColumnName = "id") //,	  nullable=false
     private Cliente cliente;
@@ -97,9 +99,13 @@ public class Venda
 		return id;
 	}
 
-	public Date getDataVenda() {
+	public Date getDataDeVenda() {
 		return dataVenda;
 	}
+	public void setDataDeVenda(Date dataVenda) {
+		this.dataVenda = dataVenda;
+	}
+	
 
 	public void setDataVenda(String dataVenda ) throws ParseException {
 		String pattern = "dd-MM-yyyy";
@@ -108,6 +114,12 @@ public class Venda
 
 	}
 
-	
-  	
+
+	public String getDataVenda() throws ParseException 
+	{
+		String pattern = "dd-MM-yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		return simpleDateFormat.format(this.dataVenda);
+	}
+	  	
 }

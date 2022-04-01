@@ -1,4 +1,4 @@
-import imageteste from "./teste.jpg";
+import imageteste from "../../images/teste.jpg";
 import { useState, React, useEffect } from "react";
 import Select from "react-select";
 import "./LivroForm.css";

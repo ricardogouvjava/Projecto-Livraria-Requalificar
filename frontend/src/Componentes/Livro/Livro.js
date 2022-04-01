@@ -1,4 +1,4 @@
-import imageteste from "./teste.jpg";
+import { imageteste } from "../../images/teste.jpg";
 import "./Livro.css";
 const API_URL = "http://localhost:8080";
 
@@ -11,7 +11,7 @@ const data = {
       email: "string",
     },
   ],
-  titulo: "O mundo dos Stringd",
+  titulo: "O mundo dos String",
   isbn: "string",
   preco: 0,
   stock: 0,
@@ -27,6 +27,7 @@ export function LivroService(props) {
   return (
     <div className="LivroBody">
       <div className="Livrobodyleft">
+        <div>Id: </div>
         <div>Titulo: {data.titulo}</div>
         <div>ISBN: {data.isbn}</div>
         <div>Data de Lancamento: </div>

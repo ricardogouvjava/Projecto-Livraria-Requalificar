@@ -1,39 +1,33 @@
 import { useEffect, useState, React } from "react";
-import { useNavigate } from "react-router-dom";
 import { AdicionaEditora } from "../Editora/AdicionarEditora";
-
+import Select from "react-select";
 import "./Autor.css";
 
 const API_URL = "http://localhost:8080";
 
 export function AutorService(props) {
-  const navigate = useNavigate();
   const [info, setInfo] = useState("");
-  const [opcao, SetOpcao] = useState();
+  const [pesquisa, setPesquisa] = useState("");
   const [autorLista, setAutoresLista] = useState([]);
-  const [autorSelecionado, setAutorSelecionado] = useState({});
-  const [selectEditar, SetSelectEditar] = useState(false);
-  const [selectVerdadosAutor, SetSelectVerdadosAutor] = useState(false);
-  const [selecinou, SetSelecinou] = useState(false);
-  const [selectRemover, SetSelectRemover] = useState(false);
+  const [autorSelecionado, setAutorSelecionado] = useState({
+    nome: "",
+    email: "",
+    editora: "",
+    livros: [],
+  });
+  const [selectEditar, setSelectEditar] = useState(false);
+  const [selectVerdadosAutor, setSelectVerdadosAutor] = useState(false);
+  const [selecinou, setSelecinou] = useState(false);
+  const [selectRemover, setSelectRemover] = useState(false);
+  const [mostraAdiconarEditora, SetMostraAdicionarEditora] = useState(false);
   const [novoAutor, setNovoAutor] = useState({
     nome: "",
     email: "",
     editora: "",
     livros: [],
   });
-  const [editora, SetEditora] = useState({});
-  const [editoras, SetEditoras] = useState([]);
-  //const [autoresPesquisa, setAutoresPesquisa] = useState([]);
-
-  // O que foi pesquisado
-  const [pesquisa, setPesquisa] = useState("");
-  const [selecionado, setSelecionado] = useState({
-    nome: "",
-    email: "",
-    editora: "",
-    livros: [],
-  });
+  const [editora, setEditora] = useState({});
+  const [editoras, setEditoras] = useState([]);
 
   useEffect(() => {
     fetchAutores();
@@ -48,16 +42,23 @@ export function AutorService(props) {
     }
   }
 
+  function AdicionaEditoraNova() {
+    getEditoras();
+    SetMostraAdicionarEditora(!mostraAdiconarEditora);
+  }
+  const onChangesetEditora = (item) => {
+    setEditora(item);
+  };
   function opcaoEditar() {
-    SetSelectEditar(!selectEditar);
+    setSelectEditar(!selectEditar);
   }
 
   function opcaoRemover() {
-    SetSelectRemover(!selectRemover);
+    setSelectRemover(!selectRemover);
   }
 
   function verAutor() {
-    SetSelectVerdadosAutor(!selectVerdadosAutor);
+    setSelectVerdadosAutor(!selectVerdadosAutor);
   }
 
   function adicionarEditora() {
@@ -67,7 +68,7 @@ export function AutorService(props) {
   function AdicionaEditoraAutor() {
     let tempAutor = novoAutor;
     tempAutor.editora = editora;
-    SetEditora({});
+    setEditora({});
   }
 
   function getEditoras() {
@@ -80,7 +81,7 @@ export function AutorService(props) {
       .then((response) => {
         if (response.status === 204) {
           setInfo("Nenhum Editora Encontrada");
-          SetEditoras([]);
+          setEditoras([]);
           return null;
         } else if (response.status !== 200 && response.status !== 204) {
           throw new Error("error");
@@ -89,12 +90,12 @@ export function AutorService(props) {
         }
       })
       .then((parsedResponse) => {
-        SetEditoras(parsedResponse.editoras);
+        setEditoras(parsedResponse.editoras);
         console.log("Editoras Econtrados:" + parsedResponse.editoras);
       })
       .catch(() => {
         setInfo("Nenhums Editora Encontrada");
-        SetEditoras([]);
+        setEditoras([]);
       });
   }
 
@@ -154,44 +155,8 @@ export function AutorService(props) {
       });
   }
 
-  function addAutor() {
-    if (
-      novoAutor.nome.trim().length !== 0 &&
-      novoAutor.email.trim().length !== 0
-    ) {
-      fetch(API_URL + "/addAutor", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(novoAutor),
-      })
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error("Falha adicionar autor");
-          }
-          return response.json();
-        })
-        .then((parsedResponse) => {
-          console.log(parsedResponse);
-          if (!parsedResponse.status) {
-            alert(parsedResponse.message);
-            return;
-          }
-
-          console.log(parsedResponse.message);
-          // Precisamos de refrescar a lista, se tivessemos o id bastava adicionar um novo com o id
-          fetchAutores();
-        })
-        .catch((error) => {
-          console.log(error);
-          setInfo("Falha em adicionar Autor");
-        });
-    }
-  }
-
   function removeAutor() {
-    let id = selecionado.id;
+    let id = autorSelecionado.id;
     if (autorSelecionado.id === id) {
       setAutorSelecionado(null);
     }
@@ -209,9 +174,9 @@ export function AutorService(props) {
       })
       .then((res) => {
         setInfo("Sucesso em remover autor");
-        SetSelectEditar(false);
-        SetSelectRemover(false);
-        SetSelecinou(false);
+        setSelectEditar(false);
+        setSelectRemover(false);
+        setSelecinou(false);
       })
       .catch((error) => {
         console.log(error);
@@ -280,7 +245,7 @@ export function AutorService(props) {
                       onClick={() => {
                         setAutorSelecionado(element);
                         console.log(element);
-                        SetSelecinou(true);
+                        setSelecinou(true);
                       }}
                     >
                       {element.nome + " , " + element.email}
@@ -304,7 +269,7 @@ export function AutorService(props) {
         <button onClick={adicionarEditora}>Adiciona Editora</button>
       </div>
       <div className={selectEditar ? "MostraEditar" : "EscondeEditar"}>
-        <div className="DadosUser">
+        <div className="DadosAutor">
           <h4> Editar Autor: {autorSelecionado.nome}</h4>
           <p>Nome:</p>
           <input
@@ -325,7 +290,27 @@ export function AutorService(props) {
               });
             }}
           ></input>
-          <div className="DivButtonCriarConta">
+          <div className="selectEditora">
+            <p>Seleciona Editora</p>
+            <Select
+              value={editora}
+              onChange={onChangesetEditora}
+              options={editoras}
+              getOptionValue={(option) => option.id}
+              getOptionLabel={(option) => option.nome}
+            />
+            <button onClick={AdicionaEditoraAutor}>Confima</button>
+            <button onClick={AdicionaEditoraNova}>Adiciona Editora</button>
+            <button onClick={getEditoras}>Actualizar Editoras</button>
+            <div
+              className={
+                mostraAdiconarEditora ? "MostraSelecao" : "EscondeSelecao"
+              }
+            >
+              <AdicionaEditora></AdicionaEditora>
+            </div>
+          </div>
+          <div className="UpdateAutor">
             <button onClick={updateAutor}>Finalizar</button>
           </div>
         </div>
@@ -339,104 +324,16 @@ export function AutorService(props) {
       </div>
 
       <div className={selectVerdadosAutor ? "MostraSelecao" : "EscondeSelecao"}>
+        <p>Nome : {autorSelecionado.nome}</p>
+        <p>Email : {autorSelecionado.email}</p>
+        <p>Editora : {autorSelecionado.nome}</p>
         <div>
-          <p>Nome : {selecionado.nome}</p>
-          <p>Email : {selecionado.email}</p>
-          <p>Editora : {selecionado.nome}</p>
-          <div>
-            {selecionado.livros.map((liv) => (
+          {autorSelecionado.livros &&
+            autorSelecionado.livros.map((liv) => (
               <div key={liv.id}> autor: {liv.nome}</div>
             ))}
-          </div>
         </div>
       </div>
-
-      {/*
-        <div className={mostra ? "MostraSelecao" : "EscondeSelecao"}>
-          <div>
-            <input
-              type="text"
-              name="Pesquisa"
-              value={pesquisa}
-              onChange={(char) => {
-                setPesquisa(char.target.value);
-              }}
-            ></input>
-          </div>
-          <button className="butaoPesquisa" onClick={getAutoresByPesquisa}>
-            Pesquisa
-          </button>
-
-          <div className="Informacao">
-            <p>{info}</p>
-          </div>
-          <div className={selecinou ? "MostraSelecao" : "EscondeSelecao"}>
-            <p>Selecionado: {autorSelecionado.titulo} </p>{" "}
-            <button
-              onClick={() => {
-                navigate("/Autor");
-              }}
-            >
-              Ver Livro
-            </button>
-          </div>
-          {autorLista.length > 0 && (
-            <div className="Listagem">
-              {autorLista.map(function (element, index) {
-                return (
-                  <div
-                    key={index}
-                    className="ElementoListagem"
-                    onClick={() => {
-                      setAutorSelecionado(element);
-                      SetSelecinou(true);
-                    }}
-                  >
-                    {element.nome +
-                      " , " +
-                      element.email +
-                      " , " +
-                      element.editora +
-                      ", " +
-                      element.livros}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        <div className="Altera">
-          <div className="Linha">
-            <div className="column">Autor Selecionado :</div>
-            <div className="column">
-              {autorSelecionado.nome + " , " + autorSelecionado.email}
-            </div>
-          </div>
-          <div className="Linha">
-            <div className="column">
-              <p>Nome:</p>
-              <input
-                type="text"
-                value={novoAutor.name}
-                onChange={(e) => {
-                  setNovoAutor({ ...novoAutor, nome: e.target.value });
-                }}
-              />
-            </div>
-            <div className="column">
-              <p>Email:</p>
-              <input
-                type="text"
-                value={novoAutor.email}
-                onChange={(e) => {
-                  setNovoAutor({ ...novoAutor, email: e.target.value });
-                }}
-              />
-            </div>
-          </div>
-        </div>
-*/}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import imageteste from "./teste.jpg";
+import imageteste from "../../images/teste.jpg";
 import "./Livro.css";
 const API_URL = "http://localhost:8080";
 

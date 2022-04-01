@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import moment from "moment";
 import { ElementoLivro } from "../Livro/ElementoLivro";
-import "./Pesquisa.css";
-import imageteste from "./teste.jpg";
+//import "./Pesquisa.css";
+import imageteste from "../../images/teste.jpg";
 
 const API_URL = "http://localhost:8080";
 const info1 = "Pode pesquisar por titulo autor ou editora.";
 
-export function PesquisaCliente(props) {
-  const navigate = useNavigate();
+export function Loja(props) {
   const [quantidade, setQuantidade] = useState(0);
+  const [quantidades, setQuantidades] = useState([]);
   const [pesquisa, setPesquisa] = useState("");
   const [restultados, setResultados] = useState([]);
   const [info, setInfo] = useState(info1);
@@ -24,8 +24,6 @@ export function PesquisaCliente(props) {
   });
   const [carrinho, setCarrinho] = useState([]);
   const [total, setTotal] = useState(0);
-
-  let totalSaco = 0;
 
   useEffect(() => {
     getLivros();
@@ -45,20 +43,25 @@ export function PesquisaCliente(props) {
         numero: quantidade,
       },
     ]);
-    //console.log(selecionado);
-    //console.log(carrinho);
+    setQuantidades([...quantidades, quantidade]);
     SetCarrinhoAtivo(true);
     SetSelecinou(!selecinou);
-    totalSaco = calculaTotal();
     setTotal(calculaTotal());
+  }
+
+  function removeElementocarrinho(index) {
+    let carrinhoTemp = carrinho;
+    carrinhoTemp.splice(index, 1);
+    //carrinhoTemp = carrinhoTemp.filter((e, i) => e.id !== id);
+    setCarrinho(...carrinho, carrinhoTemp);
+    console.log(carrinho);
   }
 
   function calculaTotal() {
     let soma = 0;
     carrinho.forEach(function (arrayItem) {
-      soma = arrayItem.preco * arrayItem.numero;
+      soma += arrayItem.preco * arrayItem.numero;
     });
-    console.log(soma);
     return soma;
   }
 
@@ -118,6 +121,39 @@ export function PesquisaCliente(props) {
       });
   }
 
+  function pagar() {
+    let venda = [];
+    let carinhoTemp = carrinho;
+    delete carinhoTemp.forEach.numero;
+    venda.push({ livros: carrinho });
+    venda.push({ cliente: { id: props.user } });
+    venda.push({ valor: total });
+    venda.push({ quantLivros: quantidades });
+    venda.push({ data: moment().format("DD-MM-YYYY") });
+    console.log(venda);
+
+    fetch(API_URL + "/criaVenda", {
+      mode: "cors",
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(venda),
+    })
+      .then((response) => {
+        if (response.status != 200) {
+          throw new Error(" Falha em realizar compra");
+        }
+        return response.json();
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   return (
     <>
       <div className="MainBodyClean">
@@ -138,17 +174,27 @@ export function PesquisaCliente(props) {
               </button>
             </div>
           </div>
-          {carrinho && (
-            <div className={carrinhoAtivo ? "Carinho" : "EscondeCarrinho"}>
-              ___Carrinho___
-              {carrinho.map((item, index) => (
-                <div key={index}>
-                  {item.titulo} : {item.numero}
+          <div>
+            {carrinho && (
+              <div className={carrinhoAtivo ? "Carinho" : "EscondeCarrinho"}>
+                ___Carrinho___
+                {carrinho.map((item, index) => (
+                  <div key={index}>
+                    <p>
+                      {item.titulo} : {item.numero}
+                    </p>
+                    <button onClick={() => removeElementocarrinho(index)}>
+                      X
+                    </button>
+                  </div>
+                ))}
+                Total : {calculaTotal()}
+                <div>
+                  <button onClick={pagar}> Pagar</button>
                 </div>
-              ))}
-              Total : {calculaTotal()}
-            </div>
-          )}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="Informacao">

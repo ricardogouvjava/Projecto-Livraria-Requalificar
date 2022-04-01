@@ -6,9 +6,8 @@ export function Logout(props) {
   return (
     <button
       onClick={() => {
-        props.user(null);
         navigate("/");
-        console.log(props.user);
+        window.location.reload();
       }}
     >
       Logout

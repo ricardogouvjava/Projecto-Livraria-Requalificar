@@ -17,7 +17,7 @@ export function NavBarFuncionario(props) {
         </button>
         <button
           onClick={() => {
-            navigate("/Pesquisa");
+            navigate("/PesquisaFuncionario");
           }}
         >
           Pesquisa

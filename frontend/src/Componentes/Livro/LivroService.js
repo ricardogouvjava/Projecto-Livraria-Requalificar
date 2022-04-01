@@ -2,7 +2,7 @@ import { useEffect, useState, React } from "react";
 import { useNavigate } from "react-router-dom";
 import { ElementoLivro } from "./ElementoLivro";
 import "./Livro.css";
-import imageteste from "./teste.jpg";
+import imageteste from "../../images/teste.jpg";
 
 const API_URL = "http://localhost:8080";
 

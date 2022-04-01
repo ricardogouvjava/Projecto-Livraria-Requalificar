@@ -36,7 +36,7 @@ public class VendaService {
 		}
 		catch (Exception e)
 		{
-			return true;
+			return false;
 
 		}
 	}
@@ -80,6 +80,19 @@ public class VendaService {
 			return false;
 
 		}
+	}
+
+	public List<Venda> getVendasBycliente(Cliente cliente) {
+		List<Venda> vendasCliente = new ArrayList<Venda>();
+		for(Venda venda : getVendas())
+		{
+			if(venda.getCliente() == cliente)
+				
+			{
+				vendasCliente.add(venda);
+			}
+		}
+		return vendasCliente;
 	}
 
 }

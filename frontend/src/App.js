@@ -4,14 +4,14 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { Navbar } from "./Componentes/NavBar/Navbar";
 import { CriarConta } from "./Componentes/CriarConta/CriarConta";
-import { PesquisaService } from "./Componentes/Pesquisa/Pesquisa";
 import { Login } from "./Componentes/Login/Login";
 import { MenuCliente } from "./Componentes/Menu/MenuCliente";
 import { MenuFuncionario } from "./Componentes/Menu/MenuFuncionario";
 import { Footer } from "./Footer/Footer";
-import { LivroService } from "./Componentes/Livro/Livro";
 import { HomePageFuncionario } from "./Componentes/Home/HomePageFuncionario";
 import { HomePageCliente } from "./Componentes/Home/HomePageCliente";
+import { Loja } from "./Componentes/Loja/Loja";
+import { PesquisaFuncionario } from "./Componentes/Pesquisa/PesquisaFuncionario";
 
 function App() {
   const [user, setUser] = useState();
@@ -38,10 +38,10 @@ function App() {
             }
           ></Route>
           <Route
-            path="/Pesquisa"
+            path="/Loja"
             element={
               <VerificaUser user={user}>
-                <PesquisaService tipo={tipo} user={user}></PesquisaService>
+                <Loja tipo={tipo} user={user}></Loja>
               </VerificaUser>
             }
           ></Route>
@@ -62,13 +62,14 @@ function App() {
             }
           />
           <Route
-            path="/Livro"
+            path="/PesquisaFuncionario"
             element={
               <VerificaUser user={user}>
-                <LivroService user={user}></LivroService>
+                <PesquisaFuncionario user={user}></PesquisaFuncionario>
               </VerificaUser>
             }
           />
+          <Route path="/Logout" element={<Navigate to="/" replace={true} />} />
           <Route
             path="/*"
             element={<Login setUser={setUser} setTipo={setTipo}></Login>}

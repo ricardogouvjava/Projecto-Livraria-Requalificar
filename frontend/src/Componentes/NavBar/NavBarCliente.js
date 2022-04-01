@@ -23,17 +23,10 @@ export function NavBarCliente(props) {
         </button>
         <button
           onClick={() => {
-            navigate("/Pesquisa");
+            navigate("/Loja");
           }}
         >
-          Pesquisa
-        </button>
-        <button
-          onClick={() => {
-            navigate("/Carrinho");
-          }}
-        >
-          Carrinho
+          Loja
         </button>
         <button
           onClick={() => {
@@ -43,8 +36,7 @@ export function NavBarCliente(props) {
         >
           Menu
         </button>
-
-        <Logout user={props.user}></Logout>
+        <Logout></Logout>
       </div>
     </>
   );

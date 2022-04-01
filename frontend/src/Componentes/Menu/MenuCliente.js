@@ -7,8 +7,10 @@ const API_URL = "http://localhost:8080";
 export function MenuCliente(props) {
   const [id, setId] = useState();
   const [cliente, setCliente] = useState({});
+  const [vendas, setVendas] = useState([]);
   const [mostraInfo, setMostraInfo] = useState(false);
   const [mostraForm, setMostraForm] = useState(false);
+  const [mostraHistorico, setMostraHistorico] = useState(false);
   const [info, setInfo] = useState("");
   const [updateClienteInfo, setUpdateClienteInfo] = useState({
     login: "",
@@ -16,21 +18,27 @@ export function MenuCliente(props) {
     dataDeNascimento: "",
     email: "",
   });
-  const onClickInfo = () => {
-    setMostraInfo(!mostraInfo);
-  };
 
-  const onClickForm = () => {
-    setMostraForm(!mostraForm);
-  };
   useEffect(() => {
     setId(props.user);
     console.log("Menu Cliente:" + props.user);
     getCliente(props.user);
   }, []);
 
+  const onClickForm = () => {
+    setMostraForm(!mostraForm);
+  };
+
+  const onClickHistorico = () => {
+    setMostraHistorico(!mostraHistorico);
+    getVendasByClienteId(id);
+  };
+  const onClickInfo = () => {
+    setMostraInfo(!mostraInfo);
+  };
+
   function getCliente(userid) {
-    console.log(" Busca Cçoetne" + userid);
+    console.log(" Busca Cliente" + userid);
     fetch(API_URL + "/getClienteById/" + userid, {
       mode: "cors",
       method: "GET",
@@ -45,6 +53,27 @@ export function MenuCliente(props) {
       .then((parsedResponse) => {
         console.log(parsedResponse);
         setCliente(parsedResponse.cliente);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function getVendasByClienteId(userid) {
+    fetch(API_URL + "/getVendasByClienteId/" + userid, {
+      mode: "cors",
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error("Erro encontrar Vendas Cliente");
+        }
+
+        return response.json();
+      })
+      .then((parsedResponse) => {
+        console.log(parsedResponse);
+        setVendas(parsedResponse.vendas);
       })
       .catch((error) => {
         console.log(error);
@@ -185,6 +214,13 @@ export function MenuCliente(props) {
               Update Info
             </button>
           </div>
+          <div className={mostraHistorico ? "MostraSelecao" : "EscondeSelecao"}>
+            {vendas.map((vend) => (
+              <div key={vend.id}>
+                {vend.data} {vendas.valor}
+              </div>
+            ))}
+          </div>
           <p className="Informacao">{info}</p>
         </div>
         <div className="bodyright">
@@ -194,7 +230,9 @@ export function MenuCliente(props) {
           <button className="ButtonMenu" onClick={onClickForm}>
             Altera Info
           </button>
-          <button className="ButtonMenu">Ver Historico</button>
+          <button className="ButtonMenu" onClick={onClickHistorico}>
+            Ver Historico
+          </button>
 
           <button className="ButtonMenu">Ver Cupoes</button>
         </div>

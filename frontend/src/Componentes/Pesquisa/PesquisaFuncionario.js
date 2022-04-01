@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ElementoLivro } from "../Livro/ElementoLivro";
 import "./Pesquisa.css";
-import imageteste from "./teste.jpg";
+import imageteste from "../../images/teste.jpg";
 
 const API_URL = "http://localhost:8080";
 const info1 = "Pode pesquisar por titulo autor ou editora.";
 
-export function PesquisaAutor(props) {
+export function PesquisaFuncionario(props) {
   const navigate = useNavigate();
   const [quantidade, setQuantidade] = useState(0);
   const [pesquisa, setPesquisa] = useState("");
