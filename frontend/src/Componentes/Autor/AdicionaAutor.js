@@ -3,13 +3,15 @@ import { useState, React } from "react";
 
 const API_URL = "http://localhost:8080";
 
-export function AdicionaAutor(props) {
+export function AdicionaAutor() {
   const [info, setInfo] = useState("");
 
   function addAutor(data) {
     if (data.editora === "") {
       setInfo("Preencha campo editora");
     } else {
+      console.log(JSON.stringify(data));
+
       fetch(API_URL + "/addAutor", {
         mode: "cors",
         method: "POST",

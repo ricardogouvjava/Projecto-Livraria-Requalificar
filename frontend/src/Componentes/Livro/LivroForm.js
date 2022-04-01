@@ -15,7 +15,7 @@ export function LivroForm({ childToParent }) {
     id: 0,
     autores: [
       {
-        id: "",
+        id: 0,
       },
     ],
     titulo: "O melhor Livro de Sempre",
@@ -35,39 +35,44 @@ export function LivroForm({ childToParent }) {
   }, []);
 
   const onChangesetAutor = (item) => {
-    console.log("Selecionado: " + item.id);
     setSelecionado(true);
     setAutorToLivro(item);
-    console.log("autor to livro: " + autorToLivro);
   };
 
-  function naoexiste(lista, item) {
-    for (var i = 0; i <= lista.length; ++i) {
-      console.log("dsdsdsdsd: " + lista[i].id);
-      console.log("ds;p,p,p: " + item.id);
-      if (lista[i].id === item.id) {
-        return false;
-      }
+  function existe(lista, item) {
+    if (lista.filter((value) => value == item).length > 0) {
+      setInfo("Autor ja existente");
+      return true;
     }
-    return true;
+    console.log("Autor Adicionado");
+    return false;
   }
 
   function adicionaAutorToLivro() {
-    let tempAutores = autoresToLivro;
-    console.log(" length " + autoresToLivro.length);
-    console.log(" lth " + autorToLivro.id);
-    if (tempAutores.length <= 0) {
-      tempAutores.push(autorToLivro);
-      setAutoresToLivro(tempAutores);
-      setSelecionado(false);
-      setAutorToLivro({});
-    } else if (tempAutores.length > 0 && naoexiste(tempAutores, autorToLivro)) {
-      tempAutores.push(autorToLivro);
-      setAutoresToLivro(tempAutores);
-      setSelecionado(false);
-      setAutorToLivro({});
-      console.log("Adicionado por fora");
+    if (
+      (autoresToLivro.length > 0 && !existe(autoresToLivro, autorToLivro)) ||
+      autoresToLivro <= 0
+    ) {
+      setAutoresToLivro([
+        ...autoresToLivro,
+        {
+          id: autorToLivro.id,
+          nome: autorToLivro.nome,
+        },
+      ]);
     }
+    //updatelivroInfo();
+
+    console.log(autoresToLivro);
+  }
+
+  function updatelivroInfo() {
+    setLivroInfo([
+      {
+        ...livro,
+        autores: autoresToLivro,
+      },
+    ]);
   }
 
   function adicionaAutorNovo() {
@@ -255,13 +260,7 @@ export function LivroForm({ childToParent }) {
       </div>
       <br></br>
 
-      <button
-        onClick={() => {
-          childToParent(livro);
-        }}
-      >
-        Adiciona Livro
-      </button>
+      <button onClick={() => childToParent(livro)}>Adiciona Livro</button>
       <div>{info}</div>
     </div>
   );

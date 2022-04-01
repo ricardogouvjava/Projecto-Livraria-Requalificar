@@ -8,22 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import requalificar.projecto.models.Autor;
+import requalificar.projecto.models.Editora;
 import requalificar.projecto.repository.AutorRepo;
+import requalificar.projecto.repository.EditoraRepo;
 
 @Service
 public class AutorService 
 {
 	private final AutorRepo autorRepo;
+	private final EditoraRepo editoraRepo;
 	
 	@Autowired
-	public AutorService(AutorRepo autorRepo)
+	public AutorService(AutorRepo autorRepo, EditoraRepo editoraRepo)
 	{
 		this.autorRepo = autorRepo;
+		this.editoraRepo = editoraRepo;
 	}
 
 	/** Adiciona autor a base de dados **/
 	public boolean addAutor(Autor aAutor)
 	{
+		// adiciona autor a editora
+		Editora editora = editoraRepo.findById(aAutor.getEditora().getId()).get();
+		editora.addAutor(aAutor);
+		editoraRepo.save(editora);
 		autorRepo.save(aAutor);
 		return true;	
 	}

@@ -46,7 +46,7 @@ public class AutorController
 			srA.setAsError("Autor ja existente");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
 		}
-		
+		System.err.print(aAutor.getEditora());	
 		SimpleResponseAutor checkData = verificaDados(aAutor);
 		
 		if(checkData.isStatus())
@@ -229,13 +229,18 @@ public class AutorController
 		
 		if(aAutor.getNome() == null || aAutor.getNome().isEmpty())
 		{
-			srA.setAsError("Falha no parametro nome: " + aAutor.getNome());
+			srA.setAsError("Falha no parametro nome: ");
 			return srA;	
 		}
 			
 		if(aAutor.getEmail() == null || aAutor.getEmail().isEmpty())
 		{
-			srA.setAsError("Falha no parametro email: " + aAutor.getEmail());
+			srA.setAsError("Falha no parametro email: ");
+			return srA;	
+		}
+		if(aAutor.getEditora().equals(null) || aAutor.getEditora().getId().equals(null))
+		{
+			srA.setAsError("Falha no parametro editora:");
 			return srA;	
 		}
 		srA.setAsSuccess("Correcto");

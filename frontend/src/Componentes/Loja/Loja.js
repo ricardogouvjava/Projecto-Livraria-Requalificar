@@ -50,11 +50,9 @@ export function Loja(props) {
   }
 
   function removeElementocarrinho(index) {
-    let carrinhoTemp = carrinho;
+    let carrinhoTemp = [...carrinho];
     carrinhoTemp.splice(index, 1);
-    //carrinhoTemp = carrinhoTemp.filter((e, i) => e.id !== id);
-    setCarrinho(...carrinho, carrinhoTemp);
-    console.log(carrinho);
+    setCarrinho(carrinhoTemp);
   }
 
   function calculaTotal() {
@@ -122,36 +120,43 @@ export function Loja(props) {
   }
 
   function pagar() {
-    let venda = [];
-    let carinhoTemp = carrinho;
-    delete carinhoTemp.forEach.numero;
-    venda.push({ livros: carrinho });
-    venda.push({ cliente: { id: props.user } });
-    venda.push({ valor: total });
-    venda.push({ quantLivros: quantidades });
-    venda.push({ data: moment().format("DD-MM-YYYY") });
-    console.log(venda);
+    if (carrinho.length >= 1) {
+      let venda = {
+        livros: carrinho,
+        cliente: { id: props.user },
+        valor: total,
+        quantLivros: quantidades,
+        dataVenda: moment().format("DD-MM-YYYY"),
+      };
+      console.log(venda);
+      /*     venda.push({ livros: carrinho });
+      venda.push( "cliente": { id: props.user } );
+      venda.push( valor: total );
+      venda.push( quantLivros: quantidades );
+      venda.push({ data: moment().format("DD-MM-YYYY") });
+      console.log(venda); */
 
-    fetch(API_URL + "/criaVenda", {
-      mode: "cors",
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(venda),
-    })
-      .then((response) => {
-        if (response.status != 200) {
-          throw new Error(" Falha em realizar compra");
-        }
-        return response.json();
+      fetch(API_URL + "/criaVenda", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(venda),
       })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => {
+          if (response.status != 200) {
+            throw new Error(" Falha em realizar compra");
+          }
+          return response.json();
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   return (

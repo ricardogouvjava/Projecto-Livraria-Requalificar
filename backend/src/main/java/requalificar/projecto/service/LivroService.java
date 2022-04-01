@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import requalificar.projecto.models.Autor;
 import requalificar.projecto.models.Livro;
+import requalificar.projecto.repository.AutorRepo;
 import requalificar.projecto.repository.LivroRepo;
 
 
@@ -20,11 +21,13 @@ import requalificar.projecto.repository.LivroRepo;
 public class LivroService 
 {
 	private final LivroRepo livroRepo;
+	private final AutorRepo autorrepo;
 	
 	@Autowired
-	public LivroService(LivroRepo livroRepo)
+	public LivroService(LivroRepo livroRepo, AutorRepo autorrepo)
 	{
 		this.livroRepo = livroRepo;
+		this.autorrepo = autorrepo;
 	}
 	
 	
@@ -59,6 +62,12 @@ public class LivroService
 	/** Adiciona livro a base de dados **/
 	public boolean addLivro(Livro aLivro)
 	{
+		for(Autor autor : aLivro.getAutores())
+		{
+			Autor autorTemp = autorrepo.findById(autor.getId()).get();
+			autorTemp.addLivro(aLivro);
+			autorrepo.save(autorTemp);
+		}
 		livroRepo.save(aLivro);
 		return true;	
 	}

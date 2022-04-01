@@ -22,6 +22,7 @@ export function AutorForm({ childToParent }) {
     let tempAutor = autor;
     tempAutor.editora = editora;
     setAutor(tempAutor);
+    console.log(autor);
   }
 
   function AdicionaEditoraNova() {

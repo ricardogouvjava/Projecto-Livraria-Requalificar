@@ -5,16 +5,26 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity(name="Editora")
 @Table(name="editora")
 public class Editora 
 {
+	@Override
+	public String toString() {
+		return "Editora [id=" + id + ", nome=" + nome + ", autores=" + autores + ", livros=" + livros + ", morada="
+				+ morada + "]";
+	}
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 
 	
 	private String nome;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "editora", targetEntity=Autor.class)
 	List<Autor> autores = new ArrayList<Autor>();
 

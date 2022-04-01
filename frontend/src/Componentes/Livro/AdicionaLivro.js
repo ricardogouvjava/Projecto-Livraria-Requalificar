@@ -1,5 +1,4 @@
-import { Navigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LivroForm } from "./LivroForm";
 
 const API_URL = "http://localhost:8080";
