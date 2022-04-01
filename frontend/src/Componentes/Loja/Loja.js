@@ -3,6 +3,7 @@ import moment from "moment";
 import { ElementoLivro } from "../Livro/ElementoLivro";
 //import "./Pesquisa.css";
 import imageteste from "../../images/teste.jpg";
+import { PropaneSharp } from "@mui/icons-material";
 
 const API_URL = "http://localhost:8080";
 const info1 = "Pode pesquisar por titulo autor ou editora.";
@@ -123,14 +124,26 @@ export function Loja(props) {
 
   function pagar() {
     let venda = [];
-    let carinhoTemp = carrinho;
-    delete carinhoTemp.forEach.numero;
-    venda.push({ livros: carrinho });
-    venda.push({ cliente: { id: props.user } });
-    venda.push({ valor: total });
-    venda.push({ quantLivros: quantidades });
-    venda.push({ data: moment().format("DD-MM-YYYY") });
+    //let carinhoTemp = carrinho;
+    //delete carinhoTemp.forEach.numero;
+    venda = {
+      livros: carrinho,
+      cliente: { id: props.user },
+      valor: total,
+      //   quantLivros: quantidades,
+      data: moment().format("DD-MM-YYYY"),
+    };
     console.log(venda);
+
+    let stringifed = JSON.stringify(venda);
+    console.log(stringifed);
+
+    /*     venda.push({ livros: carrinho });
+    venda.push( "cliente": { id: props.user } );
+    venda.push( valor: total );
+    venda.push( quantLivros: quantidades );
+    venda.push({ data: moment().format("DD-MM-YYYY") });
+    console.log(venda); */
 
     fetch(API_URL + "/criaVenda", {
       mode: "cors",

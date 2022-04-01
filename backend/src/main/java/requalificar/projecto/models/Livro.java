@@ -31,7 +31,7 @@ public class Livro
 	private Editora editora;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "livrosvenda", fetch = FetchType.LAZY)
 	private List<Venda> vendas = new ArrayList<Venda>();
 		
 	private String titulo;

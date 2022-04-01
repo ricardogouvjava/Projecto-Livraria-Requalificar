@@ -18,7 +18,7 @@ import requalificar.projecto.models.Venda;
 import requalificar.projecto.service.ClienteService;
 import requalificar.projecto.service.LivroService;
 import requalificar.projecto.service.VendaService;
-import requalificar.projecto.utils.WrapperVenda;
+
 
 @RestController
 public class VendaController {
@@ -42,11 +42,12 @@ public class VendaController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srV);
 		}
 						
-		if(venda.getDataDeVenda().equals(null) || venda.getDataDeVenda().after(new Date()))
-		{
-			srV.setAsError("Falha no parametro data: " + venda.getDataDeVenda());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srV);
-		}
+		/*
+		 * if(venda.getDataDeVenda().equals(null) || venda.getDataDeVenda().after(new
+		 * Date())) { srV.setAsError("Falha no parametro data: " +
+		 * venda.getDataDeVenda()); return
+		 * ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srV); }
+		 */
 
 		if (vendaService.addVenda(venda)) 
 		{

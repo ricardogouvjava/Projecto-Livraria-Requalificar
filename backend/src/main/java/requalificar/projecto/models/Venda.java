@@ -29,12 +29,12 @@ public class Venda
     @JoinTable(name = "Venda_Livro", 
 				joinColumns = @JoinColumn(name = "venda_id"),
 				inverseJoinColumns = @JoinColumn(name = "livro_id"))
-    private List<Livro> livros = new ArrayList<Livro>();
+    private List<Livro> livrosvenda = new ArrayList<Livro>();
     
     @Column(name="valor_venda")
     private double valor;
     
-    private Date dataVenda;
+    //private Date dataVenda;
 
     @Column
   	@ElementCollection(targetClass=Integer.class)
@@ -45,23 +45,21 @@ public class Venda
     public void addLivro(Livro livro, Integer quantidade)
     {
     	valor += livro.getPreco() * quantidade;
-		livros.add(livro);
+    	livrosvenda.add(livro);
 		quantLivros.add(quantidade);
 		
 	}
     
     public void removeLivro(Livro livro) {
     	valor -= livro.getPreco();
-		livros.remove(livro);
-		quantLivros.remove(livros.indexOf(livro));
+    	livrosvenda.remove(livro);
+		quantLivros.remove(livrosvenda.indexOf(livro));
 		
 	} 
     
     
     
     //Getters & Setters
-    
-    
     
     public Cliente getCliente() {
 		return cliente;
@@ -80,11 +78,11 @@ public class Venda
 	}
 
 	public List<Livro> getLivros() {
-		return livros;
+		return livrosvenda;
 	}
 
 	public void setLivros(List<Livro> livros) {
-		this.livros = livros;
+		this.livrosvenda = livros;
 	}
 
 	public double getValor() {
@@ -98,28 +96,22 @@ public class Venda
 	public Long getId() {
 		return id;
 	}
-
-	public Date getDataDeVenda() {
-		return dataVenda;
-	}
-	public void setDataDeVenda(Date dataVenda) {
-		this.dataVenda = dataVenda;
-	}
-	
-
-	public void setDataVenda(String dataVenda ) throws ParseException {
-		String pattern = "dd-MM-yyyy";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		this.dataVenda = simpleDateFormat.parse(dataVenda);
-
-	}
-
-
-	public String getDataVenda() throws ParseException 
-	{
-		String pattern = "dd-MM-yyyy";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		return simpleDateFormat.format(this.dataVenda);
-	}
+	/*
+	 * public Date getDataDeVenda() { return dataVenda; } public void
+	 * setDataDeVenda(Date dataVenda) { this.dataVenda = dataVenda; }
+	 * 
+	 * 
+	 * public void setDataVenda(String dataVenda ) throws ParseException { String
+	 * pattern = "dd-MM-yyyy"; SimpleDateFormat simpleDateFormat = new
+	 * SimpleDateFormat(pattern); this.dataVenda =
+	 * simpleDateFormat.parse(dataVenda);
+	 * 
+	 * }
+	 * 
+	 * 
+	 * public String getDataVenda() throws ParseException { String pattern =
+	 * "dd-MM-yyyy"; SimpleDateFormat simpleDateFormat = new
+	 * SimpleDateFormat(pattern); return simpleDateFormat.format(this.dataVenda); }
+	 */
 	  	
 }

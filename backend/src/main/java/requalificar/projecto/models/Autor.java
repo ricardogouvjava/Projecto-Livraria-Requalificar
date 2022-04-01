@@ -6,7 +6,8 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="Autor")
 public class Autor 
@@ -15,9 +16,9 @@ public class Autor
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 
 	
+    @JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "autor_id", referencedColumnName = "id") //, nullable=false
-    @JsonIgnore
 	private Editora editora;
 
 	
