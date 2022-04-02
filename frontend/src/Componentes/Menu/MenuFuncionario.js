@@ -16,7 +16,7 @@ export function MenuFuncionario({ SetMostra }) {
   const [mostraEditoraMenu, setMostraEditoraMenu] = useState(false);
   const [opcao, SetOpcao] = useState();
 
-  function adicionaLivro() {
+  function adicionarLivro() {
     SetOpcao(<AdicionaLivro></AdicionaLivro>);
   }
 
@@ -57,7 +57,7 @@ export function MenuFuncionario({ SetMostra }) {
             <div
               className={mostraLivroMenu ? "MostraButtons" : "EscondeButtons"}
             >
-              <button onClick={adicionaLivro}>Adiciona Livro</button>
+              <button onClick={adicionarLivro}>Adicionar Livro</button>
               <button onClick={opcoesLivro}>Outras Opcoes</button>
             </div>
             <button

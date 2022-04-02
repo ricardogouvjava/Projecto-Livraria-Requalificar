@@ -4,8 +4,8 @@ import Select from "react-select";
 import "./LivroForm.css";
 import { AdicionaAutor } from "../Autor/AdicionaAutor";
 const API_URL = "http://localhost:8080";
+
 export function LivroForm({ childToParent }) {
-  const [selecionado, setSelecionado] = useState(false);
   const [autores, setAutores] = useState([]);
   const [autorToLivro, setAutorToLivro] = useState({});
   const [autoresToLivro, setAutoresToLivro] = useState([]);
@@ -35,12 +35,12 @@ export function LivroForm({ childToParent }) {
   }, []);
 
   const onChangesetAutor = (item) => {
-    setSelecionado(true);
     setAutorToLivro(item);
+    console.log(item);
   };
 
   function existe(lista, item) {
-    if (lista.filter((value) => value == item).length > 0) {
+    if (lista.filter((value) => value.id == item.id).length > 0) {
       setInfo("Autor ja existente");
       return true;
     }
@@ -49,30 +49,37 @@ export function LivroForm({ childToParent }) {
   }
 
   function adicionaAutorToLivro() {
-    if (
-      (autoresToLivro.length > 0 && !existe(autoresToLivro, autorToLivro)) ||
-      autoresToLivro <= 0
-    ) {
-      setAutoresToLivro([
-        ...autoresToLivro,
-        {
-          id: autorToLivro.id,
-          nome: autorToLivro.nome,
-        },
-      ]);
-    }
-    //updatelivroInfo();
+    if (!existe(autoresToLivro, autorToLivro)) {
+      let autoresTemp = autoresToLivro;
+      autoresTemp.push(autorToLivro);
+      setAutoresToLivro(autoresTemp);
 
-    console.log(autoresToLivro);
+      // setAutoresToLivro([
+      //   ...autoresToLivro,
+      //   {
+      //     id: autorToLivro.id,
+      //     nome: autorToLivro.nome,
+      //   },
+      // ]);
+    }
   }
 
-  function updatelivroInfo() {
-    setLivroInfo([
-      {
-        ...livro,
-        autores: autoresToLivro,
-      },
-    ]);
+  function criaLivro() {
+    let novoLivro = {
+      titulo: livro.titulo,
+      isbn: livro.isbn,
+      preco: livro.preco,
+      stock: livro.stock,
+      dataDeLancamento: livro.dataDeLancamento,
+      paginas: livro.paginas,
+      edicao: livro.edicao,
+      sinopse: livro.sinopse,
+      imagem: livro.imagem,
+      vendidos: livro.vendidos,
+      autores: autoresToLivro,
+    };
+    console.log(novoLivro);
+    childToParent(novoLivro);
   }
 
   function adicionaAutorNovo() {
@@ -235,7 +242,7 @@ export function LivroForm({ childToParent }) {
       <b>imagem: </b>
       <img src={imageteste} style={{ width: "100px" }} alt="image"></img>
 
-      <div className={selecionado ? "MostraSelecao" : "EscondeSelecao"}>
+      <div className="infoSeleciondao">
         Autor Seleciondado Para adicionar: {autorToLivro.nome}
       </div>
       <div className="SelectAutor">
@@ -259,8 +266,9 @@ export function LivroForm({ childToParent }) {
         </div>
       </div>
       <br></br>
-
-      <button onClick={() => childToParent(livro)}>Adiciona Livro</button>
+      <div>
+        <button onClick={criaLivro}>Criar Livro</button>
+      </div>
       <div>{info}</div>
     </div>
   );
