@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import requalificar.projecto.models.Autor;
+import requalificar.projecto.models.Editora;
 import requalificar.projecto.models.Livro;
 import requalificar.projecto.repository.AutorRepo;
+import requalificar.projecto.repository.EditoraRepo;
 import requalificar.projecto.repository.LivroRepo;
 
 
@@ -21,13 +23,15 @@ import requalificar.projecto.repository.LivroRepo;
 public class LivroService 
 {
 	private final LivroRepo livroRepo;
+	private final EditoraRepo editoraRepo;
 	private final AutorRepo autorrepo;
 	
 	@Autowired
-	public LivroService(LivroRepo livroRepo, AutorRepo autorrepo)
+	public LivroService(LivroRepo livroRepo, AutorRepo autorrepo, EditoraRepo editoraRepo)
 	{
 		this.livroRepo = livroRepo;
 		this.autorrepo = autorrepo;
+		this.editoraRepo = editoraRepo;
 	}
 	
 	
@@ -67,8 +71,9 @@ public class LivroService
 		{
 			Autor autorTemp = autorrepo.findById(autor.getId()).get();
 			autorTemp.addLivro(aLivro);
-			autorrepo.save(autorTemp);
+			autorrepo.save(autorTemp);		
 		}
+		
 		
 		return true;	
 	}

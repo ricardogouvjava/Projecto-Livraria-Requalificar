@@ -15,12 +15,12 @@ public class Cliente extends Utilizador
 	@Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id; 
+	
+	
 	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "cliente", targetEntity=Venda.class)
 	private List<Venda> compras = new ArrayList<Venda>();
 
-
-	
 	@Override
 	public String toString() {
 		return "Cliente [getLogin()=" + getLogin() + "]";

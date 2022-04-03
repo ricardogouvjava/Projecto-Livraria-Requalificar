@@ -28,7 +28,7 @@
 }
 
 .Grelha {
-  width: 90%;
+  width: 100%;
   margin: auto;
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -100,19 +100,116 @@
   margin: 1em;
 }
 
-.PesquisaCarrinho {
-  display: flex;
+.PesquisaMaisCarrinho {
   width: 100%;
+  margin-top: 1em;
+}
+.PesquisaMenuCarrinho {
+  width: 50%;
+  margin: 1em;
+  float: left;
 }
 .Carinho {
   display: block;
   visibility: visible;
-  width: 200px;
+  width: 300px;
   background-color: wheat;
+  border: 2px solid white;
   text-align: left;
   font-size: 0.8em;
+  padding: 0.5em;
+  float: right;
 }
 .EscondeCarrinho {
   display: none;
   visibility: hidden;
+}
+
+.TopCarinho {
+  box-sizing: border-box;
+  height: 4em;
+  display: flex;
+  font-weight: bolder;
+  flex-direction: row;
+}
+
+.NomeCarinho {
+  color: #282c34;
+  flex: 9;
+  border-bottom: 3px solid white;
+}
+
+.CancelaCarrinho {
+  color: wheat;
+  background-color: black;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  cursor: pointer;
+  height: 2em;
+}
+
+.PesquisaMenuCarrinho {
+  width: 50%;
+  margin: 1em;
+}
+
+.PesquisaMaisCarrinho::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.ListaCarrinho {
+  box-sizing: content-box;
+  padding-top: 1em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ItemCarrinho {
+  box-sizing: border-box;
+  padding: 0.5em;
+  width: 100%;
+  height: 4em;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1em;
+  border: #0777ac double;
+}
+
+.RemoveItem {
+  color: wheat;
+  background-color: #0777ac;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  cursor: pointer;
+}
+
+.ItemText {
+  color: #282c34;
+  flex: 9;
+}
+
+.Total {
+  margin: 1em;
+  text-align: right;
+  font-weight: bolder;
+}
+
+.Totalbutton {
+  text-align: center;
+  margin: 0.5em 0 0.5em 0;
+  height: 3em;
+  width: 100%;
 }

@@ -32,6 +32,19 @@ public class VendaService {
 		try
 		{
 			vendaRepo.save(venda);
+			Cliente cliente = clienteRepo.findById(venda.getCliente().getId()).get();
+			cliente.addVenda(venda);
+			clienteRepo.save(cliente);
+			
+			int i= 0; 
+			for(Livro livro: venda.getLivros())
+			{
+				Livro tempLivro = livroRepo.findById(livro.getId()).get();
+				tempLivro.addVenda(venda, venda.getQuantLivros().get(i));
+				 i +=1;
+				 livroRepo.save(tempLivro); 
+				 }
+			
 			return true;
 		}
 		catch (Exception e)
@@ -51,35 +64,6 @@ public class VendaService {
 	public Optional<Venda> getVendaById(Long idToGet) {
 
 		return vendaRepo.findById(idToGet);
-	}
-
-	public boolean addClienteToVenda(Cliente cliente, Venda venda) {
-		try {
-			venda.setCliente(cliente);
-			vendaRepo.save(venda);
-
-			cliente.addVenda(venda);
-			clienteRepo.save(cliente);
-			return true;
-		} catch (Exception e) {
-			return false;
-
-		}
-	}
-
-	public boolean addLivroToVenda(Livro livro, Venda venda, int quantidade) {
-		try {
-			venda.addLivro(livro, quantidade);
-			vendaRepo.save(venda);
-
-			livro.addVenda(venda, quantidade);
-			livroRepo.save(livro);
-			
-			return true;
-		} catch (Exception e) {
-			return false;
-
-		}
 	}
 
 	public List<Venda> getVendasBycliente(Cliente cliente) {

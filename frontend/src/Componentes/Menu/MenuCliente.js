@@ -199,25 +199,35 @@ export function MenuCliente(props) {
                 }}
               ></input>
             </p>
-            Email:
-            <input
-              type="text"
-              value={updateCliente.email}
-              onChange={(e) => {
-                setUpdateClienteInfo({
-                  ...updateClienteInfo,
-                  email: e.target.value,
-                });
-              }}
-            ></input>
-            <button className="Button" onClick={updateCliente}>
-              Update Info
-            </button>
+            <p>
+              Email:
+              <input
+                type="text"
+                value={updateCliente.email}
+                onChange={(e) => {
+                  setUpdateClienteInfo({
+                    ...updateClienteInfo,
+                    email: e.target.value,
+                  });
+                }}
+              ></input>
+              <button className="Button" onClick={updateCliente}>
+                Update Info
+              </button>
+            </p>
           </div>
-          <div className={mostraHistorico ? "MostraSelecao" : "EscondeSelecao"}>
-            {vendas.map((vend) => (
-              <div key={vend.id}>
-                {vend.data} {vendas.valor}
+          <div
+            className={mostraHistorico ? "MostraHistorico" : "EscondeHistorico"}
+          >
+            <div className="TituloHistorico">Compras Realizadas</div>
+            {vendas.map((vend, index) => (
+              <div className="ListaHistorico" key={index}>
+                Data: {vend.dataVenda}, Valor: {vend.valor}
+                {vend.livros.map((liv, ind) => (
+                  <div className="LivroHistorico" key={ind}>
+                    {liv.titulo} : {vend.quantLivros[ind]} uni.
+                  </div>
+                ))}
               </div>
             ))}
           </div>
@@ -233,8 +243,6 @@ export function MenuCliente(props) {
           <button className="ButtonMenu" onClick={onClickHistorico}>
             Ver Historico
           </button>
-
-          <button className="ButtonMenu">Ver Cupoes</button>
         </div>
       </div>
     </>

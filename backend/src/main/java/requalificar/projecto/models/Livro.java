@@ -1,9 +1,14 @@
 package requalificar.projecto.models;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +17,6 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import requalificar.projecto.utils.ImageFileToString;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="Livro")
@@ -25,11 +29,6 @@ public class Livro
 	@ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
 	private List<Autor> autores = new ArrayList<Autor>();
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "livro_id", referencedColumnName = "id") //, nullable=false
-    @JsonIgnore
-	private Editora editora;
-	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "livros", fetch = FetchType.LAZY)
 	private List<Venda> vendas = new ArrayList<Venda>();
@@ -40,21 +39,22 @@ public class Livro
 	private double preco;
 	private int stock;
 	
-	@Column(name="data_de_Lancamento")
+	@Column(name="data_de_lancamento")
 	private Date dataDeLancamento;
-	private int paginas;
-	private int edicao;
-	private String sinopse;
 	
+	private int paginas;
+	
+	private int edicao;
+	
+	private String sinopse;
+
 	@Column(columnDefinition="text")
 	private String imagem;
 	
 	private int vendidos;
 	
+		
 	//Methods
-	public void addAutor(Autor autor){
-		this.autores.add(autor);
-	}
 	public void addVenda(Venda venda, Integer quantidade)
 	{
 		vendas.add(venda);
@@ -81,10 +81,6 @@ public class Livro
 	{
 		return autores;
 	}
-	public Editora getEditora()
-	{
-		return editora;
-	}
 	public double getPreco() 
 	{
 		return preco;
@@ -92,18 +88,32 @@ public class Livro
 	public int getStock() {
 		return stock;
 	}
-	
-	
-	
-	
 	public int getPaginas() {
 		return paginas;
 	}
 	public int getEdicao() {
 		return edicao;
 	}
-	public String getImagem() throws IOException {
-		return ImageFileToString.decode(imagem);
+	public String getImagem()  {
+		Path path = Paths.get(System.getProperty("user.home")+
+				"\\Documents\\GitHub\\Projecto-Livraria-Requalificar\\backend\\src\\main\\resources\\imagens\\teste.jpg");
+		 byte[] decodedBytes = Base64.getDecoder().decode(imagem);
+		 String decoPath;
+		try {
+			decoPath = Files.write(path, decodedBytes, StandardOpenOption.CREATE).toString();
+			 if(decoPath.equals(null))
+			 {
+				 return " ";
+			 }
+			 return decoPath;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			return " ";
+		}
+		 
+
 	}
 	public String getSinopse() {
 		return sinopse;
@@ -122,9 +132,6 @@ public class Livro
 	}
 	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
-	}
-	public void setEditora(Editora editora) {
-		this.editora = editora;
 	}
 	public void setIsbn(String aIsn)
 	{
@@ -146,8 +153,10 @@ public class Livro
 	}
 	public void setImagem(String aPath) throws IOException 
 	{
-		
-		this.imagem = ImageFileToString.encode(aPath);
+		Path path = Paths.get(System.getProperty("user.home")+
+				"\\Documents\\GitHub\\Projecto-Livraria-Requalificar\\backend\\src\\main\\resources\\imagens\\teste.jpg");
+		byte[] fileContent = Files.readAllBytes(path); 
+		this.imagem = Base64.getEncoder().encodeToString(fileContent);
 	}
 	public void setSinopse(String sinopse) 
 	{
@@ -164,15 +173,12 @@ public class Livro
 	public void setVendidos(int vendidos) {
 		this.vendidos = vendidos;
 	}
-	
-	
-	
+
 	public Date dataLancamento()
 	{
 		return dataDeLancamento;
 	}
-		
-	public void setDataLancamento(Date dataDeLancamento) {
+	public void setDataDeLancamento(Date dataDeLancamento) {
 		this.dataDeLancamento = dataDeLancamento;
 	}
 	

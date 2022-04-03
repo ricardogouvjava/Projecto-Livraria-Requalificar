@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { ElementoLivro } from "../Livro/ElementoLivro";
-//import "./Pesquisa.css";
 import imageteste from "../../images/teste.jpg";
 
 const API_URL = "http://localhost:8080";
-const info1 = "Pode pesquisar por titulo autor ou editora.";
 
 export function Loja(props) {
   const [quantidade, setQuantidade] = useState(0);
   const [quantidades, setQuantidades] = useState([]);
   const [pesquisa, setPesquisa] = useState("");
   const [restultados, setResultados] = useState([]);
-  const [info, setInfo] = useState(info1);
+  const [info, setInfo] = useState("");
   const [selecinou, SetSelecinou] = useState(false);
   const [abreLivro, SetAbreLivro] = useState(false);
   const [carrinhoAtivo, SetCarrinhoAtivo] = useState(false);
@@ -39,6 +37,11 @@ export function Loja(props) {
 
   function mudaquantidade(quant) {
     setQuantidade(quant);
+  }
+
+  function cancelaCarrinho() {
+    SetCarrinhoAtivo(false);
+    setCarrinho([]);
   }
 
   function adicionaLivroCarrinho() {
@@ -141,12 +144,6 @@ export function Loja(props) {
         dataVenda: moment().format("DD-MM-YYYY"),
       };
       console.log(venda);
-      /*     venda.push({ livros: carrinho });
-      venda.push( "cliente": { id: props.user } );
-      venda.push( valor: total );
-      venda.push( quantLivros: quantidades );
-      venda.push({ data: moment().format("DD-MM-YYYY") });
-      console.log(venda); */
 
       fetch(API_URL + "/criaVenda", {
         mode: "cors",
@@ -164,6 +161,12 @@ export function Loja(props) {
         })
         .then((res) => {
           console.log(res);
+          setInfo("Sucesso em criar venda");
+          SetCarrinhoAtivo(false);
+          setCarrinho([]);
+          setQuantidades([]);
+          SetAbreLivro(false);
+          getLivros();
         })
         .catch((error) => {
           console.error(error);
@@ -174,8 +177,8 @@ export function Loja(props) {
   return (
     <>
       <div className="MainBodyClean">
-        <div className="PesquisaCarrinho">
-          <div className="Pesquisa">
+        <div className="PesquisaMaisCarrinho">
+          <div className="PesquisaMenuCarrinho">
             <h3>Pesquisa de Livros</h3>
             <div>
               <input
@@ -194,26 +197,40 @@ export function Loja(props) {
           <div>
             {carrinho && (
               <div className={carrinhoAtivo ? "Carinho" : "EscondeCarrinho"}>
-                ___Carrinho___
-                {carrinho.map((item, index) => (
-                  <div key={index}>
-                    <p>
-                      {item.titulo} : {item.numero}
-                    </p>
-                    <button onClick={() => removeElementocarrinho(index)}>
-                      X
-                    </button>
-                  </div>
-                ))}
-                Total : {calculaTotal()}
+                <div className="TopCarinho">
+                  <p className="NomeCarinho">Carrinho :</p>
+                  <button
+                    className={"CancelaCarrinho"}
+                    onClick={cancelaCarrinho}
+                  >
+                    X
+                  </button>
+                </div>
+                <div className="ListaCarrinho">
+                  {carrinho.map((item, index) => (
+                    <div key={index} className={"ItemCarrinho"}>
+                      <p className="ItemText">
+                        {item.titulo} : {item.numero}
+                      </p>
+                      <button
+                        className="RemoveItem"
+                        onClick={() => removeElementocarrinho(index)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="Total"> Total : {calculaTotal()}</div>
                 <div>
-                  <button onClick={pagar}> Pagar</button>
+                  <button className="Totalbutton" onClick={pagar}>
+                    Pagar
+                  </button>
                 </div>
               </div>
             )}
           </div>
         </div>
-
         <div className="Informacao">
           <p>{info}</p>
         </div>
@@ -225,16 +242,20 @@ export function Loja(props) {
           }
         >
           <ElementoLivro livro={livroseleciondoloja}></ElementoLivro>
+          <p style={{ color: "wheat" }}>
+            Esccolha quantidade a adicionar: Esta sujeito ao stock existente
+          </p>
           <input
             type="number"
             id="number"
             name="numerodeLivros"
             min={0}
+            max={livroseleciondoloja.stock}
             onChange={(e) => {
               mudaquantidade(e.target.valueAsNumber);
             }}
           ></input>
-          <button onClick={adicionaLivroCarrinho}>Adicionar Carrinho</button>
+          <button onClick={adicionaLivroCarrinho}>Adicionar ao Carrinho</button>
         </div>
         <div className="Grelha">
           {restultados.map(function (element, index) {

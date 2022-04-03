@@ -14,7 +14,7 @@ public class Editora
 {
 	@Override
 	public String toString() {
-		return "Editora [id=" + id + ", nome=" + nome + ", autores=" + autores + ", livros=" + livros + ", morada="
+		return "Editora [id=" + id + ", nome=" + nome + ", autores=" + autores + ", morada="
 				+ morada + "]";
 	}
 
@@ -28,12 +28,7 @@ public class Editora
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "editora", targetEntity=Autor.class)
 	List<Autor> autores = new ArrayList<Autor>();
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "editora", targetEntity=Livro.class)
-	List<Livro> livros = new ArrayList<Livro>();
-
 	private String morada;
-	
-	
 	
 	public void addAutor(Autor autor) {
 		autores.add(autor);
@@ -44,14 +39,6 @@ public class Editora
 		autores.remove(autor);
 		
 	}
-	
-	public void addLivro(Livro livro) {
-		livros.add(livro);
-	}
-	public void removeLivro(Livro livro) {
-		livros.remove(livro);
-	}
-	
 	
 	public String getMorada() {
 		return morada;
@@ -86,15 +73,5 @@ public class Editora
 	public void setAutores(List<Autor> autores) {
 		this.autores = autores;
 	}
-
-	public List<Livro> getLivros() {
-		return livros;
-	}
-
-	public void setLivros(List<Livro> livros) {
-		this.livros = livros;
-	}
-
-
 	
 }

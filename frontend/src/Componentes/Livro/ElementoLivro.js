@@ -17,6 +17,7 @@ export function ElementoLivro(props) {
         <div>Sinopse: {data.sinopse} </div>
         <div>vendidos: {data.vendidos} </div>
         <div>Editora: {data.editora}</div>
+        <div>Stock: {data.stock}</div>
       </div>
       <div className="LivroImageZoom">
         <img src={imageteste} alt="image"></img>

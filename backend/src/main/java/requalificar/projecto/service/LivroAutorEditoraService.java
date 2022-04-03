@@ -29,61 +29,7 @@ public class LivroAutorEditoraService
 	}
 	
 	
-	public boolean addAutorToLivro(Autor autor, Livro livro)
-	{
-		try
-		{
-			autor.addLivro(livro);			
-			autorRepo.save(autor);
-			
-			livro.addAutor(autor);
-			livroRepo.save(livro);
 
-			
-			if(!autor.getEditora().equals(null) && livro.getEditora().equals(null))
-			{
-				livro.setEditora(autor.getEditora());
-				livroRepo.save(livro);
-			}
-				
-				
-			return true;
-		}
-		catch(Exception e)
-		{
-			return false;
-		}
-		
-	}
-
-
-	public boolean addAutorToEditora(Autor autor, Editora editora) {
-		try
-		{
-			if(autor.getLivros().size() > 0) {
-				for(Livro livro : autor.getLivros())
-				{
-					editora.addLivro(livro);
-					livro.setEditora(editora);
-					livroRepo.save(livro);
-				}				
-			}
-			
-			editora.addAutor(autor);
-			editoraRepo.save(editora);
-
-			autor.setEditora(editora);			
-			autorRepo.save(autor);
-			return true;		
-		}
-		catch(Exception e)
-		{
-			return false;
-		}
-		
-	}
-	
-	
 	
 	public boolean removeEditora(Editora editora)
 	{

@@ -20,7 +20,6 @@ public class Venda
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", referencedColumnName = "id") //,	  nullable=false
     private Cliente cliente;
@@ -34,34 +33,15 @@ public class Venda
     @Column(name="valor_venda")
     private double valor;
     
+    @Column(name="data_de_venda")
     private Date dataVenda;
 
     @Column
   	@ElementCollection(targetClass=Integer.class)
-  	private List<Integer> quantLivros;
+  	private List<Integer> quantLivros = new ArrayList<Integer>();
 	  	
     
-    //Metodos
-    public void addLivro(Livro livro, Integer quantidade)
-    {
-    	valor += livro.getPreco() * quantidade;
-		livros.add(livro);
-		quantLivros.add(quantidade);
-		
-	}
-    
-    public void removeLivro(Livro livro) {
-    	valor -= livro.getPreco();
-		livros.remove(livro);
-		quantLivros.remove(livros.indexOf(livro));
-		
-	} 
-    
-    
-    
-    //Getters & Setters
-    
-    
+    //Getters & Setters    
     
     public Cliente getCliente() {
 		return cliente;
@@ -102,7 +82,7 @@ public class Venda
 	public Date getDataDeVenda() {
 		return dataVenda;
 	}
-	public void setDataDeVenda(Date dataVenda) {
+	public void setDataVenda(Date dataVenda) {
 		this.dataVenda = dataVenda;
 	}
 	
