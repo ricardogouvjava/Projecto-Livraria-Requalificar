@@ -1,29 +1,18 @@
-import { padding } from "@mui/system";
 import { useEffect, useState, React } from "react";
-import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import "./Editora.css";
 
 const API_URL = "http://localhost:8080";
 
 export function EditoraService(props) {
-  const navigate = useNavigate();
   const [info, setInfo] = useState("");
-  const [pesquisa, setPesquisa] = useState("");
-  const [editorasPesquisa, setEditorasPesquisa] = useState([]);
-  const [autor, setAutor] = useState({
-    id: 0,
-    nome: "",
-    morada: "",
-    editora: "",
-  });
-  const [autores, setAutores] = useState([]);
+  const [pesquisaeditora, setPesquisaEditora] = useState("");
+  const [editorasLista, setEditorasLista] = useState([]);
   const [selecinou, SetSelecinou] = useState(false);
   const [selectEditar, SetSelectEditar] = useState(false);
   const [selectRemover, SetSelectRemover] = useState(false);
-  const [selectAdicionaAutor, SetSelectAdicionaAutor] = useState(false);
-  const [selectState, SetSelectState] = useState({});
   const [selectVerdadosEditora, SetSelectVerdadosEditora] = useState(false);
-  const [selecionado, setSelecionado] = useState({
+  const [editoraSelecionada, setEditoraSelecionda] = useState({
     nome: "",
     morada: "",
     autores: [],
@@ -42,77 +31,8 @@ export function EditoraService(props) {
     SetSelectRemover(!selectRemover);
   }
 
-  function opcaoAdicionaAutor() {
-    getAutores();
-    SetSelectAdicionaAutor(!selectAdicionaAutor);
-  }
-
   function verEditora() {
     SetSelectVerdadosEditora(!selectVerdadosEditora);
-  }
-
-  function adicionaAutor() {
-    let tempEditora = selecionado;
-    if (!tempEditora.autores.includes(autor)) {
-      tempEditora.autores.push(autor);
-      setAutor({});
-      setInfo("Autor Adicionado");
-      console.log(selecionado);
-
-      fetch(
-        API_URL + "/addAutor/" + autor.id + "/ToEditora/" + tempEditora.id,
-        {
-          mode: "cors",
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-        }
-      )
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error("Erro associar autor a editora");
-          }
-
-          return response.json();
-        })
-        .then((res) => {
-          setInfo("Sucesso em associar autor a editora");
-          console.log(res);
-        })
-        .catch((error) => {
-          setInfo("Erro associar autor a editora");
-        });
-    } else {
-      setInfo("Autor ja existe!!");
-    }
-  }
-
-  function getAutores() {
-    fetch(API_URL + "/getAutores", {
-      mode: "cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status == 204) {
-          setInfo("Nenhum Autor Encontrado");
-          setAutores([]);
-        } else if (response.status !== 200 && response.status !== 204) {
-          throw new Error("error");
-        } else {
-          return response.json();
-        }
-      })
-      .then((parsedResponse) => {
-        setAutores(parsedResponse.autores);
-        console.log("Autores Encontrados:" + parsedResponse);
-      })
-      .catch((error) => {
-        setInfo("Nenhum Autor Encontrado");
-        setAutores([]);
-      });
   }
 
   function getEditoras() {
@@ -125,7 +45,7 @@ export function EditoraService(props) {
       .then((response) => {
         if (response.status === 204) {
           setInfo("Nenhum Editora Encontrada");
-          setEditorasPesquisa([]);
+          setEditorasLista([]);
           return null;
         } else if (response.status !== 200 && response.status !== 204) {
           throw new Error("error");
@@ -134,20 +54,21 @@ export function EditoraService(props) {
         }
       })
       .then((parsedResponse) => {
-        setEditorasPesquisa(parsedResponse.editoras);
-        console.log("Editoras Econtrados:" + parsedResponse.editoras);
+        setEditorasLista(parsedResponse.editoras);
+        console.log("Editoras Econtrados:");
+        console.log(parsedResponse.editoras);
       })
       .catch(() => {
         setInfo("Nenhum Editora Encontrada");
-        setEditorasPesquisa([]);
+        setEditorasLista([]);
       });
   }
 
   function getEditorasByPesquisa() {
-    if (pesquisa === "") {
+    if (pesquisaeditora === "") {
       getEditoras();
     } else {
-      fetch(API_URL + "/procuraEditora/" + pesquisa, {
+      fetch(API_URL + "/procuraEditora/" + pesquisaeditora, {
         mode: "cors",
         headers: {
           "Content-type": "application/json",
@@ -156,7 +77,7 @@ export function EditoraService(props) {
         .then((response) => {
           if (response.status === 204) {
             setInfo("Nenhum Editora Encontrada");
-            setEditorasPesquisa([]);
+            setEditorasLista([]);
           } else if (response.status !== 200 && response.status !== 204) {
             throw new Error("error");
           } else {
@@ -164,18 +85,18 @@ export function EditoraService(props) {
           }
         })
         .then((parsedResponse) => {
-          setEditorasPesquisa(parsedResponse.editoras);
+          setEditorasLista(parsedResponse.editoras);
         })
         .catch((error) => {
           setInfo("Nenhuma Editora Encontrada");
-          setEditorasPesquisa([]);
+          setEditorasLista([]);
         });
     }
   }
 
   function updateEditora() {
     let updatedEditora = {
-      id: props.edit.id,
+      id: editoraSelecionada.id,
       nome: novoEditora.nome,
       morada: novoEditora.morada,
     };
@@ -201,7 +122,7 @@ export function EditoraService(props) {
         setInfo("Editora actualizada");
         SetSelectEditar(false);
         SetSelecinou(false);
-        SetSelectAdicionaAutor(false);
+        getEditoras();
       })
       .catch((error) => {
         console.log(error);
@@ -209,8 +130,9 @@ export function EditoraService(props) {
   }
 
   function removeEditora() {
-    let id = selecionado.id;
-    setSelecionado({
+    let id = editoraSelecionada.id;
+    setEditoraSelecionda({
+      id: 0,
       nome: "",
       morada: "",
       autores: [],
@@ -231,12 +153,11 @@ export function EditoraService(props) {
         return response.json();
       })
       .then((res) => {
-        setEditorasPesquisa(res.editoras);
+        setEditorasLista(res.editoras);
         setInfo("Sucesso em remover editora");
         SetSelectEditar(false);
         SetSelectRemover(false);
         SetSelecinou(false);
-        SetSelectAdicionaAutor(false);
       })
       .catch((error) => {
         console.log(error);
@@ -246,35 +167,37 @@ export function EditoraService(props) {
   return (
     <>
       <div className="EditoraBody">
+        <div className="Informacao">
+          <p>{info}</p>
+        </div>
         <div className="PesquisaEditora">
-          <h3>Pesquisa de Editoras</h3>
+          <h3>PesquisaEditora de Editoras</h3>
           <div>
             <input
               type="text"
-              name="Pesquisa"
-              value={pesquisa}
+              name="PesquisaEditora"
+              value={pesquisaeditora}
               onChange={(char) => {
-                setPesquisa(char.target.value);
+                setPesquisaEditora(char.target.value);
               }}
             ></input>
           </div>
           <div>
-            <button onClick={getEditorasByPesquisa}>Pesquisa</button>
+            <button onClick={getEditorasByPesquisa}>PesquisaEditora</button>
           </div>
 
           <div className="Listagem">
-            {" "}
             <h3>Resultados</h3>
-            {editorasPesquisa.length > 0 && (
+            {editorasLista.length > 0 && (
               <div>
-                {editorasPesquisa.map(function (element, index) {
+                {editorasLista.map(function (element, index) {
                   return (
                     <div
                       key={index}
                       className="ElementoListagem"
                       onClick={() => {
-                        setSelecionado(element);
                         console.log(element);
+                        setEditoraSelecionda(element);
                         SetSelecinou(true);
                       }}
                     >
@@ -286,22 +209,19 @@ export function EditoraService(props) {
             )}
           </div>
         </div>
-        <div className="Informacao">
-          <p>{info}</p>
-        </div>
+
         <div className={selecinou ? "MostraSeleciondo" : "EscondeSeleciondo"}>
           <h4>Editora Seleciondada</h4>
           <div>
-            {selecionado.nome}, Morada: {selecionado.morada}
+            {editoraSelecionada.nome}, Morada: {editoraSelecionada.morada}
           </div>
           <button onClick={verEditora}>Ver dados Editora</button>
           <button onClick={opcaoEditar}>Altera Dados Editora</button>
           <button onClick={opcaoRemover}>Remove Editora</button>
-          <button onClick={opcaoAdicionaAutor}>Adiciona Autor</button>
         </div>
         <div className={selectEditar ? "MostraEditar" : "EscondeEditar"}>
           <div className="DadosUser">
-            <h4> Editar Editora: {selecionado.nome}</h4>
+            <h4> Editar Editora: {editoraSelecionada.nome}</h4>
             <p>Nome:</p>
             <input
               type="text"
@@ -334,39 +254,16 @@ export function EditoraService(props) {
           <button onClick={opcaoRemover}>Nao</button>
         </div>
         <div
-          className={selectAdicionaAutor ? "MostraSelecao" : "EscondeSelecao"}
-        >
-          Seleciona Autor
-          <select
-            style={{ width: "200px", padding: "0.2em", margin: "10px" }}
-            value={selectState.value}
-            id="Autores"
-            onChange={(e) => {
-              SetSelectState({ value: e.target.value });
-              console.log(e.target.key);
-              setAutor(autores[e.target.value - 1]);
-              console.log(autores[e.target.value - 1]);
-            }}
-          >
-            {autores.map((elementoAutor, index) => (
-              <option key={index} value={elementoAutor.id}>
-                {elementoAutor.id}__{elementoAutor.nome}
-              </option>
-            ))}
-          </select>
-          <button onClick={adicionaAutor}>Confima</button>
-        </div>
-
-        <div
           className={selectVerdadosEditora ? "MostraSelecao" : "EscondeSelecao"}
         >
           <div>
-            <p>Nome : {selecionado.nome}</p>
-            <p>Morada : {selecionado.morada}</p>
+            <p>Nome : {editoraSelecionada.nome}</p>
+            <p>Morada : {editoraSelecionada.morada}</p>
             <div>
-              {selecionado.autores.map((aut, index) => (
-                <div key={aut.id}> autor: {aut.nome}</div>
-              ))}
+              {editoraSelecionada.autores &&
+                editoraSelecionada.autores.map((aut, index) => (
+                  <div key={index}> autor: {aut.nome}</div>
+                ))}
             </div>
           </div>
         </div>

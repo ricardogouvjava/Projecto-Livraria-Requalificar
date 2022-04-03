@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ElementoLivro } from "../Livro/ElementoLivro";
 import "./Pesquisa.css";
 import imageteste from "../../images/teste.jpg";
@@ -8,8 +7,6 @@ const API_URL = "http://localhost:8080";
 const info1 = "Pode pesquisar por titulo autor ou editora.";
 
 export function PesquisaFuncionario(props) {
-  const navigate = useNavigate();
-  const [quantidade, setQuantidade] = useState(0);
   const [pesquisa, setPesquisa] = useState("");
   const [restultados, setResultados] = useState([]);
   const [info, setInfo] = useState(info1);
@@ -17,17 +14,22 @@ export function PesquisaFuncionario(props) {
   const [abreLivro, SetAbreLivro] = useState(false);
   const [selecionado, setSelecionado] = useState({
     titulo: "",
+    isbn: "",
+    preco: 0,
+    stock: 0,
     dataDeLancamento: "",
-    paginas: "",
+    paginas: 0,
+    edicao: 0,
+    sinopse: "",
+    imagem: "",
+    vendidos: 0,
+    editora: "",
+    autores: [],
   });
 
   useEffect(() => {
     getLivros();
   }, []);
-
-  function mudaquantidade(quant) {
-    setQuantidade(quant);
-  }
 
   function getLivros() {
     fetch(API_URL + "/getLivros", {
