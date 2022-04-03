@@ -23,12 +23,17 @@ Para uma melhor visualizacao dos menus e interacoes pretendidas achei melhor cri
 [Documento - Sprint 2](Sprints/Sprint_2.md)
 
 **Implementacao de diversas funcionalidades**
-- ClassController
-- ClassService
-- ClassRepo
-- SimpleResponseClass
+- Controller
+- Service
+- Repo
+- SimpleResponse
+- Model
 
 *nas classes*
 - Cliente
 - Funcionario
 - Livro
+- Editora
+- Autor
+
+# Sprint 3 - FrontEnd
