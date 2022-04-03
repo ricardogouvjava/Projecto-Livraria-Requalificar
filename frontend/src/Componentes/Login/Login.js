@@ -75,7 +75,7 @@ export function Login(props) {
         .then((idFuncionario) => {
           props.setUser(idFuncionario);
           props.setTipo(tipo);
-          navigate("/HomeFuncionario/:id");
+          navigate("/HomeFuncionario/" + idFuncionario);
         })
         .catch((error) => {
           console.log(error);

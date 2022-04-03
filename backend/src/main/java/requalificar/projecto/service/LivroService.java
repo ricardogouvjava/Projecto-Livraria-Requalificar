@@ -62,13 +62,14 @@ public class LivroService
 	/** Adiciona livro a base de dados **/
 	public boolean addLivro(Livro aLivro)
 	{
+		livroRepo.save(aLivro);
 		for(Autor autor : aLivro.getAutores())
 		{
 			Autor autorTemp = autorrepo.findById(autor.getId()).get();
 			autorTemp.addLivro(aLivro);
 			autorrepo.save(autorTemp);
 		}
-		livroRepo.save(aLivro);
+		
 		return true;	
 	}
 	

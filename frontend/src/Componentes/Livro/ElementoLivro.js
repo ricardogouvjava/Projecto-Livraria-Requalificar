@@ -13,10 +13,10 @@ export function ElementoLivro(props) {
         <div>Data de Lancamento: {data.dataDeLancamento} </div>
         <div>Paginas: {data.paginas} </div>
         <div>Preco: {data.preco}</div>
-        <div>Autores: {data.autores}</div>
         <div>Edicao: {data.edicao} </div>
         <div>Sinopse: {data.sinopse} </div>
         <div>vendidos: {data.vendidos} </div>
+        <div>Editora: {data.editora}</div>
       </div>
       <div className="LivroImageZoom">
         <img src={imageteste} alt="image"></img>

@@ -7,24 +7,23 @@ import imageteste from "../../images/teste.jpg";
 const API_URL = "http://localhost:8080";
 
 export function LivroService(props) {
-  const navigate = useNavigate();
   const [info, setInfo] = useState("");
-  const [pesquisa, setPesquisa] = useState("");
+  const [pesquisalivro, setLivroPesquisa] = useState("");
   const [livrosPesquisa, setLivrosPesquisa] = useState([]);
   const [autor, setAutor] = useState({
     id: 0,
     nome: "",
     morada: "",
-    livro: "",
+    livros: [],
+    editora: {},
   });
   const [autores, setAutores] = useState([]);
-  const [selecinou, SetSelecinou] = useState(false);
+  const [selecinou, SetSelecinouLivro] = useState(false);
   const [selectEditar, SetSelectEditar] = useState(false);
   const [selectRemover, SetSelectRemover] = useState(false);
   const [selectAdicionaAutor, SetSelectAdicionaAutor] = useState(false);
-  const [selectState, SetSelectState] = useState({});
   const [selectVerdadosLivro, SetSelectVerdadosLivro] = useState(false);
-  const [selecionado, setSelecionado] = useState({
+  const [livroselecionado, setLivroSelecinado] = useState({
     titulo: "",
     isbn: "",
     preco: 0,
@@ -35,6 +34,8 @@ export function LivroService(props) {
     sinopse: "",
     imagem: "",
     vendidos: 0,
+    editora: "",
+    autores: [],
   });
   const [novoLivro, setNovoLivro] = useState({
     titulo: "",
@@ -47,6 +48,8 @@ export function LivroService(props) {
     sinopse: "",
     imagem: "",
     vendidos: 0,
+    editora: {},
+    autores: [],
   });
 
   useEffect(() => {
@@ -61,49 +64,9 @@ export function LivroService(props) {
     SetSelectRemover(!selectRemover);
   }
 
-  function opcaoAdicionaAutor() {
-    getAutores();
-    SetSelectAdicionaAutor(!selectAdicionaAutor);
-  }
-
   function verLivro() {
     SetSelectVerdadosLivro(!selectVerdadosLivro);
   }
-
-  function adicionaAutor() {
-    let tempLivro = selecionado;
-    if (!tempLivro.autores.includes(autor)) {
-      tempLivro.autores.push(autor);
-      setAutor({});
-      setInfo("Autor Adicionado");
-      console.log(selecionado);
-
-      fetch(API_URL + "/addAutor/" + autor.id + "/ToLivro/" + tempLivro.id, {
-        mode: "cors",
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error("Erro associar autor a livro");
-          }
-
-          return response.json();
-        })
-        .then((res) => {
-          setInfo("Sucesso em associar autor a livro");
-          console.log(res);
-        })
-        .catch((error) => {
-          setInfo("Erro associar autor a livro");
-        });
-    } else {
-      setInfo("Autor ja existe!!");
-    }
-  }
-
   function getAutores() {
     fetch(API_URL + "/getAutores", {
       mode: "cors",
@@ -112,7 +75,7 @@ export function LivroService(props) {
       },
     })
       .then((response) => {
-        if (response.status == 204) {
+        if (response.status === 204) {
           setInfo("Nenhum Autor Encontrado");
           setAutores([]);
         } else if (response.status !== 200 && response.status !== 204) {
@@ -160,10 +123,10 @@ export function LivroService(props) {
   }
 
   function getLivrosByPesquisa() {
-    if (pesquisa === "") {
+    if (pesquisalivro === "") {
       getLivros();
     } else {
-      fetch(API_URL + "/procuraLivro/" + pesquisa, {
+      fetch(API_URL + "/procuraLivro/" + pesquisalivro, {
         mode: "cors",
         headers: {
           "Content-type": "application/json",
@@ -191,8 +154,8 @@ export function LivroService(props) {
 
   function updateLivro() {
     let updatedLivro = {
-      id: selecionado.id,
-      isbn: selecionado.isbn,
+      id: livroselecionado.id,
+      isbn: livroselecionado.isbn,
       titulo: novoLivro.titulo,
       morada: novoLivro.morada,
       preco: novoLivro.preco,
@@ -224,7 +187,7 @@ export function LivroService(props) {
         console.log(res);
         setInfo("Livro actualizado");
         SetSelectEditar(false);
-        SetSelecinou(false);
+        SetSelecinouLivro(false);
         SetSelectAdicionaAutor(false);
       })
       .catch((error) => {
@@ -233,10 +196,19 @@ export function LivroService(props) {
   }
 
   function removeLivro() {
-    let isbn = selecionado.isbn;
-    setSelecionado({
-      nome: "",
-      morada: "",
+    let isbn = livroselecionado.isbn;
+    setLivroSelecinado({
+      titulo: "",
+      isbn: "",
+      preco: 0,
+      stock: 0,
+      dataDeLancamento: "",
+      paginas: 0,
+      edicao: 0,
+      sinopse: "",
+      imagem: "",
+      vendidos: 0,
+      editora: {},
       autores: [],
     });
 
@@ -259,7 +231,7 @@ export function LivroService(props) {
         setInfo("Sucesso em remover livro");
         SetSelectEditar(false);
         SetSelectRemover(false);
-        SetSelecinou(false);
+        SetSelecinouLivro(false);
         SetSelectAdicionaAutor(false);
       })
       .catch((error) => {
@@ -276,9 +248,9 @@ export function LivroService(props) {
             <input
               type="text"
               name="Pesquisa"
-              value={pesquisa}
+              value={pesquisalivro}
               onChange={(char) => {
-                setPesquisa(char.target.value);
+                setLivroPesquisa(char.target.value);
               }}
             ></input>
           </div>
@@ -289,7 +261,7 @@ export function LivroService(props) {
           <div className="Listagem">
             {" "}
             <h3>Resultados</h3>
-            {livrosPesquisa.length > 0 && (
+            {livrosPesquisa && (
               <div>
                 {livrosPesquisa.map(function (element, index) {
                   return (
@@ -297,9 +269,9 @@ export function LivroService(props) {
                       key={index}
                       className="ElementoListagem"
                       onClick={() => {
-                        setSelecionado(element);
+                        setLivroSelecinado(element);
                         console.log(element);
-                        SetSelecinou(true);
+                        SetSelecinouLivro(true);
                       }}
                     >
                       {element.titulo + " , " + element.dataDeLancamento}
@@ -316,7 +288,8 @@ export function LivroService(props) {
         <div className={selecinou ? "MostraSeleciondo" : "EscondeSeleciondo"}>
           <h4>Livro Seleciondado</h4>
           <div>
-            {selecionado.titulo}, Morada: {selecionado.dataDeLancamento}
+            {livroselecionado.titulo}, Morada:{" "}
+            {livroselecionado.dataDeLancamento}
           </div>
           <button onClick={verLivro}>Ver dados Livro</button>
           <button onClick={opcaoEditar}>Altera Dados Livro</button>
@@ -324,14 +297,14 @@ export function LivroService(props) {
         </div>
         <div className={selectEditar ? "MostraEditar" : "EscondeEditar"}>
           <div className="LivroForm">
-            <h4> Editar Livro: {selecionado.titulo}</h4>
+            <h4> Editar Livro: {livroselecionado.titulo}</h4>
             <p>
               Id: (Autenticacao Nao editavel)
-              <input type="text" value={selecionado.id}></input>
+              <input type="text" value={livroselecionado.id}></input>
             </p>
             <p>
               isbn: (Autenticacao Nao editavel)
-              <input type="text" value={selecionado.isbn}></input>
+              <input type="text" value={livroselecionado.isbn}></input>
             </p>
             <p>
               Titulo
@@ -456,7 +429,7 @@ export function LivroService(props) {
             : "LivroSelecionadoOpcoesEsconde"
         }
       >
-        <ElementoLivro livro={selecionado}></ElementoLivro>
+        <ElementoLivro livro={livroselecionado}></ElementoLivro>
       </div>
     </>
   );

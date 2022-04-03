@@ -7,43 +7,24 @@ const API_URL = "http://localhost:8080";
 
 export function AutorService(props) {
   const [info, setInfo] = useState("");
-  const [pesquisa, setPesquisa] = useState("");
+  const [pesquisaAutor, setPesquisaAutor] = useState("");
   const [autorLista, setAutoresLista] = useState([]);
-  const [autorSelecionado, setAutorSelecionado] = useState({
-    nome: "",
-    email: "",
-    editora: "",
-    livros: [],
-  });
+  const [autorSelecionado, setAutorSelecionado] = useState({});
   const [selectEditar, setSelectEditar] = useState(false);
   const [selectVerdadosAutor, setSelectVerdadosAutor] = useState(false);
   const [selecinou, setSelecinou] = useState(false);
   const [selectRemover, setSelectRemover] = useState(false);
   const [mostraAdiconarEditora, SetMostraAdicionarEditora] = useState(false);
-  const [novoAutor, setNovoAutor] = useState({
-    nome: "",
-    email: "",
-    editora: "",
-    livros: [],
-  });
+  const [novoAutor, setNovoAutor] = useState({});
   const [editora, setEditora] = useState({});
   const [editoras, setEditoras] = useState([]);
 
   useEffect(() => {
-    fetchAutores();
+    getAutores();
   }, []);
 
-  function fetchAutores() {
-    getAutores();
-    if (autorLista.length === 0) {
-      setInfo("Base de dados vazia");
-    } else {
-      setInfo("Autores encontrados");
-    }
-  }
-
   function AdicionaEditoraNova() {
-    getEditoras();
+    getAutores();
     SetMostraAdicionarEditora(!mostraAdiconarEditora);
   }
   const onChangesetEditora = (item) => {
@@ -91,7 +72,8 @@ export function AutorService(props) {
       })
       .then((parsedResponse) => {
         setEditoras(parsedResponse.editoras);
-        console.log("Editoras Econtrados:" + parsedResponse.editoras);
+        console.log("Editoras Econtrados:");
+        console.log(parsedResponse.editoras);
       })
       .catch(() => {
         setInfo("Nenhums Editora Encontrada");
@@ -119,7 +101,8 @@ export function AutorService(props) {
       })
       .then((parsedResponse) => {
         setAutoresLista(parsedResponse.autores);
-        console.log("Autores Econtrados:" + parsedResponse.autores);
+        console.log("Autores Econtrados:");
+        console.log(parsedResponse.autores);
       })
       .catch(() => {
         setInfo("Nenhum Autor Encontrado");
@@ -128,31 +111,35 @@ export function AutorService(props) {
   }
 
   function getAutoresByPesquisa() {
-    fetch(API_URL + "/procuraAutor/" + pesquisa, {
-      mode: "cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status === 204) {
-          setInfo("Nenhum Autor Encontrado");
+    if (pesquisaAutor === "") {
+      getAutores();
+    } else {
+      fetch(API_URL + "/procuraAutor/" + pesquisaAutor, {
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.status === 204) {
+            setInfo("Nenhum Autor Encontrado");
+            setAutoresLista([]);
+          } else if (response.status !== 200 && response.status !== 204) {
+            throw new Error("error");
+          } else {
+            return response.json();
+          }
+        })
+        .then((parsedResponse) => {
+          setAutoresLista(parsedResponse.livros);
+        })
+        .catch((error) => {
+          if (error === undefined) {
+            setInfo("Nenhum Autor Encontrado");
+          }
           setAutoresLista([]);
-        } else if (response.status !== 200 && response.status !== 204) {
-          throw new Error("error");
-        } else {
-          return response.json();
-        }
-      })
-      .then((parsedResponse) => {
-        setAutoresLista(parsedResponse.livros);
-      })
-      .catch((error) => {
-        if (error === undefined) {
-          setInfo("Nenhum Autor Encontrado");
-        }
-        getAutores();
-      });
+        });
+    }
   }
 
   function removeAutor() {
@@ -208,7 +195,7 @@ export function AutorService(props) {
       })
       .then((res) => {
         console.log(res);
-        fetchAutores();
+        getAutores();
       })
       .catch((error) => {
         console.log(error);
@@ -218,24 +205,24 @@ export function AutorService(props) {
     <>
       <div className="MainBody">
         <div className="PesquisaEditora">
-          <h3>Pesquisa Autores</h3>
+          <h3>pesquisaAutor Autores</h3>
           <div>
             <input
               type="text"
-              name="Pesquisa"
-              value={pesquisa}
+              name="pesquisaAutor"
+              value={pesquisaAutor}
               onChange={(char) => {
-                setPesquisa(char.target.value);
+                setPesquisaAutor(char.target.value);
               }}
             ></input>
           </div>
           <div>
-            <button onClick={getAutoresByPesquisa}>Pesquisa</button>
+            <button onClick={getAutoresByPesquisa}>pesquisaAutor</button>
           </div>
 
           <div className="Listagem">
             <h3>Resultados</h3>
-            {pesquisa.length > 0 && (
+            {autorLista && (
               <div>
                 {autorLista.map(function (element, index) {
                   return (

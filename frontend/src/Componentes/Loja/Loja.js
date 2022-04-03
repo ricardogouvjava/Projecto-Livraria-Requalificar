@@ -16,11 +16,19 @@ export function Loja(props) {
   const [selecinou, SetSelecinou] = useState(false);
   const [abreLivro, SetAbreLivro] = useState(false);
   const [carrinhoAtivo, SetCarrinhoAtivo] = useState(false);
-  const [selecionado, setSelecionado] = useState({
-    id: "",
+  const [livroseleciondoloja, setLivroSelecionadoLoja] = useState({
     titulo: "",
+    isbn: "",
+    preco: 0,
+    stock: 0,
     dataDeLancamento: "",
-    paginas: "",
+    paginas: 0,
+    edicao: 0,
+    sinopse: "",
+    imagem: "",
+    vendidos: 0,
+    editora: "",
+    autores: [],
   });
   const [carrinho, setCarrinho] = useState([]);
   const [total, setTotal] = useState(0);
@@ -37,9 +45,9 @@ export function Loja(props) {
     setCarrinho([
       ...carrinho,
       {
-        id: selecionado.id,
-        preco: selecionado.preco,
-        titulo: selecionado.titulo,
+        id: livroseleciondoloja.id,
+        preco: livroseleciondoloja.preco,
+        titulo: livroseleciondoloja.titulo,
         numero: quantidade,
       },
     ]);
@@ -92,31 +100,35 @@ export function Loja(props) {
   }
 
   function getLivrosByPesquisa() {
-    fetch(API_URL + "/procuraLivros/" + pesquisa, {
-      mode: "cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status === 204) {
+    if (pesquisa === "") {
+      getLivros();
+    } else {
+      fetch(API_URL + "/procuraLivros/" + pesquisa, {
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.status === 204) {
+            setInfo("Nenhum Livro Encontrado");
+            setResultados([]);
+            return null;
+          } else if (response.status !== 200 && response.status !== 204) {
+            throw new Error("error");
+          } else {
+            return response.json();
+          }
+        })
+        .then((parsedResponse) => {
+          setResultados(parsedResponse.livros);
+          setInfo("Livros Encontrados");
+        })
+        .catch(() => {
           setInfo("Nenhum Livro Encontrado");
           setResultados([]);
-          return null;
-        } else if (response.status !== 200 && response.status !== 204) {
-          throw new Error("error");
-        } else {
-          return response.json();
-        }
-      })
-      .then((parsedResponse) => {
-        setResultados(parsedResponse.livros);
-        setInfo("Livros Encontrados");
-      })
-      .catch(() => {
-        setInfo("Nenhum Livro Encontrado");
-        setResultados([]);
-      });
+        });
+    }
   }
 
   function pagar() {
@@ -145,7 +157,7 @@ export function Loja(props) {
         body: JSON.stringify(venda),
       })
         .then((response) => {
-          if (response.status != 200) {
+          if (response.status !== 200) {
             throw new Error(" Falha em realizar compra");
           }
           return response.json();
@@ -212,13 +224,11 @@ export function Loja(props) {
               : "EscondeLivroSelecionadoZoom"
           }
         >
-          <ElementoLivro livro={selecionado}></ElementoLivro>
-
+          <ElementoLivro livro={livroseleciondoloja}></ElementoLivro>
           <input
             type="number"
             id="number"
             name="numerodeLivros"
-            //value={quantidade}
             min={0}
             onChange={(e) => {
               mudaquantidade(e.target.valueAsNumber);
@@ -233,14 +243,14 @@ export function Loja(props) {
                 key={index}
                 className="ElementoGrelha"
                 onClick={() => {
-                  setSelecionado(element);
+                  setLivroSelecionadoLoja(element);
                   SetSelecinou(true);
                   SetAbreLivro(!abreLivro);
                 }}
               >
                 <div className="LivroBody">
                   <div className="LivroImage">
-                    <img src={imageteste} alt="image"></img>
+                    <img src={imageteste} alt="Capa de Livro"></img>
                   </div>
                   <div className="LivroInfo">
                     <p>{element.titulo}</p>
