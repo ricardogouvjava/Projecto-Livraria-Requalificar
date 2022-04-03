@@ -46,7 +46,6 @@ public class AutorController
 			srA.setAsError("Autor ja existente");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(srA);
 		}
-		System.err.print(aAutor.getEditora());	
 		SimpleResponseAutor checkData = verificaDados(aAutor);
 		
 		if(checkData.isStatus())

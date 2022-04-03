@@ -18,7 +18,6 @@ import requalificar.projecto.models.Venda;
 import requalificar.projecto.service.ClienteService;
 import requalificar.projecto.service.LivroService;
 import requalificar.projecto.service.VendaService;
-import requalificar.projecto.utils.WrapperVenda;
 
 @RestController
 public class VendaController {
@@ -35,7 +34,7 @@ public class VendaController {
 	@CrossOrigin
 	@PostMapping("/criaVenda")
 	public ResponseEntity<SimpleResponse> criaVenda(@RequestBody Venda venda) {
-		SimpleResponseVendas srV = new SimpleResponseVendas();
+		SimpleResponseVenda srV = new SimpleResponseVenda();
 
 		if (venda.equals(null) || venda.getId() != null) {
 			srV.setAsError("Falha na entrada de dados");
@@ -51,7 +50,6 @@ public class VendaController {
 		if (vendaService.addVenda(venda)) 
 		{
 			srV.setAsSuccess("Sucesso em criar venda");
-			srV.setVendas(vendaService.getVendasBycliente(venda.getCliente()));
 			return ResponseEntity.status(HttpStatus.OK).body(srV);
 		}
 
